@@ -23,7 +23,7 @@ for (let i = 0; i < cols; i++) {
         } else {
             if (matrix[i][j] > maxOddRow) {
                 maxOddRow = matrix[i][j];
-            }
+            }   
         }
 
     }
