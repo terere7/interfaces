@@ -1,15 +1,19 @@
-function pintar (){
-console.log("pintar");
+
+window.addEventListener('load', ()=>{
+    document.querySelector("#pencil").addEventListener('click', pintar);
+    document.querySelector("#rubber").addEventListener('click', borrar);
+   
+function pintar() {
+    console.log("pintar");
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d");
-
     // get the width and heigth of the windows
     canvas.height = window.innerHeight;
     canvas.widht = window.innerWidth;
     // change the color of the rectangle
-    ctx.strokeStyle = "red";
+    //ctx.strokeStyle = "red";
     //rectangle (top, margin left, width, heigth )
-    ctx.strokeRect(100, 100, 500, 500);
+   // ctx.strokeRect(100, 100, 500, 500);
 
     //other functions 
     //ctx.lineWidth=5;
@@ -22,7 +26,7 @@ console.log("pintar");
         painting = false;
         ctx.beginPath();// cuando termina seteo un nuevo comienzo, reseteo
     }
-    // pasa por parametro el evento
+    // pasa por parametro el evento, contiene las coordenadas
     function draw(e) {
         if (!painting) return; // si no esta pintando retornar nada
         ctx.lineWidth = 5;
@@ -42,14 +46,12 @@ console.log("pintar");
 
 };
 
-function borrar(){
-console.log("borrar");
+function borrar() {
+    console.log("borrar");
 };
+ 
+})
 
-
-    document.querySelector("#pencil").addEventListener('onclick', pintar);
-    document.querySelector("#rubber").addEventListener('onclick',borrar);
-    
 
 
 // resize the canvas of the window
