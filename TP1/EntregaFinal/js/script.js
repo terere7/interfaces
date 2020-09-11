@@ -2,8 +2,10 @@
 window.addEventListener('load', ()=>{
     document.querySelector("#pencil").addEventListener('click', pintar);
     document.querySelector("#rubber").addEventListener('click', borrar);
-   
+    
 function pintar() {
+    let dibujar = false;
+    let borrar=false;
     console.log("pintar");
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d");
@@ -17,19 +19,19 @@ function pintar() {
 
     //other functions 
     //ctx.lineWidth=5;
-    let painting = false;
+    
     function startPosition(e) {
-        painting = true;
+        dibujar = true;
         draw(e);
     }
     function finishedPosition() {
-        painting = false;
+        dibujar = false;
         ctx.beginPath();// cuando termina seteo un nuevo comienzo, reseteo
     }
     // pasa por parametro el evento, contiene las coordenadas
     function draw(e) {
-        if (!painting) return; // si no esta pintando retornar nada
-        ctx.lineWidth = 5;
+        if (!dibujar) return; // si no esta pintando retornar nada
+        ctx.lineWidth = 3;
         ctx.lineCap = "round";
         //obtiene las coordenadas
         ctx.lineTo(e.clientX, e.clientY);//trazos 
@@ -37,6 +39,7 @@ function pintar() {
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(e.clientX, e.clientY);
+
     }
 
     //event listeners
@@ -47,7 +50,8 @@ function pintar() {
 };
 
 function borrar() {
-    console.log("borrar");
+  borrar = true;
+        draw(e);
 };
  
 })
