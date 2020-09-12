@@ -1,59 +1,59 @@
 
-window.addEventListener('load', ()=>{
+window.addEventListener('load', () => {
     document.querySelector("#pencil").addEventListener('click', pintar);
     document.querySelector("#rubber").addEventListener('click', borrar);
-    
-function pintar() {
-    let dibujar = false;
-    let borrar=false;
-    console.log("pintar");
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d");
     // get the width and heigth of the windows
     canvas.height = window.innerHeight;
     canvas.widht = window.innerWidth;
-    // change the color of the rectangle
-    //ctx.strokeStyle = "red";
-    //rectangle (top, margin left, width, heigth )
-   // ctx.strokeRect(100, 100, 500, 500);
+    let dibujar = false;
+    let borrando = false;
 
-    //other functions 
-    //ctx.lineWidth=5;
-    
-    function startPosition(e) {
+    function startPosition() {
         dibujar = true;
-        draw(e);
+        draw();
     }
+
     function finishedPosition() {
         dibujar = false;
         ctx.beginPath();// cuando termina seteo un nuevo comienzo, reseteo
     }
+
     // pasa por parametro el evento, contiene las coordenadas
     function draw(e) {
-        if (!dibujar) return; // si no esta pintando retornar nada
-        ctx.lineWidth = 3;
-        ctx.lineCap = "round";
-        //obtiene las coordenadas
-        ctx.lineTo(e.clientX, e.clientY);//trazos 
-        ctx.strokeStyle = "grey";
+        if (!dibujar) return;
+        if (!borrando) ctx.strokeStyle = document.querySelector("#paleton").value;
+        ctx.lineWidth = document.querySelector("#slider-size").value;
+        ctx.lineTo(e.clientX - this.offsetLeft, e.clientY - this.offsetTop);
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(e.clientX, e.clientY);
-
+        ctx.moveTo(e.clientX - this.offsetLeft, e.clientY - this.offsetTop);
     }
 
     //event listeners
-    canvas.addEventListener('mousedown', startPosition);
-    canvas.addEventListener('mouseup', finishedPosition);
-    canvas.addEventListener('mousemove', draw);
+    function eventosMouse() {
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', finishedPosition);
+        canvas.addEventListener('mousemove', draw);
+    }
+    function borrar() {
+        ctx.strokeStyle = 'rgba(255,255,255,255)';
+        ctx.lineCap = "round";
+        ctx.lineWidth = 10;
+        borrando = true;
+        eventosMouse();
 
-};
+    }
+    function pintar() {
+        console.log("pintando");
+        ctx.strokeStyle = "grey";
+        ctx.lineCap = "round";
+        ctx.lineWidth = 2;
+        borrando = false;
+        eventosMouse();
+    }
 
-function borrar() {
-  borrar = true;
-        draw(e);
-};
- 
 })
 
 

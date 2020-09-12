@@ -15,33 +15,46 @@
 <body>
 
 	<h1>Entregable 1</h1>
+
 	<div>
-		<canvas id="canvas" width="600" height="800">
+		<canvas id="canvas" width="700" height="600">
 			Your browser does not support the canvas element.
 		</canvas>
 		<div>
 			<p>HERRAMIENTAS</p>
-			<button id="pencil">Lapiz</button>
-			<button id="rubber">Goma</button>
+			<button class="btn btn-primary" id="pencil">Lapiz</button>
+			<button class="btn btn-primary" id="rubber">Goma</button>
+			<p class="btn btn-primary">Grosor
+				<input type="range" min="1" max="40" value="15" id="slider-size">
+			</p>
+			<p class="btn btn-primary">Color
+				<input type="color" id="paleton" value="#000000">
+			</p>
 		</div>
 
 	</div>
 	<!--Agregar imagen-->
 	<div class="container">
 		<p>Subir imagen</p>
-		<button id="addImg" onclick="">Subir imagen</button>
-		<input id="input1" type="file" accept="image/*" >
-		<button id="btnAbrir">Abrir imagen</button>
-		<a id="download" download="dibujo.png"><button type="button" onClick="download()">Descargar</button></a>
+		<button class="btn btn-primary" id="addImg" onclick="">Subir imagen</button>
+		<input id="input1" type="file" accept="image/*" style="display: none;">
+
+		<button class="btn btn-primary" id="btnAbrir" onclick="document.querySelector('.input1').click();">Agregar
+			imagen</button>
+		<a id="download" download="dibujo.png"><button class="btn btn-primary" type="button"
+				onClick="download()">Descargar</button></a>
 	</div>
 
 
+	<div>
+		<p> </p>
+	</div>
 
-
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	<!--	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
 		</script>
-	<script type="text/javascript" src="js/image.js"></script>
+		<script type="text/javascript" src="js/image.js"></script>-->
+	<script type="text/javascript" src="js/ejemplo.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 </body>
 
