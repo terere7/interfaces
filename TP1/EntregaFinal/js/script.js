@@ -1,5 +1,6 @@
 
 window.addEventListener('load', () => {
+    //botones
     document.querySelector("#pencil").addEventListener('click', pintar);
     document.querySelector("#rubber").addEventListener('click', borrar);
     const canvas = document.querySelector("#canvas");
@@ -38,25 +39,21 @@ window.addEventListener('load', () => {
         canvas.addEventListener('mousemove', draw);
     }
     function borrar() {
-        ctx.strokeStyle = 'rgba(255,255,255,255)';
+        ctx.strokeStyle = 'rgba(255,255,255,255)';//blanco
         ctx.lineCap = "round";
-        ctx.lineWidth = 10;
+        //ctx.lineWidth = 10;
         borrando = true;
         eventosMouse();
 
     }
     function pintar() {
-        console.log("pintando");
-        ctx.strokeStyle = "grey";
         ctx.lineCap = "round";
-        ctx.lineWidth = 2;
+        // ctx.lineWidth = 2;
         borrando = false;
         eventosMouse();
     }
 
 })
-
-
 
 // resize the canvas of the window
 //window.addEventListener('resize, ');

@@ -20,6 +20,7 @@
 		<canvas id="canvas" width="700" height="600">
 			Your browser does not support the canvas element.
 		</canvas>
+		<!--Paint-->
 		<div>
 			<p>HERRAMIENTAS</p>
 			<button class="btn btn-primary" id="pencil">Lapiz</button>
@@ -36,13 +37,11 @@
 	<!--Agregar imagen-->
 	<div class="container">
 		<p>Subir imagen</p>
-		<button class="btn btn-primary" id="addImg" onclick="">Subir imagen</button>
-		<input id="input1" type="file" accept="image/*" style="display: none;">
-
-		<button class="btn btn-primary" id="btnAbrir" onclick="document.querySelector('.input1').click();">Agregar
+		<input class="input1" type="file" accept="image/*" style="display: none;">
+		<button class="btn btn-primary" id="addImg" onclick="document.querySelector('.input1').click();">Agregar
 			imagen</button>
 		<a id="download" download="dibujo.png"><button class="btn btn-primary" type="button"
-				onClick="download()">Descargar</button></a>
+				onclick="download()">Descargar</button></a>
 	</div>
 
 
@@ -52,9 +51,8 @@
 
 	<!--	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-		</script>
-		<script type="text/javascript" src="js/image.js"></script>-->
-	<script type="text/javascript" src="js/ejemplo.js"></script>
+		</script>-->
+	<script type="text/javascript" src="js/image.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 </body>
 
