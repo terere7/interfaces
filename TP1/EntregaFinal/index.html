@@ -25,13 +25,14 @@
 			<p>HERRAMIENTAS</p>
 			<button class="btn btn-primary" id="pencil">Lapiz</button>
 			<button class="btn btn-primary" id="rubber">Goma</button>
+			<button class="btn btn-primary" id="btnVaciar">Vaciar canvas</button>
 			<p class="btn btn-primary">Grosor
 				<input type="range" min="1" max="40" value="15" id="slider-size">
 			</p>
 			<p class="btn btn-primary">Color
 				<input type="color" id="paleton" value="#000000">
 			</p>
-			<button class="btn btn-primary" id="btnVaciar">Vaciar canvas</button>
+			
 		</div>
 
 	</div>
@@ -43,6 +44,13 @@
 			imagen</button>
 		<a id="download" download="dibujo.png"><button class="btn btn-primary" type="button"
 				onclick="download()">Descargar</button></a>
+	</div>
+
+	<div>
+		<p>Filtros</p>
+		<button class="btn btn-primary" id="sepia">Sepia</button>
+		<button class="btn btn-primary" id="gris">Gris</button>
+		<button class="btn btn-primary" id="blur">Blur</button>
 	</div>
 
 

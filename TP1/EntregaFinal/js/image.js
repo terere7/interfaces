@@ -1,26 +1,30 @@
 window.addEventListener('load', () => {
-    console.log("imagen");
     let imageAspectRatio;
     let imageScaledWidth;
     let imageScaledHeight;
     let imageData;
     let imageData2;
-    let btnVaciar = document.querySelector("#btnVaciar");
-    let input = document.querySelector(".input1");
 
     let canvas = document.querySelector("#canvas");
     let context = canvas.getContext('2d');
-    // context.fillStyle = "#FFFFFF"; // canvas background color, lo limpio con un color solido
-    // context.fillRect(0, 0, canvas.width, canvas.height);// pinta un cuadrado del color de arriba
-    // CARGAR IMAGEN
 
+    let btnVaciar = document.querySelector("#btnVaciar");
+    let input = document.querySelector(".input1");// input foto
+
+    //LIMPIAR CANVAS
+    function vaciarCanvas() {
+        console.log("vaciar camvas")
+        context.fillStyle = "#FFFFFF";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.beginPath();
+    }
     btnVaciar.addEventListener("click", vaciarCanvas);
 
+    // CARGAR IMAGEN
     input.onchange = (e) => {
         console.log("Agregar img");
         agregarImagen(e);
     }
-
     function agregarImagen(e) {
         // entiende los datos que tiene el archivo
         let file = e.target.files[0];
@@ -46,25 +50,15 @@ window.addEventListener('load', () => {
                     imageScaledWidth = image.width;
                     imageScaledHeight = image.height;
                 }
-
                 vaciarCanvas();
                 //dibuja la img en el canvas
                 context.drawImage(this, 0, 0, imageScaledWidth, imageScaledHeight);// this xq estoy en el evento onload, sup izq coordenadas 0,0
-                // //obtiene la img del canvas
-                // imageData = context.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
-                // imageData2 = context.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
-                // //modifica la img
-                // context.putImageData(imageData, 0, 0);
             }
         }
     }
 
-    function vaciarCanvas() {
-        console.log("vaciar camvas")
-        context.fillStyle = "#FFFFFF";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.beginPath();
-    }
+
+    //GETTER Y SETTERS
     function getPixel(imageData, x, y, pos) {
         let index = (x + y * imageData.width) * 4;
         return imageData.data[index + pos];
@@ -76,35 +70,26 @@ window.addEventListener('load', () => {
         imageData.data[index + 1] = g;
         imageData.data[index + 2] = b;
     }
+    // FILTROS
 
     function filtroGris() {
-        let imageAspectRatio = (1.0 * this.height) / this.width;
-        let imageScaledWidth = canvas.width;
-        let imageScaledHeight = canvas.width + imageAspectRatio;
-        //dibuja la img en el canvas
-        //context.drawImage(this, 0, 0, imageScaledWidth, imageScaledHeight);// this xq estoy en el evento onload, sup izq coordenadas 0,0
+
         //obtiene la img del canvas
         let imageData = context.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
         //modifica la img
         for (let y = 0; y < imageData.height; y++) {
             for (let x = 0; x < imageData.width; x++) {
-                let index = (x + imageData.width * y) * 4;
-
-                let red = imageData.data[0];
-                let green = imageData.data[1];
-                let blue = imageData.data[2];
-
-                let grey = (red + green + blue) / 3;
-
-                imageData.data[index + 0] = grey;
-                imageData.data[index + 1] = grey;
-                imageData.data[index + 2] = grey;
-
+                let grey = getPixel(imageData, x, y, 0) +
+                    getPixel(imageData, x, y, 1) +
+                    getPixel(imageData, x, y, 2);
+                grey = grey / 3;
+                setPixel(imageData, x, y, grey, grey, grey);
             }
         }
         //dibuja la img modificada
         context.putImageData(imageData, 0, 0);
     }
+    document.querySelector("#gris").addEventListener("click", filtroGris);
 
 });
 
