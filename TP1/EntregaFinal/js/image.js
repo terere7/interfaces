@@ -5,22 +5,21 @@ window.addEventListener('load', () => {
     let imageScaledHeight;
     let imageData;
     let imageData2;
-    let input = document.querySelector("#input1");;
+    let btnVaciar = document.querySelector("#btnVaciar");
+    let input = document.querySelector(".input1");
 
     let canvas = document.querySelector("#canvas");
     let context = canvas.getContext('2d');
     // context.fillStyle = "#FFFFFF"; // canvas background color, lo limpio con un color solido
     // context.fillRect(0, 0, canvas.width, canvas.height);// pinta un cuadrado del color de arriba
-    // cargar imagen
-    document.querySelector("#addImg").addEventListener("click", function () {
-        input.onchange = (e) => {
-            console.log("Agregar img");
-            agregarImagen(e);
-        }
+    // CARGAR IMAGEN
 
-    });
+    btnVaciar.addEventListener("click", vaciarCanvas);
 
-    //cuando hace click en el dialogo del archivo
+    input.onchange = (e) => {
+        console.log("Agregar img");
+        agregarImagen(e);
+    }
 
     function agregarImagen(e) {
         // entiende los datos que tiene el archivo
@@ -31,7 +30,7 @@ window.addEventListener('load', () => {
         reader.onload = (readerEvent) => {
             let content = readerEvent.target.result;// tiene la img en formato data
             let image = new Image();//img vacia
-         //   image.crossOrigin = "Anonymous";
+            //   image.crossOrigin = "Anonymous";
             image.src = content; // se lo asigna al src
 
             image.onload = function () {
@@ -61,9 +60,10 @@ window.addEventListener('load', () => {
     }
 
     function vaciarCanvas() {
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
+        console.log("vaciar camvas")
+        context.fillStyle = "#FFFFFF";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.beginPath();
     }
     function getPixel(imageData, x, y, pos) {
         let index = (x + y * imageData.width) * 4;
