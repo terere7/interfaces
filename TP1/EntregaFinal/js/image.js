@@ -72,8 +72,38 @@ window.addEventListener('load', () => {
     }
     // FILTROS
 
-    function filtroGris() {
+    //SEPIA
+    function filtroSepia() {
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        for (let y = 0; y < imageData.height; y++) {
+            for (let x = 0; x < imageData.width; x++) {
+                let r =
+                    0.393 * getPixel(imageData, x, y, 0) +
+                    0.769 * getPixel(imageData, x, y, 1) +
+                    0.189 * getPixel(imageData, x, y, 2);
+                if (r > 255) r = 255;// controlar q no se exceda del valor
 
+                let g =
+                    0.349 * getPixel(imageData, x, y, 0) +
+                    0.686 * getPixel(imageData, x, y, 1) +
+                    0.168 * getPixel(imageData, x, y, 2);
+                if (g > 255) g = 255;
+
+                let b =
+                    0.272 * getPixel(imageData, x, y, 0) +
+                    0.534 * getPixel(imageData, x, y, 1) +
+                    0.131 * getPixel(imageData, x, y, 2);
+                if (b > 255) b = 255;
+
+                setPixel(imageData, x, y, r, g, b);
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    }
+    document.querySelector("#sepia").addEventListener("click", filtroSepia);
+
+    //GRIS
+    function filtroGris() {
         //obtiene la img del canvas
         let imageData = context.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
         //modifica la img
@@ -91,6 +121,21 @@ window.addEventListener('load', () => {
     }
     document.querySelector("#gris").addEventListener("click", filtroGris);
 
+
+    function filtroNegativo() {
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        for (let y = 0; y < canvas.height; y++) {
+            for (let x = 0; x < canvas.width; x++) {
+                setPixel(imageData, x, y,
+                    255 - getPixel(imageData, x, y, 0),
+                    255 - getPixel(imageData, x, y, 1),
+                    255 - getPixel(imageData, x, y, 2)
+                );
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    }
+    document.querySelector("#negativo").addEventListener("click", filtroNegativo);
 });
 
 
