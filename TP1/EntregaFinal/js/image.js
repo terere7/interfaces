@@ -168,6 +168,41 @@ window.addEventListener('load', () => {
     }
     document.querySelector("#binario").addEventListener("click", filtroBinario);
 
+    //BLUR
+    function filtroBlur() {
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let arrData = imageData.data;
+        for (let i = 0; i < arrData.length; i++) {
+            if (i % 4 === 3) { continue; }// skip
+            let pixel = arrData[i];
+            arrData[i] = (pixel + (arrData[i - 4] || pixel) + (arrData[i + 4] || pixel) +
+                (arrData[i - 4 * imageData.width] || pixel) + (arrData[i + 4 * imageData.width] || pixel) +
+                (arrData[i - 4 * imageData.width - 4] || pixel) + (arrData[i + 4 * imageData.width + 4] || pixel) +
+                (arrData[i - 4 * imageData.width + 4] || pixel) + (arrData[i + 4 * imageData.width - 4] || pixel)) / 9;
+        }
+        context.putImageData(imageData, 0, 0);
+    }
+    document.querySelector("#blur").addEventListener("click", filtroBlur);
+
+    //SATURACION
+    function filtroSaturacion() {
+        let value = -3;
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let arrData = imageData.data;
+        for (let i = 0; i < arrData.length; i += 4) {
+            let r = arrData[i];
+            let g = arrData[i + 1];
+            let b = arrData[i + 2];
+
+            var gray = 0.2989 * r + 0.5870 * g + 0.1140 * b;
+            arrData[i] = gray * value + arrData[i] * (1 - value);
+            arrData[i + 1] = gray * value + arrData[i + 1] * (1 - value);
+            arrData[i + 2] = gray * value + arrData[i + 2] * (1 - value);
+        }
+        context.putImageData(imageData, 0, 0);
+    }
+    document.querySelector("#saturacion").addEventListener("click", filtroSaturacion);
+
 });
 
 
