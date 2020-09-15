@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
     let imageScaledHeight;
     let imageData;
     let imageData2;
-
+    let downloader = document.querySelector("#download");
     let canvas = document.querySelector("#canvas");
     let context = canvas.getContext('2d');
 
@@ -56,7 +56,14 @@ window.addEventListener('load', () => {
             }
         }
     }
-
+    
+    //DESCARGAR IMAGEN
+    function download() {
+        let dnld = document.getElementById("download");
+        let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        dnld.setAttribute("href", image);
+    }
+    downloader.addEventListener("click", download);
 
     //GETTER Y SETTERS
     function getPixel(imageData, x, y, pos) {
