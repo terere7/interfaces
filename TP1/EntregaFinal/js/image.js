@@ -3,7 +3,7 @@ window.addEventListener('load', () => {
     let imageScaledWidth;
     let imageScaledHeight;
     let imageData;
-    let imageData2;
+    let imageGuardada;
     let downloader = document.querySelector("#download");
     let canvas = document.querySelector("#canvas");
     let context = canvas.getContext('2d');
@@ -38,25 +38,18 @@ window.addEventListener('load', () => {
             image.src = content; // se lo asigna al src
 
             image.onload = function () {
-                if (image.width > canvas.width && ((image.height < canvas.height || image.height < canvas.height))) {
-                    imageAspectRatio = (1.0 * this.height) / this.width;
-                    imageScaledWidth = canvas.width;
-                    imageScaledHeight = image.height;
-                } else if (image.width < canvas.width && image.height > canvas.height) {
-                    imageAspectRatio = (1.0 * this.height) / this.width;
-                    imageScaledWidth = image.width;
-                    imageScaledHeight = canvas.height;
-                } else {
-                    imageScaledWidth = image.width;
-                    imageScaledHeight = image.height;
-                }
+                imageAspectRatio = (1.0 * this.width) / this.height;
+                imageGuardada = this;// guardo la img original
+                imageScaledHeight = canvas.height;
+                imageScaledWidth = canvas.height * imageAspectRatio;
+                canvas.width = imageScaledWidth;
                 vaciarCanvas();
                 //dibuja la img en el canvas
                 context.drawImage(this, 0, 0, imageScaledWidth, imageScaledHeight);// this xq estoy en el evento onload, sup izq coordenadas 0,0
             }
         }
     }
-    
+
     //DESCARGAR IMAGEN
     function download() {
         let dnld = document.getElementById("download");
@@ -78,9 +71,17 @@ window.addEventListener('load', () => {
         imageData.data[index + 2] = b;
     }
     // FILTROS
+    //Evita la acumulacion de filtros
+    function borrarEfectos() { //variable global con las dimensiones
+        let imageAspectRatio = (1.0 * saved_image.width) / saved_image.height;
+        let imageScaledHeight = canvas.height;
+        let imageScaledWidth = canvas.height * imageAspectRatio;
+        ctx.drawImage(imageGuardada, 0, 0, imageScaledWidth, imageScaledHeight);
+    }
 
     //SEPIA
     function filtroSepia() {
+        //  borrarEfectos();
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         for (let y = 0; y < imageData.height; y++) {
             for (let x = 0; x < imageData.width; x++) {
@@ -111,6 +112,7 @@ window.addEventListener('load', () => {
 
     //GRIS
     function filtroGris() {
+        //  borrarEfectos();
         //obtiene la img del canvas
         let imageData = context.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
         //modifica la img
@@ -130,6 +132,7 @@ window.addEventListener('load', () => {
 
     //NEGATIVO
     function filtroNegativo() {
+        //   borrarEfectos();
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         for (let y = 0; y < canvas.height; y++) {
             for (let x = 0; x < canvas.width; x++) {
@@ -146,6 +149,7 @@ window.addEventListener('load', () => {
 
     //BINARIO
     function filtroBinario() {
+        //borrarEfectos();
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         for (let y = 0; y < canvas.height; y++) {
             for (let x = 0; x < canvas.width; x++) {

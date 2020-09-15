@@ -21,39 +21,54 @@
 			Your browser does not support the canvas element.
 		</canvas>
 		<!--Paint-->
+	</div>
+	<aside>
+
 		<div>
-			<p>HERRAMIENTAS</p>
-			<button class="btn btn-primary" id="pencil">Lapiz</button>
-			<button class="btn btn-primary" id="rubber">Goma</button>
-			<button class="btn btn-primary" id="btnVaciar">Vaciar canvas</button>
-			<p class="btn btn-primary">Grosor
-				<input type="range" min="1" max="40" value="15" id="slider-size">
-			</p>
-			<p class="btn btn-primary">Color
-				<input type="color" id="paleton" value="#000000">
-			</p>
-			
+			<div>
+				<p>HERRAMIENTAS</p>
+			</div>
+			<div>
+				<button class="btn btn-primary" id="pencil">Lapiz</button>
+				<button class="btn btn-primary" id="rubber">Goma</button>
+				<button class="btn btn-primary" id="btnVaciar">Vaciar canvas</button>
+				<p class="btn btn-primary">Grosor
+					<input type="range" min="1" max="40" value="15" id="slider-size">
+				</p>
+				<p class="btn btn-primary">Color
+					<input type="color" id="paleton" value="#000000">
+				</p>
+			</div>
 		</div>
 
-	</div>
-	<!--Agregar imagen-->
-	<div class="container">
-		<p>Subir imagen</p>
-		<input class="input1" type="file" accept="image/*" style="display: none;">
-		<button class="btn btn-primary" id="addImg" onclick="document.querySelector('.input1').click();">Agregar
-			imagen</button>
-			<a class="btn btn-primary" download="draw.png" id="download">Descargar</a>
-	</div>
 
-	<div>
-		<p>Filtros</p>
-		<button class="btn btn-primary" id="sepia">Sepia</button>
-		<button class="btn btn-primary" id="gris">Gris</button>
-		<button class="btn btn-primary" id="negativo">Negativo</button>
-		<button class="btn btn-primary" id="binario">Binarizacion</button>
-	</div>
+		<!--Agregar imagen-->
+		<div>
+			<div>
+				<p>IMAGEN</p>
+			</div>
+			<div>
+				<input class="input1" type="file" accept="image/*" style="display: none;">
+				<button class="btn btn-primary" id="addImg" onclick="document.querySelector('.input1').click();">Agregar
+					imagen</button>
+				<a class="btn btn-primary" download="draw.png" id="download">Descargar</a>
+			</div>
+		</div>
 
-
+		<div>
+			<div>
+				<p>FILTROS</p>
+			</div>
+			<div>
+				<button class="btn btn-primary" id="sepia">Sepia</button>
+				<button class="btn btn-primary" id="gris">Gris</button>
+				<button class="btn btn-primary" id="negativo">Negativo</button>
+				<button class="btn btn-primary" id="binario">Binarizacion</button>
+				<button class="btn btn-primary" id="blur">Blur</button>
+				<button class="btn btn-primary" id="bordes">Deteccion de bordes</button>
+			</div>
+		</div>
+	</aside>
 	<div>
 		<p> </p>
 	</div>
@@ -61,7 +76,8 @@
 	<!--	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
 		</script>-->
-	<script type="text/javascript" src="js/image.js"></script>
+		<script type="text/javascript" src="js/filtrosAvanzados.js"></script>
+		<script type="text/javascript" src="js/image.js"></script>
 	<script type="text/javascript" src="js/paint.js"></script>
 </body>
 
