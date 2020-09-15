@@ -121,7 +121,7 @@ window.addEventListener('load', () => {
     }
     document.querySelector("#gris").addEventListener("click", filtroGris);
 
-
+    //NEGATIVO
     function filtroNegativo() {
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         for (let y = 0; y < canvas.height; y++) {
@@ -136,6 +136,27 @@ window.addEventListener('load', () => {
         context.putImageData(imageData, 0, 0);
     }
     document.querySelector("#negativo").addEventListener("click", filtroNegativo);
+
+    //BINARIO
+    function filtroBinario() {
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        for (let y = 0; y < canvas.height; y++) {
+            for (let x = 0; x < canvas.width; x++) {
+                let pixel =
+                    getPixel(imageData, x, y, 0) +
+                    getPixel(imageData, x, y, 1) +
+                    getPixel(imageData, x, y, 2);
+                if (pixel > 382) { //255*3/2
+                    setPixel(imageData, x, y, 255, 255, 255);
+                } else {
+                    setPixel(imageData, x, y, 0, 0, 0);
+                }
+            }
+        }
+        context.putImageData(imageData, 0, 0);
+    }
+    document.querySelector("#binario").addEventListener("click", filtroBinario);
+
 });
 
 
