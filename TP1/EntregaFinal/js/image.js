@@ -11,6 +11,7 @@ window.addEventListener('load', () => {
     let btnVaciar = document.querySelector("#btnVaciar");
     let input = document.querySelector(".input1");// input foto
 
+
     //LIMPIAR CANVAS
     function vaciarCanvas() {
         console.log("vaciar camvas")

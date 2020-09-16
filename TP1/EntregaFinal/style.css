@@ -5,17 +5,20 @@
  
 }
 
-#canvas{
-    border: 2px solid purple;
+.pizarron{
+    border-color: aqua;
+    border-width: 5px;
+    width: 100%;
 }
 
 h1{
 position: center;
 }
-button{
-    color: blueviolet;
-}
 
+#canvas{
+    border: 2px solid #255784;
+    border-radius: 25px;
+}
 
     
     
@@ -122,7 +125,7 @@ button{
     .lienzo{
         display: block;
         background: whitesmoke;
-        width: 50%;
+        width: 95%;
     }
     
     .minibox{
