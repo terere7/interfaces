@@ -18,9 +18,8 @@ position: center;
 #canvas{
     border: 2px solid #255784;
     border-radius: 25px;
+    background-color: whitesmoke;
 }
-
-    
     
     body{
         margin:0;
@@ -29,7 +28,7 @@ position: center;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: #031321;
+        background-color: #2a0c61;
         font-family: cursive;
         font-size: 14px;
         color: white;
@@ -52,7 +51,7 @@ position: center;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #13426b;
+        background-color: #2bc2e7;
     }
     
     input, button, a{
@@ -65,7 +64,7 @@ position: center;
         text-decoration: none;
         font-size: 12px;
         border-radius: 20px;
-        background: #255784;
+        background: #2196f3;
         border: none;
     }
     
@@ -75,7 +74,7 @@ position: center;
     }
     
     input:hover{
-        color: #255784;
+        color: whitesmoke;
         background: #2196f3;
         box-shadow: 0 0 10px #2196f3,  0 0 400px #2196f3,  0 0 80px #2196f3; 
         transition-delay: 0.2s;
@@ -83,7 +82,7 @@ position: center;
     }
     
     button:hover {
-        color: #255784;
+        color: whitesmoke;
         background: #2196f3;
         box-shadow: 0 0 10px #2196f3,  0 0 400px #2196f3,  0 0 80px #2196f3; 
         transition-delay: 0.2s;
@@ -91,7 +90,7 @@ position: center;
     }
     
     a:hover {
-        color: #255784;
+        color: whitesmoke;
         background: #2196f3;
         box-shadow: 0 0 10px #2196f3,  0 0 400px #2196f3,  0 0 80px #2196f3; 
         transition-delay: 0.2s;
@@ -124,7 +123,7 @@ position: center;
     
     .lienzo{
         display: block;
-        background: whitesmoke;
+        background: rgb(64, 167, 214);
         width: 95%;
     }
     
