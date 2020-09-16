@@ -39,7 +39,7 @@ window.addEventListener('load', () => {
         canvas.addEventListener('mousemove', draw);
     }
     function borrar() {
-        ctx.strokeStyle = 'rgba(255,255,255,255)';//blanco
+        ctx.strokeStyle = whitesmoke;//blanco
         ctx.lineCap = "round";
         //ctx.lineWidth = 10;
         borrando = true;
