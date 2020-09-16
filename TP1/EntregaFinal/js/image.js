@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
     //LIMPIAR CANVAS
     function vaciarCanvas() {
         console.log("vaciar camvas")
-        context.fillStyle = "#FFFFFF";
+        context.fillStyle = "whitesmoke";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.beginPath();
     }
