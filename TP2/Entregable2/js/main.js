@@ -4,9 +4,11 @@ let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
 const NUM_FIGURES = 10;
 const FIGURE_SIZE = 20;
+const NUM_FICHAS = 21;
 let figures = []; // arreglo de figuras
 let lastClickedFigure = null;// ultima figura clickeada, por defecto no tengo ninguna
 let isMouseDown = false;//esta clickeado
+
 
 
 //AGREGAR FIGURAS
@@ -31,11 +33,9 @@ function addRectangle() { // Agregar rectangulos al azar dentro del canvas
     figures.push(rect);//agrega recangulos al arreglo
 }
 //Circulo
-function addCircle() {
-    let posX = Math.round(Math.random() * canvasWidth);
-    let posY = Math.round(Math.random() * canvasHeight);
-    let color = randomRGBA();
-    let circle = new Circle(posX, posY, 10, color, context);
+function addCircle(color,posX,posY) {
+    //let color ='#600080';
+    let circle = new Circle(posX, posY, 20, color, context);
     figures.push(circle);
 }
 
@@ -104,10 +104,16 @@ function onMouseUp(event) {
 }
 
 function crearFichas() {
+    let espacio= canvas.height/NUM_FICHAS;
     // Inicializar figuras de forma aleatoria
-    for (let index = 0; index < NUM_FIGURES; index++) {
-        
-            addCircle()
+    for (let index = 0; index < NUM_FICHAS; index++) {
+        if(index==0){
+            addCircle('#00e6e6', canvas.width*0.1, canvas.height/2);
+            addCircle('#600080', canvas.width*0.9, canvas.height/2);
+        }else{
+            addCircle('#00e6e6', canvas.width*0.05, espacio*index);
+            addCircle('#600080', canvas.width*0.95, espacio*index);
+        }
         
     }
     drawFigures();
