@@ -103,14 +103,12 @@ function onMouseUp(event) {
     isMouseDown = false;
 }
 
-function initExample() {
+function crearFichas() {
     // Inicializar figuras de forma aleatoria
     for (let index = 0; index < NUM_FIGURES; index++) {
-        if (Math.random() > 0.5) {
-            addRectangle();
-        } else {
+        
             addCircle()
-        }
+        
     }
     drawFigures();
 
@@ -121,6 +119,6 @@ function initExample() {
 
 }
 //#endr
-initExample();
+crearFichas();
 
 
