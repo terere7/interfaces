@@ -14,7 +14,7 @@ class Rect extends Figure {
         this.context.fillRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
     }
 
-    //GETTERS
+    //GETTERS AND SETTERS
     //Ancho
     getWidht() {
         return this.width;
@@ -29,5 +29,12 @@ class Rect extends Figure {
     setHeight(height) {
         this.height = height;
     }
+
+    //saber si esta clickeando
+    isPointInside(x, y) {
+        //si no estoy afuera del rectangulo
+        return !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
+    }
+
 
 }

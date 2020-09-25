@@ -33,4 +33,6 @@ class Figure {
     draw(){
         this.context.fillStyle=this.fill;
     }
+    isPointInside(x, y) { //metodo abstracto que tiene que implementar las clases hijas
+    }
 }

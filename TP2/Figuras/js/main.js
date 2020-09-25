@@ -2,21 +2,44 @@ let canvas = document.querySelector('#canvas');
 let context = canvas.getContext('2d');
 let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
-
+const NUM_FIGURES = 10;
+const FIGURE_SIZE = 20;
 let figures = []; // arreglo de figuras
+
+
+function initExample() {
+    // Inicializar figuras de forma aleatoria
+    for (let index = 0; index < NUM_FIGURES; index++) {
+       addFigure();
+    }
+    //dibujar figuras
+    drawFigures();
+
+    // Inicializar listeners
+    canvas.addEventListener('click', event => {
+        let clickedFigure = findClickedFigure(event.layerX, event.layerY);
+        if (clickedFigure != null) {
+            console.log("I've clicked a Figure!");
+        } else {
+            console.log("Nope");// no hay figura
+        }
+    });
+
+}
 
 function addFigure() {
     if (Math.random() > 0.5) {
         addRectangle();
     } else {
-        addCicle()
+        addCircle()
     }
     drawFigures();// dibujar en pantalla
 }
 
 function drawFigures() {
-    clearCanvaS();
-    for (let index = 0; index < figures.length; index++) {
+    clearCanvas();
+    //recorre el arreglo para dibujas las figuras
+    for (let i = 0; i < figures.length; i++) {
         figures[i].draw();
     }
 }
@@ -40,24 +63,37 @@ function addCircle() {
 }
 //Evento temporal para agregasr figuras
 function addFigures() {
-    addFigures();
+    addFigure();
     if (figures.length < 30) {
         setTimeout(addFigures, 333);
     }
 }
-setTimeout(() => {
-    addFigures();
-}, 333);
+// setTimeout(() => {
+//     addFigures();
+// }, 333);
 
 function randomRGBA() {
     let r = Math.round(Math.random() * 255);
     let g = Math.round(Math.random() * 255);
     let b = Math.round(Math.random() * 255);
-    let a = 255;//alpha
-    return 'rgba(${r}, ${g}, ${b}, ${a})';// nose si lo toma bn
+    let a = 255;
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
-function clearCanvaS() {
+function clearCanvas() {
     context.fillStyle = '#F8F8FF';
     context.fillRect(0, 0, canvasWidth, canvasHeight);
 }
+// retorna la figura clickeada
+function findClickedFigure(x, y) {
+    for (let index = 0; index < figures.length; index++) {
+        const element = figures[index];
+        if (element.isPointInside(x, y)) {
+            return element;
+        }        
+    }
+}
+
+initExample();
+
+
