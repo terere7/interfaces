@@ -12,6 +12,12 @@ class Rect extends Figure {
         super.draw();
         // x,y,alto,ancho
         this.context.fillRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
+        //Resaltado
+        if (this.highlighted === true) {
+            this.context.strokeStyle = this.highlightedStyle;
+            this.context.lineWidth = 5;
+            this.context.strokeRect(this.posX, this.posY, this.width, this.height);
+        }
     }
 
     //GETTERS AND SETTERS

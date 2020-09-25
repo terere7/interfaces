@@ -5,6 +5,7 @@ let canvasHeight = canvas.height;
 const NUM_FIGURES = 10;
 const FIGURE_SIZE = 20;
 let figures = []; // arreglo de figuras
+let lastClickedFigure=null;// ultima figura clickeada, por defecto no tengo ninguna
 
 
 function initExample() {
@@ -17,12 +18,18 @@ function initExample() {
 
     // Inicializar listeners
     canvas.addEventListener('click', event => {
-        let clickedFigure = findClickedFigure(event.layerX, event.layerY);
-        if (clickedFigure != null) {
-            console.log("I've clicked a Figure!");
-        } else {
-            console.log("Nope");// no hay figura
+        // Se limpia la propiedad highlighted de la ultima figura clickedad para buscar la nueva
+        if (lastClickedFigure != null) {//figura antes clickeada
+            lastClickedFigure.setHighlighted(false);// sacar resaltado
+            lastClickedFigure = null;// setear en null
         }
+
+        let clickedFigure = findClickedFigure(event.layerX, event.layerY);//busca la figura clickeada
+        if (clickedFigure != null) {         
+            clickedFigure.setHighlighted(true);// setea el resaltado, indicado que es la seleccionada
+            lastClickedFigure = clickedFigure;     //guarda la figura clickeada       
+        }
+        drawFigures(); //dibujar ya que cambio la figura
     });
 
 }
@@ -80,9 +87,9 @@ function randomRGBA() {
     return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
-function clearCanvas() {
-    context.fillStyle = '#F8F8FF';
-    context.fillRect(0, 0, canvasWidth, canvasHeight);
+function clearCanvas(color, canvas) {
+    context.fillStyle = color;
+    context.fillRect(0, 0, canvas.width, canvas.height);
 }
 // retorna la figura clickeada
 function findClickedFigure(x, y) {

@@ -6,11 +6,18 @@ class Circle extends Figure{
 
     draw() {
         super.draw();
-        this.context.beginPath();
+        this.context.beginPath();//queda en el contexto hasta que se cierra el path
         //x,y,radio, angulo de comienzo, angulo de finalidad (radianes) 
         // PI=180, 2PI=360
         this.context.arc(this.posX, this.posY, this.radius,0, 2*Math.PI);
         this.context.fill();
+        //resaltar el que este seleccionado
+        if (this.highlighted === true) {// si la figura esta resaltada
+            this.context.strokeStyle = this.highlightedStyle;
+            this.context.lineWidth = 5;
+            this.context.stroke();
+        }
+
         this.context.closePath();
     }
 

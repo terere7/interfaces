@@ -16,12 +16,16 @@ class Figure {
         return this.fill;
     }
 
-    //Position
+    // POSICION
     getPosX() {
         return this.posX;
     }
     getPosY() {
         return this.posY;
+    }
+    setPosition(x, y) {
+        this.posX = x;
+        this.posY = y;
     }
     getPosition() {
         return {
@@ -30,8 +34,19 @@ class Figure {
         };
     }
 
-    draw(){
-        this.context.fillStyle=this.fill;
+    //RESALTADO
+    //setear el grosor de resaltado
+    setHighlighted(value) {
+        this.highlighted = value;
+    }
+    // setear el color de resaltado
+    setHighlightedStyle(style) {
+        this.highlightedStyle = style;
+    }
+
+    //METODOS ABSTRACTOS
+    draw() {
+        this.context.fillStyle = this.fill;
     }
     isPointInside(x, y) { //metodo abstracto que tiene que implementar las clases hijas
     }
