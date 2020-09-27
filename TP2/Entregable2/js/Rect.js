@@ -11,12 +11,9 @@ class Rect extends Figure {
     //polimorfismo, llama al metodo de la clase mas baja
     draw() {
         super.draw();
-        // x,y,alto,ancho
-        this.context.beginPath();
-     
+        this.context.strokeStyle = "blue";
+        this.context.lineWidth = 3;
         this.context.strokeRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
-     
-        this.context.closePath();
     }
 
     //GETTERS AND SETTERS
