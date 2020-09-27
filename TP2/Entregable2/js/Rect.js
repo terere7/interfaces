@@ -5,19 +5,18 @@ class Rect extends Figure {
         //propios atributos del rectangulo
         this.width = width;
         this.height = height;
+        this.strokeStyle = '#0000ff';
     }
 
     //polimorfismo, llama al metodo de la clase mas baja
     draw() {
         super.draw();
         // x,y,alto,ancho
-        this.context.fillRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
-        //Resaltado
-        if (this.highlighted === true) {
-            this.context.strokeStyle = this.highlightedStyle;
-            this.context.lineWidth = 5;
-            this.context.strokeRect(this.posX, this.posY, this.width, this.height);
-        }
+        this.context.beginPath();
+     
+        this.context.strokeRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
+     
+        this.context.closePath();
     }
 
     //GETTERS AND SETTERS

@@ -15,18 +15,16 @@ let isMouseDown = false;//esta clickeado
 //AGREGAR FIGURAS
 
 //Rectangulo
-function addRectangle() { // Agregar rectangulos al azar dentro del canvas
+function addRectangle(posX,posY) { // Agregar rectangulos al azar dentro del canvas
     //posicion random
-    let posX = Math.round(Math.random() * canvasWidth);
-    let posY = Math.round(Math.random() * canvasHeight);
-    let color = randomRGBA();// color random
-    let rect = new Rect(posX, posY, 20, 20, color, context);
+    let color = '#0000ff';// color delineado
+    let rect = new Rect(posX, posY, 45, 45, color, context);
     fichas.push(rect);//agrega recangulos al arreglo
 }
 //Circulo
-function addCircle(color,posX,posY) {
+function addCircle(color,posX,posY,player) {
     //let color ='#600080';
-    let circle = new Circle(posX, posY, FICHAS_SIZE, color, context);
+    let circle = new Circle(posX, posY, FICHAS_SIZE, color, context, player);
     fichas.push(circle);
 }
 
@@ -39,14 +37,7 @@ function drawFigures() {
 }
 
 
-//COLOR RANDOM
-function randomRGBA() {
-    let r = Math.round(Math.random() * 255);
-    let g = Math.round(Math.random() * 255);
-    let b = Math.round(Math.random() * 255);
-    let a = 255;
-    return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
+
 //LIMPIAR CANVAS
 function clearCanvas(color, canvas) {
     context.fillStyle = color;
@@ -79,7 +70,6 @@ function onMouseDown(event) {
         clickedFigure.setHighlighted(true);
         lastClickedFicha = clickedFigure;
     }
-
     drawFigures();
 }
 
@@ -97,23 +87,36 @@ function onMouseUp(event) {
 function crearFichas() {
     let espacio= canvas.height/NUM_FICHAS;
     // Inicializar figuras de forma aleatoria
+    let player1 = new Player("Tere");
+    let player2 = new Player("Nina");
     for (let index = 0; index < NUM_FICHAS; index++) {
         if(index==0){
-            addCircle('#00e6e6', canvas.width*0.1, canvas.height/2);
-            addCircle('#600080', canvas.width*0.9, canvas.height/2);
+            addCircle('#00e6e6', canvas.width*0.1, canvas.height/2,player1 );
+            addCircle('#600080', canvas.width*0.9, canvas.height/2, player2);
         }else{
             addCircle('#00e6e6', canvas.width*0.05, espacio*index);
             addCircle('#600080', canvas.width*0.95, espacio*index);
-        }
-        
+        }   
     }
     drawFigures();
     // Inicializar listeners de eventos de mouse en el canvas
     canvas.addEventListener('mousedown', onMouseDown, false);
     canvas.addEventListener('mouseup', onMouseUp, false);
     canvas.addEventListener('mousemove', onMouseMoved, false);
+}
+
+function crearTablero(){
+    // for (let index = 0; index < NUM_FICHAS*2; index++) {
+    // }
+    addRectangle(300,300);
+    // let img= "./img/tablero.png";
+    // let board= new Board(img);
+    // board.loadMat();
+    // console.log(board.getMat());
 
 }
+
 crearFichas();
+crearTablero();
 
 

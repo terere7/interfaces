@@ -1,7 +1,8 @@
 class Circle extends Figure{
-    constructor(posX, posY, radius, fill, context) {
+    constructor(posX, posY, radius, fill, context,player) {
         super(posX, posY, fill, context);
         this.radius = radius;
+        this.player=player;
     }
 
     draw() {
