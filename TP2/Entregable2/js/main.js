@@ -8,7 +8,7 @@ let canvasHeight = canvas.height;//600
 const FICHAS_SIZE = 20;
 const NUM_FICHAS = 21;
 const CUADRADO_SIZE = 50;//20*2
-let fichas = []; // arreglo de figuras
+let figuras = []; // arreglo de figuras
 let lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
 let isMouseDown = false;//esta clickeado
 
@@ -30,16 +30,15 @@ function addRectangle(color, posX, posY) { // Agregar rectangulos al azar dentro
 function addCircle(color, posX, posY, player) {
     //let color ='#600080';
     let circle = new Circle(posX, posY, FICHAS_SIZE, color, context, player);
-    fichas.push(circle);
+    figuras.push(circle);
 }
 
 function drawFigures() {
     clearCanvas('#F8F8FF', canvas);
     //Fichas
-    for (let i = 0; i < fichas.length; i++) {
-        fichas[i].draw();
+    for (let i = 0; i < figuras.length; i++) {
+        figuras[i].draw();
     }
-    //Tablero (cuadrados)
     for (let i = 0; i < tablero.length; i++) {
         tablero[i].draw();
     }
@@ -54,8 +53,8 @@ function clearCanvas(color, canvas) {
 }
 // OBTENER FIGURA CLICKEADA
 function findClickedFigure(x, y) {
-    for (let index = 0; index < fichas.length; index++) {
-        const element = fichas[index];
+    for (let index = 0; index < figuras.length; index++) {
+        const element = figuras[index];
         if (element.isPointInside(x, y)) {
             return element;
         }
@@ -65,6 +64,7 @@ function findClickedFigure(x, y) {
 
 //FUNCIONES MOUSE
 function onMouseDown(event) {
+    console.log(event);
     isMouseDown = true;
     // Se limpia la propiedad highlighted de la ultima figura clickeada
     if (lastClickedFicha != null) {
@@ -104,26 +104,44 @@ function crearFichas() {
             addCircle('#600080', canvas.width * 0.95, espacio * index);
         }
     }
-    drawFigures();
+
+    //drawFigures();
     // Inicializar listeners de eventos de mouse en el canvas
     canvas.addEventListener('mousedown', onMouseDown, false);
     canvas.addEventListener('mouseup', onMouseUp, false);
     canvas.addEventListener('mousemove', onMouseMoved, false);
+
+    // drawFigures();
 }
 
 function crearTablero() {
     let color = "blue";
+    let posX = beginPosX;
+    let posY = beginPosY;
     for (let x = 0; x < row; x++) {
         for (let y = 0; y < col; y++) {
-            beginPosX += CUADRADO_SIZE + 5;
-            addRectangle(color, beginPosX, beginPosY);
+            posX += CUADRADO_SIZE + 5;
+            addRectangle(color, posX, posY);
         }
-        beginPosX -= (CUADRADO_SIZE + 5) * col;
-        beginPosY += CUADRADO_SIZE + 5;
+        posX -= (CUADRADO_SIZE + 5) * col;
+        posY += CUADRADO_SIZE + 5;
     }
-    //creo sin eventos para que queden quietos
+    // drawFigures();
 }
-crearFichas();
-crearTablero();
+document.querySelector("#restart").addEventListener('click', restartGame);
+function restartGame() {
+    clearCanvas('#F8F8FF', canvas);
+    figuras = [];
+    tablero = [];
+    startGame();
+    //resetear ganador y todo
+}
 
+// Crear juego
+function startGame() {
+    crearFichas();
+    crearTablero();
+    drawFigures();
+}
+startGame();
 

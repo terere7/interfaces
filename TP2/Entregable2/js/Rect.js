@@ -5,7 +5,7 @@ class Rect extends Figure {
         //propios atributos del rectangulo
         this.width = width;
         this.height = height;
-        this.fill=fill;
+        this.fill = fill;
     }
 
     //polimorfismo, llama al metodo de la clase mas baja
