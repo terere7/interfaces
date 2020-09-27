@@ -3,6 +3,7 @@ let canvas = document.querySelector('#canvas');
 let context = canvas.getContext('2d');
 let canvasWidth = canvas.width;//800
 let canvasHeight = canvas.height;//600
+
 //FICHAS
 const FICHAS_SIZE = 20;
 const NUM_FICHAS = 21;
@@ -10,18 +11,18 @@ const CUADRADO_SIZE = 50;//20*2
 let fichas = []; // arreglo de figuras
 let lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
 let isMouseDown = false;//esta clickeado
-let tablero=[];
+
 //TABLERO
+let tablero = [];
 const row = 6;
 const col = 7;
-
 // Calcular donde empieza el trablero
-let beginPosX = ((canvasWidth / 2) -((col*CUADRADO_SIZE)/2) - CUADRADO_SIZE)-20; 
-let beginPosY = ((canvasHeight / 2) - ((row*CUADRADO_SIZE)/2)- CUADRADO_SIZE)+40;
+let beginPosX = ((canvasWidth / 2) - ((col * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - 20;
+let beginPosY = ((canvasHeight / 2) - ((row * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + 40;
 
 //AGREGAR FIGURAS
 //Rectangulo
-function addRectangle(color,posX, posY) { // Agregar rectangulos al azar dentro del canvas
+function addRectangle(color, posX, posY) { // Agregar rectangulos al azar dentro del canvas
     let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, context);
     tablero.push(rect);//agrega recangulos al arreglo
 }
@@ -65,13 +66,11 @@ function findClickedFigure(x, y) {
 //FUNCIONES MOUSE
 function onMouseDown(event) {
     isMouseDown = true;
-
     // Se limpia la propiedad highlighted de la ultima figura clickeada
     if (lastClickedFicha != null) {
         lastClickedFicha.setHighlighted(false);
         lastClickedFicha = null;
     }
-
     // Buscar si hay una nueva figura clickeada
     let clickedFigure = findClickedFigure(event.layerX, event.layerY);
     if (clickedFigure != null) {
@@ -87,7 +86,6 @@ function onMouseMoved(event) {
         drawFigures();
     }
 }
-
 function onMouseUp(event) {
     isMouseDown = false;
 }
@@ -114,16 +112,16 @@ function crearFichas() {
 }
 
 function crearTablero() {
- let color ="blue"
+    let color = "blue";
     for (let x = 0; x < row; x++) {
         for (let y = 0; y < col; y++) {
-            beginPosX +=  CUADRADO_SIZE+5;
-            addRectangle(color,beginPosX, beginPosY);
+            beginPosX += CUADRADO_SIZE + 5;
+            addRectangle(color, beginPosX, beginPosY);
         }
-        beginPosX -=( CUADRADO_SIZE+5 )* col;
-        beginPosY += CUADRADO_SIZE+5;
+        beginPosX -= (CUADRADO_SIZE + 5) * col;
+        beginPosY += CUADRADO_SIZE + 5;
     }
-//creo sin eventos para que queden quietos
+    //creo sin eventos para que queden quietos
 }
 crearFichas();
 crearTablero();
