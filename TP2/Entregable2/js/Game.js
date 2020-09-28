@@ -32,18 +32,25 @@ class Game {
         }
         return filaValida;
     }
+
+    //BUG, A VECES SE VUELVE AUNQUE SEA VALIDA !!!!!!!!!!!
     //Agregar ficha en las coordenadas
-    addFicha(ficha, fila, columna) {
+    addFicha(ficha,locker) {
         // si es posible ubicar en la casilla
-        let f = parseInt(fila);
-        let c = parseInt(columna);
+        let f = parseInt(locker.getRow());
+        let c = parseInt(locker.getCol());
         console.log(matrix[f][c]);
 
         if (this.isValidLocker(f, c)) {
             matrix[f][c] = ficha;//agrego la ficha
+            ficha.setPosition(locker.getPosXMed(), locker.getPosYMed())
         } else {
            ficha.setBeginPosition();
         }
         console.log("valor" + matrix[f][c].getRadius());
+    }
+
+    checkWinner(){
+        
     }
 }

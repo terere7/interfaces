@@ -16,7 +16,13 @@ class Rect extends Figure {
         this.context.lineWidth = 3;
         this.context.strokeRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
     }
-
+    //Posicion media del cuadrado
+    getPosXMed() {
+        return this.posX + (this.width / 2);
+    }
+    getPosYMed() {
+        return this.posY + (this.height / 2);
+    }
     //GETTERS AND SETTERS
     getCoordenadas() {// fila y col que esta ubicado el casillero
         return {

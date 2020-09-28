@@ -96,7 +96,7 @@ function onMouseUp(event) {
     let locker= getLocker(event.layerX,event.layerY );
     //ubico la ficha al casillero
     console.log(event.layerX,event.layerY)
-if(locker!==null&&lastClickedFicha!==null) game.addFicha(lastClickedFicha,locker.getRow(), locker.getCol());
+if(locker!==null&&lastClickedFicha!==null) game.addFicha(lastClickedFicha,locker);
 }
 //obtener un el casillero
 function getLocker(posX,posY){

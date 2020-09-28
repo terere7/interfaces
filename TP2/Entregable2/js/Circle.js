@@ -48,4 +48,9 @@ setBeginPosition(){
             beginPosY: this.beginPosY
         };
     }
+
+    setPosition(x,y){
+        this.posX=x;
+        this.posY=y
+    }
 }
