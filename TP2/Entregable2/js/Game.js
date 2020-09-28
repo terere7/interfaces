@@ -1,9 +1,13 @@
+const WIN = 4;
 class Game {
     constructor(matrix, row, col) {
         this.matrix = matrix;
         this.row = row;
         this.col = col;
         console.log(matrix);
+        this.lastInsertPos = { col: 0, fil: 0 };
+        this.lastPlayer;
+
 
     }
 
@@ -35,7 +39,7 @@ class Game {
 
     //BUG, A VECES SE VUELVE AUNQUE SEA VALIDA !!!!!!!!!!!
     //Agregar ficha en las coordenadas
-    addFicha(ficha,locker) {
+    addFicha(ficha, locker) {
         // si es posible ubicar en la casilla
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
@@ -43,14 +47,75 @@ class Game {
 
         if (this.isValidLocker(f, c)) {
             matrix[f][c] = ficha;//agrego la ficha
+            this.lastInsertPos = { col: c, fil: f };// actualizar ultima insertada
             ficha.setPosition(locker.getPosXMed(), locker.getPosYMed())
+            this.lastPlayer = ficha.getPlayer();
         } else {
-           ficha.setBeginPosition();
+            ficha.setBeginPosition();
         }
         console.log("valor" + matrix[f][c].getRadius());
     }
 
-    checkWinner(){
-        
+    checkColum(col, fil) {
+        //checkea la columna para abajo
+        let find = false;
+        let count = 0;
+        for (let index = fil; index < this.row.length; index++) {
+            if (!find) {
+                //si encuentra una ficha de otro jugador, no cuenta mas
+                if (this.matrix[index][col].getPlayer() !== this.lastPlayer) {
+                    find = true;
+                } else {
+                    count++;
+                }
+            }
+        }
+        return count === WIN;
     }
+    checkRow(col, fil) {
+        let count = 0;
+        let countRight = 0;
+        let countLeft = 0;
+        let find = false;
+        let auxCol = col;
+        //busco a la derecha
+        while (auxCol < this.col && !find) {
+            if (this.matrix[fil][auxCol].getPlayer() !== this.lastPlayer) {
+                find = true;
+            } else {
+                countRight++;
+                auxCol++;
+            }
+        }
+        //Vuelvo a pos original
+        auxCol = col-1;
+        find = false;
+        //busco a la izq
+        while (auxCol > 0 && !find) {
+            if (this.matrix[fil][auxCol].getPlayer() !== this.lastPlayer) {
+                find = true;
+            } else {
+                countLeft++;
+                auxCol--;
+            }
+        }
+        count = countRight + countLeft;
+        return count === WIN;
+    }
+
+    isWinner() {
+        let col = this.lastInsertPos.col;
+        let fil = this.lastInsertPos.fil;
+        let winner = false;
+        winner = this.checkColum(col, fil);
+        if (!winner) {
+            winner = this.checkRow(col, fil);
+        }
+
+
+        return winner;
+    }
+
+
+
 }

@@ -28,14 +28,16 @@ setBeginPosition(){
     this.posY=this.beginPosY;
  //   this.draw();
 }
-//GETTERS AND SET{TERS
+//GETTERS AND SETTERS
     setRadius(radius) {
         this.radius = radius;
     }
     getRadius() {
         return this.radius;
     }
-
+    getPlayer() {
+        return this.player;
+    }
     isPointInside(x, y) {
         let _x = this.posX - x;
         let _y = this.posY - y;
