@@ -20,10 +20,14 @@ const col = 7;
 let beginPosX = ((canvasWidth / 2) - ((col * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - 20;
 let beginPosY = ((canvasHeight / 2) - ((row * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + 40;
 
+//JUEGO
+let matrix=[];
+let game;
+
 //AGREGAR FIGURAS
 //Rectangulo
-function addRectangle(color, posX, posY) { // Agregar rectangulos al azar dentro del canvas
-    let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, context);
+function addRectangle(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
+    let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, context, row, col);
     tablero.push(rect);//agrega recangulos al arreglo
 }
 //Circulo
@@ -88,6 +92,19 @@ function onMouseMoved(event) {
 }
 function onMouseUp(event) {
     isMouseDown = false;
+    //en esa pos hay un cuadrado, ver si se puede posicionar, sino vuelvo a estado anterior
+    let locker= getLocker(event.layerX,event.layerY );
+    //ubico la ficha al casillero
+    console.log(event.layerX,event.layerY)
+if(locker!==null) game.addFicha(lastClickedFicha,locker.getRow(), locker.getCol());
+}
+//obtener un el casillero
+function getLocker(posX,posY){
+for (let index = 0; index < tablero.length; index++) {
+    if(tablero[index].isPointInside(posX,posY))
+    return tablero[index];
+}
+return null;
 }
 
 function crearFichas() {
@@ -111,37 +128,47 @@ function crearFichas() {
     canvas.addEventListener('mouseup', onMouseUp, false);
     canvas.addEventListener('mousemove', onMouseMoved, false);
 
-    // drawFigures();
+  
 }
 
 function crearTablero() {
     let color = "blue";
     let posX = beginPosX;
     let posY = beginPosY;
-    for (let x = 0; x < row; x++) {
-        for (let y = 0; y < col; y++) {
+    for (let y = 0; y < row; y++) {//filas
+        matrix[y]=[];
+        for (let x = 0; x < col; x++) {
             posX += CUADRADO_SIZE + 5;
-            addRectangle(color, posX, posY);
+            addRectangle(color, posX, posY,y,x);
+            matrix[y][x]=null;
         }
         posX -= (CUADRADO_SIZE + 5) * col;
         posY += CUADRADO_SIZE + 5;
     }
     // drawFigures();
 }
-document.querySelector("#restart").addEventListener('click', restartGame);
+
+
+
 function restartGame() {
     clearCanvas('#F8F8FF', canvas);
+    // reinicializo valores
     figuras = [];
     tablero = [];
+    matrix= [];
     startGame();
     //resetear ganador y todo
 }
+document.querySelector("#restart").addEventListener('click', restartGame);
+
 
 // Crear juego
 function startGame() {
     crearFichas();
     crearTablero();
     drawFigures();
+    game= new Game(matrix, row,col);
 }
 startGame();
+console.log(matrix);
 

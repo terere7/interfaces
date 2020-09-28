@@ -3,6 +3,8 @@ class Circle extends Figure{
         super(posX, posY, fill, context);
         this.radius = radius;
         this.player=player;
+        this.beginPosX=posX;
+        this.beginPosY=posY;
     }
 
     draw() {
@@ -34,5 +36,12 @@ class Circle extends Figure{
         let _x = this.posX - x;
         let _y = this.posY - y;
         return Math.sqrt(_x * _x + _y * _y) < this.radius;
+    }
+
+    getBeginPosition(){
+        return {
+            beginPosX: this.beginPosX,
+            beginPosY: this.beginPosY
+        };
     }
 }

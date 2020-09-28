@@ -1,11 +1,13 @@
 class Rect extends Figure {
 
-    constructor(posX, posY, width, height, fill, context) {
+    constructor(posX, posY, width, height, fill, context, row, col) {
         super(posX, posY, fill, context);// misma propiedad que el padre
         //propios atributos del rectangulo
         this.width = width;
         this.height = height;
         this.fill = fill;
+        this.row = row;
+        this.col = col;
     }
 
     //polimorfismo, llama al metodo de la clase mas baja
@@ -16,6 +18,19 @@ class Rect extends Figure {
     }
 
     //GETTERS AND SETTERS
+    getCoordenadas() {// fila y col que esta ubicado el casillero
+        return {
+            row: this.row,
+            col: this.col
+        };
+    }
+    getRow() {
+        return this.row;
+    }
+
+    getCol() {
+        return this.col;
+    }
     //Ancho
     getWidht() {
         return this.width;
