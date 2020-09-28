@@ -23,8 +23,12 @@ class Circle extends Figure{
 
         this.context.closePath();
     }
-
-//GETTERS AND SETTERS
+setBeginPosition(){
+    this.posX=this.beginPosX;
+    this.posY=this.beginPosY;
+ //   this.draw();
+}
+//GETTERS AND SET{TERS
     setRadius(radius) {
         this.radius = radius;
     }

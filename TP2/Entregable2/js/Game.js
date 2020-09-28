@@ -3,42 +3,47 @@ class Game {
         this.matrix = matrix;
         this.row = row;
         this.col = col;
-    }
-   
+        console.log(matrix);
 
-    isValidLocker(fila, col) {
-        if (!empty(fila, col)) return false;// si el casillero q quiero poner ya tiene una ficha 
+    }
+
+    isValidLocker(fila, columna) {
+        if (!this.empty(fila, columna)) return false;// si el casillero q quiero poner ya tiene una ficha 
         //busco la fila en q puede poner
-        if (validColumn(col) && valiRow(fila, col)) return true;
-        return false;
+        if (!this.validColumn(columna) || !this.validRow(fila, columna)) return false;
+        return true;
     }
-    empty(fila, col) {
-        return matrix[fila][col] === null;
+    empty(fila, columna) {
+        return matrix[fila][columna] == null;
     }
-    validColumn(col) {
-        return col < this.col && col >= 0;
+    validColumn(columna) {
+        return columna < this.col && columna >= 0;
     }
-    validRow(fila, col) {
+    validRow(fila, columna) {
         let filaValida = false;
-        if (fila < this.row && row >= 0) {// controlar q no me vaya de rango
+        if (fila < this.row && fila >= 0) {// controlar q no me vaya de rango
             if (fila == row - 1) {// fila de mas abajo
                 filaValida = true;
             } else {
-                if (matrix[fila + 1][col] !== null) {// controlar q la anterior esta 
+                if (matrix[fila + 1][columna] !== null) {// controlar q la anterior esta 
                     filaValida = true;
                 }
             }
         }
         return filaValida;
     }
- //Agregar ficha en las coordenadas
- addFicha(ficha, fila, col) {
-    // si es posible ubicar en la casilla
-    console.log(fila,col);
-    if (isValidLocker(fila, col)){
-        matrix[fila][col] = ficha;//agrego la ficha
-    } else {
-        //vuelvo a poner la ficha en la pos original
+    //Agregar ficha en las coordenadas
+    addFicha(ficha, fila, columna) {
+        // si es posible ubicar en la casilla
+        let f = parseInt(fila);
+        let c = parseInt(columna);
+        console.log(matrix[f][c]);
+
+        if (this.isValidLocker(f, c)) {
+            matrix[f][c] = ficha;//agrego la ficha
+        } else {
+           ficha.setBeginPosition();
+        }
+        console.log("valor" + matrix[f][c].getRadius());
     }
-}
 }
