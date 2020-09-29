@@ -1,14 +1,23 @@
 const WIN = 4;
 class Game {
-    constructor(matrix, row, col) {
-        this.matrix = matrix;
+    constructor(row, col, player1, player2) {
+        this.matrix = [];
         this.row = row;
         this.col = col;
-        console.log(matrix);
+       // console.log(matrix);
         this.lastInsertPos = { col: 0, fil: 0 };
-        this.lastPlayer;
+        this.lastPlayer=player1;
 
+      this.createBoard();
+    }
 
+    createBoard() {
+        for (let y = 0; y < row; y++) {//filas
+            this.matrix[y] = [];
+            for (let x = 0; x < col; x++) {
+                this.matrix[y][x] = null;
+            }
+        }
     }
 
     isValidLocker(fila, columna) {
@@ -88,7 +97,7 @@ class Game {
             }
         }
         //Vuelvo a pos original
-        auxCol = col-1;
+        auxCol = col - 1;
         find = false;
         //busco a la izq
         while (auxCol > 0 && !find) {
@@ -102,7 +111,9 @@ class Game {
         count = countRight + countLeft;
         return count === WIN;
     }
+    checkDiagonal(col, fil) {
 
+    }
     isWinner() {
         let col = this.lastInsertPos.col;
         let fil = this.lastInsertPos.fil;
@@ -111,7 +122,9 @@ class Game {
         if (!winner) {
             winner = this.checkRow(col, fil);
         }
-
+        if (!winner) {
+            winner = this.checkDiagonal(col, fil);
+        }
 
         return winner;
     }

@@ -21,9 +21,12 @@ let beginPosX = ((canvasWidth / 2) - ((col * CUADRADO_SIZE) / 2) - CUADRADO_SIZE
 let beginPosY = ((canvasHeight / 2) - ((row * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + 40;
 
 //JUEGO
-let matrix=[];
+//let matrix=[];
 let game;
 
+//JUGADORES
+let player1;
+let player2;
 //AGREGAR FIGURAS
 //Rectangulo
 function addRectangle(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
@@ -95,8 +98,8 @@ function onMouseUp(event) {
     //en esa pos hay un cuadrado, ver si se puede posicionar, sino vuelvo a estado anterior
     let locker= getLocker(event.layerX,event.layerY );
     //ubico la ficha al casillero
-    console.log(event.layerX,event.layerY)
 if(locker!==null&&lastClickedFicha!==null) game.addFicha(lastClickedFicha,locker);
+// devolver un boolean, si se agrego, eliminar del arreglo de figuras
 }
 //obtener un el casillero
 function getLocker(posX,posY){
@@ -110,8 +113,8 @@ return null;
 function crearFichas() {
     let espacio = canvas.height / NUM_FICHAS;
     // Inicializar figuras de forma aleatoria
-    let player1 = new Player("Jugador 1");
-    let player2 = new Player("Jugador 2");
+    player1 = new Player("Jugador 1");
+    player2 = new Player("Jugador 2");
     for (let index = 0; index < NUM_FICHAS; index++) {
         if (index == 0) {
             addCircle('#00e6e6', canvas.width * 0.1, canvas.height / 2, player1);
@@ -136,16 +139,15 @@ function crearTablero() {
     let posX = beginPosX;
     let posY = beginPosY;
     for (let y = 0; y < row; y++) {//filas
-        matrix[y]=[];
+      
         for (let x = 0; x < col; x++) {
             posX += CUADRADO_SIZE + 5;
             addRectangle(color, posX, posY,y,x);
-            matrix[y][x]=null;
         }
         posX -= (CUADRADO_SIZE + 5) * col;
         posY += CUADRADO_SIZE + 5;
     }
-    // drawFigures();
+
 }
 
 
@@ -154,8 +156,7 @@ function restartGame() {
     clearCanvas('#F8F8FF', canvas);
     // reinicializo valores
     figuras = [];
-    tablero = [];
-    matrix= [];
+    tablero = []; 
     startGame();
     //resetear ganador y todo
 }
@@ -167,8 +168,8 @@ function startGame() {
     crearFichas();
     crearTablero();
     drawFigures();
-    game= new Game(matrix, row,col);
+    game= new Game( row,col, player1, player2);
 }
 startGame();
-console.log(matrix);
+//console.log(matrix);
 

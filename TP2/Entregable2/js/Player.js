@@ -1,7 +1,7 @@
 class Player{
     constructor(name){
         this.name=name;
-        
+        this.turn=false;
     }
 
     //GETTER Y SETTERS
