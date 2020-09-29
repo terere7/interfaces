@@ -1,9 +1,8 @@
 class Player {
-    constructor(name, number, favoriteColor) {
+    constructor(name, number) {
         this.name = name;
         this.turn = false;
         this.number = number;
-        this.color = favoriteColor
     }
 
     //GETTER Y SETTERS
@@ -26,8 +25,4 @@ class Player {
         return this.turn;
     }
     
-    // COLOR FAVORITO, PARA LA FICHA
-    getColor() {
-        return this.color;
-    }
 }

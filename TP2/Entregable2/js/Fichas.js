@@ -1,13 +1,11 @@
 class Fichas {
-    constructor(num_fichas, fichas_size, color, player1, player2) {
+    constructor(num_fichas, fichas_size, player1, player2) {
         this.num_fichas = num_fichas;
         this.fichas_size = fichas_size;
         this.player1 = player1;
         this.player2 = player2;
-        this.color = color;
         this.fichas = [];
-        this.createFichas();
-        
+        this.createFichas(); 
     }
 
     createFichas() {

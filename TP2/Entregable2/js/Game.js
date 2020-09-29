@@ -5,7 +5,7 @@ class Game {
         this.player2 = player2;
         this.board = board;
         this.fichas = fichas;
-
+        this.countFichasUsed = 0;
         this.lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
         this.lastInsertPos = { col: 0, fil: 0 };
 
@@ -14,7 +14,6 @@ class Game {
         this.drawFigures();
 
     }
-
 
     //EVENTOS
     onMouseDown(event) {
@@ -33,6 +32,7 @@ class Game {
     }
 
     onMouseMoved(event) {
+        console.log(event);
         if (this.isMouseDown && this.lastClickedFicha != null) {
             this.lastClickedFicha.setPosition(event.layerX, event.layerY);
             this.drawFigures();
@@ -65,8 +65,10 @@ class Game {
 
     // OBTENER FIGURA CLICKEADA
     findClickedFigure(x, y) {
-        for (let index = 0; index < this.fichas.length; index++) {
-            const element = this.fichas[index];
+        let fichasAux= fichas.getFichas();
+        console.log(fichasAux);
+        for (let index = 0; index < fichasAux.length; index++) {
+           let element = fichasAux[index];
             if (element.isPointInside(x, y)) {
                 return element;
             }
@@ -121,11 +123,12 @@ class Game {
             this.lastInsertPos = { col: c, fil: f };// actualizar ultima insertada
             ficha.setPosition(locker.getPosXMed(), locker.getPosYMed());
             ficha.setClickeable(false);// no es mas clickeable
+            this.countFichasUsed++;
             if (this.isWinner()) {
-                this.win();
+                alert("Gano el " + this.lastPlayer.getName());
+            } else {
+                this.changePlayer();
             }
-            //hacer alert
-            this.changePlayer();
         } else {
             //volver a poner la ficha en el principio
             ficha.setBeginPosition();
@@ -141,8 +144,8 @@ class Game {
         for (let index = fil; index < ROW; index++) {
             if (!find) {
                 //si encuentra una ficha de otro jugador, no cuenta mas
-            let playerX=this.getLocker(index,col).getFicha().getPlayer();
-                if (playerX!== this.lastPlayer) {
+                let playerX = this.getLocker(index, col).getFicha().getPlayer().getNum();
+                if (playerX !== this.lastPlayer.getNum()) {
                     find = true;
                 } else {
                     count++;
@@ -159,8 +162,8 @@ class Game {
         let auxCol = col;
         //busco a la derecha
         while (auxCol < COL && !find) {
-            let playerX=this.getLocker(auxCol, fil).getFicha().getPlayer();
-            if (playerX !== this.lastPlayer) {
+            let playerX = this.getLocker(auxCol, fil).getFicha().getPlayer().getNum();
+            if (playerX !== this.lastPlayer.getNum()) {
                 find = true;
             } else {
                 countRight++;
@@ -171,9 +174,9 @@ class Game {
         auxCol = col - 1;// no cuento el casillero actual
         find = false;
         //busco a la izq
-        while (auxCol >=0 && !find) {
-            let playerX=this.getLocker(auxCol, fil).getFicha().getPlayer();
-            if (playerX !== this.lastPlayer) {
+        while (auxCol >= 0 && !find) {
+            let playerX = this.getLocker(auxCol, fil).getFicha().getPlayer().getNum();
+            if (playerX !== this.lastPlayer.getNum()) {
                 find = true;
             } else {
                 countLeft++;
@@ -183,10 +186,23 @@ class Game {
         count = countRight + countLeft;
         return count === WIN;
     }
-    checkDiagonal(col, fil) {
-
+    checkDiagonalAsc(col, fil) {
+        let auxCol = col;
+        let auxFil = fil;
+        while (auxCol >= 0 && !find) {
+            let playerX = this.getLocker(auxCol, fil).getFicha().getPlayer().getNum();
+            if (playerX !== this.lastPlayer.getNum()) {
+                find = true;
+            } else {
+                countLeft++;
+                auxCol--;
+            }
+        }
     }
 
+    checkDiagonalDesc(col, fil) {
+
+    }
     // CHECKEAR SI GANO
     isWinner() {
         let col = this.lastInsertPos.col;
@@ -197,13 +213,20 @@ class Game {
             winner = this.checkRow(col, fil);
         }
         if (!winner) {
-            winner = this.checkDiagonal(col, fil);
+            winner = this.checkDiagonalAsc(col, fil);
+        }
+        if (!winner) {
+            winner = this.checkDiagonalDesc(col, fil);
         }
         return winner;
     }
-    win(nombre) {
-        alert("Gano el " + nombre);
+
+    gameOver() {
+        if (this.countFichasUsed === NUM_FICHAS) {
+            alert("GAME OVER");
+        }
     }
+
     //CAMBIAR DE JUGADOR
     changePlayer() {
         if (this.lastPlayer.getNum() == 1) {
