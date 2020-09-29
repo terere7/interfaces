@@ -25,6 +25,7 @@ class Player {
     getTurn() {
         return this.turn;
     }
+    
     // COLOR FAVORITO, PARA LA FICHA
     getColor() {
         return this.color;

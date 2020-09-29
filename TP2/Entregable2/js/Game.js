@@ -1,24 +1,84 @@
 const WIN = 4;
 class Game {
-    constructor(row, col, player1, player2) {
-        this.matrix = [];
-        this.row = row;
-        this.col = col;
-        // console.log(matrix);
-        this.lastInsertPos = { col: 0, fil: 0 };
-        this.lastPlayer = player1;
+    constructor(player1, player2, board, fichas) {
         this.player1 = player1;
         this.player2 = player2;
-        this.createBoard();
+        this.board = board;
+        this.fichas = fichas;
+
+        this.matrix = [];
+        this.lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
+        this.lastInsertPos = { col: 0, fil: 0 };
+
+        this.lastPlayer = player1;// por defecto comienza el
+        this.isMouseDown = false;
+this.initGame();
+    
     }
 
-    createBoard() {
-        for (let y = 0; y < row; y++) {//filas
-            this.matrix[y] = [];
-            for (let x = 0; x < col; x++) {
-                this.matrix[y][x] = null;
+initGame(){
+    this.drawFigures();
+}
+    //EVENTOS
+    onMouseDown(event) {
+        this.isMouseDown = true;
+        if (this.lastClickedFicha != null) {
+            this.lastClickedFicha.setHighlighted(false);
+            this.lastClickedFicha = null;
+        }
+        // Buscar si hay una nueva figura clickeada
+        let clickedFigure = findClickedFigure(event.layerX, event.layerY);
+        if (clickedFigure != null) {
+            clickedFigure.setHighlighted(true);
+            this.lastClickedFicha = clickedFigure;
+        }
+        this.drawFigures();
+    }
+
+    onMouseMoved(event) {
+        if (this.isMouseDown && this.lastClickedFicha != null) {
+            this.lastClickedFicha.setPosition(event.layerX, event.layerY);
+            this.drawFigures();
+        }
+    }
+    onMouseUp(event) {
+        this.isMouseDown = false;
+        //buscar casillero;
+        let locker = this.board.getLocker(event.layerX, event.layerY);
+        //ubico la ficha al casillero
+        if (locker !== null && lastClickedFicha !== null) {
+            game.addFicha(lastClickedFicha, locker);
+
+        }
+
+    }
+    drawFigures() {
+        this.clearCanvas('#F8F8FF');
+        //Fichas
+        let fichasAux = this.fichas.getFichas();
+        for (let i = 0; i < fichasAux.length; i++) {
+            fichasAux[i].draw();
+        }
+        //Tablero
+        let boardAux = this.board.getBoard();
+        for (let i = 0; i < boardAux.length; i++) {
+            boardAux[i].draw();
+        }
+    }
+    // OBTENER FIGURA CLICKEADA
+    findClickedFigure(x, y) {
+        for (let index = 0; index < this.fichas.length; index++) {
+            const element = this.fichas[index];
+            if (element.isPointInside(x, y)) {
+                return element;
             }
         }
+    }
+
+    //LIMPIAR CANVAS
+    clearCanvas(color) {
+        CONTEXT.fillStyle = color;
+        CONTEXT.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
     isValidLocker(fila, columna) {
@@ -27,6 +87,7 @@ class Game {
         if (!this.validColumn(columna) || !this.validRow(fila, columna)) return false;
         return true;
     }
+    //FUNCION DE VERIFICACION
     empty(fila, columna) {
         return matrix[fila][columna] == null;
     }
@@ -35,8 +96,8 @@ class Game {
     }
     validRow(fila, columna) {
         let filaValida = false;
-        if (fila < this.row && fila >= 0) {// controlar q no me vaya de rango
-            if (fila == row - 1) {// fila de mas abajo
+        if (fila < this.ROW && fila >= 0) {// controlar q no me vaya de rango
+            if (fila == ROW - 1) {// fila de mas abajo
                 filaValida = true;
             } else {
                 if (matrix[fila + 1][columna] !== null) {// controlar q la anterior esta 
@@ -48,33 +109,31 @@ class Game {
     }
 
     //BUG, A VECES SE VUELVE AUNQUE SEA VALIDA !!!!!!!!!!!
-    //Agregar ficha en las coordenadas
+    //Agregar ficha al casillero
     addFicha(ficha, locker) {
         // si es posible ubicar en la casilla
-        let agregada=false;
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
-        console.log(matrix[f][c]);
-
         if (this.isValidLocker(f, c)) {
-            matrix[f][c] = ficha;//agrego la ficha a la matriz
+            locker.setFicha(ficha);//agrego la ficha al casillero
             this.lastInsertPos = { col: c, fil: f };// actualizar ultima insertada
             ficha.setPosition(locker.getPosXMed(), locker.getPosYMed());
-            this.lastPlayer = ficha.getPlayer();
-            agregada=true;
+            ficha.setClickeable(false);// no es mas clickeable
+            this.changePlayer();
         } else {
+            //volver a poner la ficha en el principio
             ficha.setBeginPosition();
-
         }
         console.log("valor" + matrix[f][c].getRadius());
-        return agregada;
+
     }
 
+    // FUNCIONES PARA CHECKEAR 4 EN LINEA
     checkColum(col, fil) {
         //checkea la columna para abajo
         let find = false;
         let count = 0;
-        for (let index = fil; index < this.row.length; index++) {
+        for (let index = fil; index < this.ROW.length; index++) {
             if (!find) {
                 //si encuentra una ficha de otro jugador, no cuenta mas
                 if (this.matrix[index][col].getPlayer() !== this.lastPlayer) {
@@ -119,6 +178,8 @@ class Game {
     checkDiagonal(col, fil) {
 
     }
+
+    // CHECKEAR SI GANO
     isWinner() {
         let col = this.lastInsertPos.col;
         let fil = this.lastInsertPos.fil;
@@ -130,11 +191,18 @@ class Game {
         if (!winner) {
             winner = this.checkDiagonal(col, fil);
         }
-
         return winner;
     }
     win(nombre) {
         return "Gano el " + nombre;
+    }
+    //CAMBIAR DE JUGADOR
+    changePlayer() {
+        if (this.lastPlayer.getNum() == 1) {
+            this.lastPlayer = this.player2;
+        } else {
+            this.lastPlayer = this.player2;
+        }
     }
 
 

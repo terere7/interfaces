@@ -6,10 +6,11 @@ class Fichas {
         this.player2 = player2;
         this.color = color;
         this.fichas = [];
-        this.crearFichas();
+        this.createFichas();
+        
     }
 
-    crearFichas() {
+    createFichas() {
         let espacio = CANVAS_HEIGHT / this.num_fichas;
         // Inicializar figuras de forma aleatoria
 
@@ -22,11 +23,8 @@ class Fichas {
                 this.addCircle('#600080', CANVAS_WIDTH * 0.95, espacio * index, player2);
             }
         }
-        // Inicializar listeners de eventos de mouse en el canvas
-        CANVAS.addEventListener('mousedown', onMouseDown, false);
-        CANVAS.addEventListener('mouseup', onMouseUp, false);
-        CANVAS.addEventListener('mousemove', onMouseMoved, false);
-    }
+        //eventos addEventListener
+     }
 
     addCircle(color, posX, posY, player) {
         let circle = new Circle(posX, posY, FICHAS_SIZE, color, CONTEXT, player);

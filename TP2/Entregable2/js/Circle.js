@@ -6,7 +6,7 @@ class Circle extends Figure {
         this.beginPosX = posX;
         this.beginPosY = posY;
         this.clickeable = true;
-        this.turn = false;
+        this.turn = true;// poner en false;
     }
 
     draw() {

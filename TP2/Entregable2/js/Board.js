@@ -1,9 +1,4 @@
-
-
-
-const ROW = 6;
-const COL = 7;
-
+    
 class Board {
 
     constructor(posX, posY) {
@@ -54,7 +49,7 @@ class Board {
                 posX += CUADRADO_SIZE + 5;
                 this.addRectangle(color, posX, posY, y, x);
             }
-            posX -= (CUADRADO_SIZE + 5) * col;
+            posX -= (CUADRADO_SIZE + 5) * COL;
             posY += CUADRADO_SIZE + 5;
         }
      
