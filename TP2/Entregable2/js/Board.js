@@ -1,10 +1,10 @@
-    
+
 class Board {
 
     constructor(posX, posY) {
         this.posX = posX;
         this.posY = posY;
-        
+
         this.board = [];
         this.createBoard();
     }
@@ -15,15 +15,15 @@ class Board {
     getHeight() {
         return this.height;
     }
-
-    //    circleInsideBoard(x, y, figure) {
-    //        // si no esta fuera de la casilla
-    //         let isInside = !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
-    //         if (isInside == true) {//esta adentro
-    //             figure.setPosition(this.posX, this.posY);//ubico al medio
-    //         }
-    //         return isInside;
-    //     }
+//VERRR
+    circleInsideBoard(x, y, figure) {
+        // si no esta fuera de la casilla
+        let isInside = !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
+        if (isInside == true) {//esta adentro
+            figure.setPosition(this.posX, this.posY);//ubico al medio
+        }
+        return isInside;
+    }
 
     //Rectangulo
     addRectangle(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
@@ -52,7 +52,7 @@ class Board {
             posX -= (CUADRADO_SIZE + 5) * COL;
             posY += CUADRADO_SIZE + 5;
         }
-     
+
 
     }
 

@@ -43,7 +43,7 @@ class Circle extends Figure {
 
     isPointInside(x, y) {
         // si se puede clickea y 0
-        if ((this.clickeable == true) && (this.turn)) {
+        if ((this.clickeable) && (this.turn)) {
             let _x = this.posX - x;
             let _y = this.posY - y;
             return Math.sqrt(_x * _x + _y * _y) < this.radius;

@@ -60,6 +60,9 @@ class Rect extends Figure {
     getFicha(){
         return this.ficha;
     }
+    isEmpty(){
+        return this.ficha!==null;
+    }
 
     //saber si esta clickeando
     isPointInside(x, y) {

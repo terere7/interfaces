@@ -6,19 +6,16 @@ class Game {
         this.board = board;
         this.fichas = fichas;
 
-        this.matrix = [];
         this.lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
         this.lastInsertPos = { col: 0, fil: 0 };
 
         this.lastPlayer = player1;// por defecto comienza el
         this.isMouseDown = false;
-this.initGame();
-    
+        this.drawFigures();
+
     }
 
-initGame(){
-    this.drawFigures();
-}
+
     //EVENTOS
     onMouseDown(event) {
         this.isMouseDown = true;
@@ -27,7 +24,7 @@ initGame(){
             this.lastClickedFicha = null;
         }
         // Buscar si hay una nueva figura clickeada
-        let clickedFigure = findClickedFigure(event.layerX, event.layerY);
+        let clickedFigure = this.findClickedFigure(event.layerX, event.layerY);
         if (clickedFigure != null) {
             clickedFigure.setHighlighted(true);
             this.lastClickedFicha = clickedFigure;
@@ -46,12 +43,12 @@ initGame(){
         //buscar casillero;
         let locker = this.board.getLocker(event.layerX, event.layerY);
         //ubico la ficha al casillero
-        if (locker !== null && lastClickedFicha !== null) {
-            game.addFicha(lastClickedFicha, locker);
-
+        if (locker !== null && this.lastClickedFicha !== null) {
+            this.addFicha(this.lastClickedFicha, locker);
         }
 
     }
+    //DIBUJAR FIGURAS EN CANVAS
     drawFigures() {
         this.clearCanvas('#F8F8FF');
         //Fichas
@@ -65,6 +62,7 @@ initGame(){
             boardAux[i].draw();
         }
     }
+
     // OBTENER FIGURA CLICKEADA
     findClickedFigure(x, y) {
         for (let index = 0; index < this.fichas.length; index++) {
@@ -81,50 +79,57 @@ initGame(){
         CONTEXT.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
-    isValidLocker(fila, columna) {
-        if (!this.empty(fila, columna)) return false;// si el casillero q quiero poner ya tiene una ficha 
+    //FUNCION DE VERIFICACION
+    isValidLocker(locker) {
+        if (!locker.isEmpty()) return false;// si el casillero q quiero poner ya tiene una ficha 
         //busco la fila en q puede poner
-        if (!this.validColumn(columna) || !this.validRow(fila, columna)) return false;
+        if (!this.isValidPos(locker)) return false;
         return true;
     }
-    //FUNCION DE VERIFICACION
-    empty(fila, columna) {
-        return matrix[fila][columna] == null;
-    }
-    validColumn(columna) {
-        return columna < this.col && columna >= 0;
-    }
-    validRow(fila, columna) {
-        let filaValida = false;
-        if (fila < this.ROW && fila >= 0) {// controlar q no me vaya de rango
-            if (fila == ROW - 1) {// fila de mas abajo
-                filaValida = true;
-            } else {
-                if (matrix[fila + 1][columna] !== null) {// controlar q la anterior esta 
-                    filaValida = true;
-                }
+
+    // Verificar si es una posicion valida
+    isValidPos(locker) {
+        let validPos = false;
+        let f = parseInt(locker.getRow());
+        let c = parseInt(locker.getCol());
+        if (f == ROW - 1) {// fila de mas abajo
+            validPos = true;
+        } else {
+            if (!this.getLocker(c, f + 1).isEmpty()) {// el de abajo tiene una ficha
+                validPos = true;
             }
         }
-        return filaValida;
+        return validPos;
     }
-
+    //Obtiene un casillero pasando su coordenadas fila y col
+    getLocker(x, y) {
+        for (let index = 0; index < this.board.length; index++) {
+            let locker = board[i];
+            if (locker.getCol() == x && locker.getRow() == y) {
+                return locker;
+            }
+        }
+    }
     //BUG, A VECES SE VUELVE AUNQUE SEA VALIDA !!!!!!!!!!!
     //Agregar ficha al casillero
     addFicha(ficha, locker) {
         // si es posible ubicar en la casilla
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
-        if (this.isValidLocker(f, c)) {
+        if (this.isValidLocker(locker)) {
             locker.setFicha(ficha);//agrego la ficha al casillero
             this.lastInsertPos = { col: c, fil: f };// actualizar ultima insertada
             ficha.setPosition(locker.getPosXMed(), locker.getPosYMed());
             ficha.setClickeable(false);// no es mas clickeable
+            if (this.isWinner()) {
+                this.win();
+            }
+            //hacer alert
             this.changePlayer();
         } else {
             //volver a poner la ficha en el principio
             ficha.setBeginPosition();
         }
-        console.log("valor" + matrix[f][c].getRadius());
 
     }
 
@@ -133,10 +138,11 @@ initGame(){
         //checkea la columna para abajo
         let find = false;
         let count = 0;
-        for (let index = fil; index < this.ROW.length; index++) {
+        for (let index = fil; index < ROW; index++) {
             if (!find) {
                 //si encuentra una ficha de otro jugador, no cuenta mas
-                if (this.matrix[index][col].getPlayer() !== this.lastPlayer) {
+            let playerX=this.getLocker(index,col).getFicha().getPlayer();
+                if (playerX!== this.lastPlayer) {
                     find = true;
                 } else {
                     count++;
@@ -152,8 +158,9 @@ initGame(){
         let find = false;
         let auxCol = col;
         //busco a la derecha
-        while (auxCol < this.col && !find) {
-            if (this.matrix[fil][auxCol].getPlayer() !== this.lastPlayer) {
+        while (auxCol < COL && !find) {
+            let playerX=this.getLocker(auxCol, fil).getFicha().getPlayer();
+            if (playerX !== this.lastPlayer) {
                 find = true;
             } else {
                 countRight++;
@@ -161,11 +168,12 @@ initGame(){
             }
         }
         //Vuelvo a pos original
-        auxCol = col - 1;
+        auxCol = col - 1;// no cuento el casillero actual
         find = false;
         //busco a la izq
-        while (auxCol > 0 && !find) {
-            if (this.matrix[fil][auxCol].getPlayer() !== this.lastPlayer) {
+        while (auxCol >=0 && !find) {
+            let playerX=this.getLocker(auxCol, fil).getFicha().getPlayer();
+            if (playerX !== this.lastPlayer) {
                 find = true;
             } else {
                 countLeft++;
@@ -194,7 +202,7 @@ initGame(){
         return winner;
     }
     win(nombre) {
-        return "Gano el " + nombre;
+        alert("Gano el " + nombre);
     }
     //CAMBIAR DE JUGADOR
     changePlayer() {
