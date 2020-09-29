@@ -32,7 +32,6 @@ class Game {
     }
 
     onMouseMoved(event) {
-        console.log(event);
         if (this.isMouseDown && this.lastClickedFicha != null) {
             this.lastClickedFicha.setPosition(event.layerX, event.layerY);
             this.drawFigures();
@@ -229,10 +228,20 @@ class Game {
 
     //CAMBIAR DE JUGADOR
     changePlayer() {
+    
         if (this.lastPlayer.getNum() == 1) {
             this.lastPlayer = this.player2;
         } else {
             this.lastPlayer = this.player2;
+        }
+        let mensaje = "Turno del "+ this.lastPlayer.getName();
+        let msjEspera= "Espera un momento";
+        if(this.lastPlayer.getNum()==1){
+            document.querySelector("#player1").innerHTML= mensaje;
+            document.querySelector("#player2").innerHTML=  msjEspera;
+        }else{
+            document.querySelector("#player1").innerHTML= msjEspera;
+            document.querySelector("#player2").innerHTML= mensaje ;
         }
     }
 

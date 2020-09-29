@@ -43,7 +43,7 @@ function clearCanvas(color) {
     CONTEXT.fillStyle = color;
     CONTEXT.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
-//PROBAR SI ANDA!!!!
+
 document.querySelector("#restart").addEventListener('click', startGame);
 
 
