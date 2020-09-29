@@ -1,14 +1,15 @@
 //CANVAS
-let canvas = document.querySelector('#canvas');
-let context = canvas.getContext('2d');
-let canvasWidth = canvas.width;//800
-let canvasHeight = canvas.height;//600
+const CANVAS = document.querySelector('#canvas');
+const CONTEXT = canvas.getContext('2d');
+const CANVAS_WIDTH = canvas.width;//800
+const CANVAS_HEIGHT = canvas.height;//600
 
 //FICHAS
 const FICHAS_SIZE = 20;
 const NUM_FICHAS = 21;
 const CUADRADO_SIZE = 50;//20*2
-let figuras = []; // arreglo de figuras
+let fichas; 
+
 let lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
 let isMouseDown = false;//esta clickeado
 
@@ -17,8 +18,8 @@ let board;
 const row = 6;
 const col = 7;
 // Calcular donde empieza el trablero
-let beginPosX = ((canvasWidth / 2) - ((col * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - 20;
-let beginPosY = ((canvasHeight / 2) - ((row * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + 40;
+let beginPosX = ((CANVAS_WIDTH / 2) - ((col * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - 20;
+let beginPosY = ((CANVAS_HEIGHT / 2) - ((row * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + 40;
 
 //JUEGO
 //let matrix=[];
@@ -29,46 +30,40 @@ let player1;
 let player2;
 //AGREGAR FIGURAS
 //Circulo
-function addCircle(color, posX, posY, player) {
-    //let color ='#600080';
-    let circle = new Circle(posX, posY, FICHAS_SIZE, color, context, player);
-    figuras.push(circle);
-}
+
 
 function drawFigures() {
     clearCanvas('#F8F8FF', canvas);
     //Fichas
-    for (let i = 0; i < figuras.length; i++) {
-        figuras[i].draw();
+    let fichasAux= fichas.getFichas();
+    console.log(fichasAux);
+    for (let i = 0; i < fichasAux.length; i++) {
+        fichasAux[i].draw();
     }
+    //Tablero
     let boardAux= board.getBoard();
-    console.log(boardAux);
     for (let i = 0; i < boardAux.length; i++) {
         boardAux[i].draw();
     }
 }
 
-
-
 //LIMPIAR CANVAS
 function clearCanvas(color, canvas) {
-    context.fillStyle = color;
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    CONTEXT.fillStyle = color;
+    CONTEXT.fillRect(0, 0, canvas.width, canvas.height);
 }
 // OBTENER FIGURA CLICKEADA
 function findClickedFigure(x, y) {
-    for (let index = 0; index < figuras.length; index++) {
-        const element = figuras[index];
+    for (let index = 0; index < fichas.length; index++) {
+        const element = fichas[index];
         if (element.isPointInside(x, y)) {
             return element;
         }
     }
 }
 
-
 //FUNCIONES MOUSE
 function onMouseDown(event) {
-    console.log(event);
     isMouseDown = true;
     // Se limpia la propiedad highlighted de la ultima figura clickeada
     if (lastClickedFicha != null) {
@@ -108,49 +103,25 @@ if(locker!==null&&lastClickedFicha!==null){
 
 
 
-function crearFichas() {
-    let espacio = canvas.height / NUM_FICHAS;
-    // Inicializar figuras de forma aleatoria
-    player1 = new Player("Jugador 1", 1);
-    player2 = new Player("Jugador 2", 2);
-    for (let index = 0; index < NUM_FICHAS; index++) {
-        if (index == 0) {
-            addCircle('#00e6e6', canvas.width * 0.1, canvas.height / 2, player1);
-            addCircle('#600080', canvas.width * 0.9, canvas.height / 2, player2);
-        } else {
-            addCircle('#00e6e6', canvas.width * 0.05, espacio * index, player1);
-            addCircle('#600080', canvas.width * 0.95, espacio * index, player2);
-        }
-    }
 
-    //drawFigures();
-    // Inicializar listeners de eventos de mouse en el canvas
-    canvas.addEventListener('mousedown', onMouseDown, false);
-    canvas.addEventListener('mouseup', onMouseUp, false);
-    canvas.addEventListener('mousemove', onMouseMoved, false);
 
-  
-}
-
+// REHAER!!!
 
 function restartGame() {
     clearCanvas('#F8F8FF', canvas);
-    // reinicializo valores
-    figuras = [];
-    board = []; 
-    startGame();
-    //resetear ganador y todo
+   
 }
 document.querySelector("#restart").addEventListener('click', restartGame);
 
 
 // Crear juego
 function startGame() {
-    crearFichas();
-    board= new Board(beginPosX, beginPosY,context);
-    drawFigures();
+    player1 = new Player("Jugador 1", 1);
+    player2 = new Player("Jugador 2", 2);
+    fichas= new Fichas(NUM_FICHAS, FICHAS_SIZE, player1,player2);
+    board= new Board(beginPosX, beginPosY);
     game= new Game( row,col, player1, player2);
+    drawFigures();
 }
 startGame();
-//console.log(matrix);
 

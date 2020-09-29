@@ -6,10 +6,10 @@ const COL = 7;
 
 class Board {
 
-    constructor(posX, posY, context) {
+    constructor(posX, posY) {
         this.posX = posX;
         this.posY = posY;
-        this.context = context;
+        
         this.board = [];
         this.createBoard();
     }
@@ -32,7 +32,7 @@ class Board {
 
     //Rectangulo
     addRectangle(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
-        let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, context, row, col);
+        let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, CONTEXT, row, col);
         this.board.push(rect);//agrega recangulos al arreglo
     }
 

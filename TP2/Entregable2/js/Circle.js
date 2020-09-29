@@ -2,7 +2,7 @@ class Circle extends Figure {
     constructor(posX, posY, radius, fill, context, player) {
         super(posX, posY, fill, context);
         this.radius = radius;
-        this.numPlayer = player.getNum();
+        this.player = player;
         this.beginPosX = posX;
         this.beginPosY = posY;
         this.clickeable = true;
@@ -37,8 +37,8 @@ class Circle extends Figure {
     getRadius() {
         return this.radius;
     }
-    getNumPlayer() {
-        return this.numPlayer;
+    getPlayer() {
+        return this.player;
     }
 
     isPointInside(x, y) {
