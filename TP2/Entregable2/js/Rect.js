@@ -8,6 +8,7 @@ class Rect extends Figure {
         this.fill = fill;
         this.row = row;
         this.col = col;
+        this.ficha= null;
     }
 
     //polimorfismo, llama al metodo de la clase mas baja
@@ -52,11 +53,19 @@ class Rect extends Figure {
         this.height = height;
     }
 
+//FICHAS
+    setFicha(ficha){
+        this.ficha=ficha;
+    }
+    getFicha(){
+        return this.ficha;
+    }
+
     //saber si esta clickeando
     isPointInside(x, y) {
         //si no estoy afuera del rectangulo
         return !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
     }
 
-
+   
 }

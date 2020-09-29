@@ -1,19 +1,27 @@
-class Player{
-    constructor(name){
-        this.name=name;
-        this.turn=false;
+class Player {
+    constructor(name, number) {
+        this.name = name;
+        this.turn = false;
+        this.number = number;
     }
 
     //GETTER Y SETTERS
-    getName(){
+    getName() {
         return this.nombre;
     }
-    setName(name){
-        this.name=name;
+    setName(name) {
+        this.name = name;
+    }
+
+    getNum() {
+        return this.number;
+    }
+    setNum(num) {
+        this.number = num;
     }
 
     //TURNO
-    getTurn(){
+    getTurn() {
         return this.turn;
     }
 }

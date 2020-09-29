@@ -13,7 +13,7 @@ let lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo nin
 let isMouseDown = false;//esta clickeado
 
 //TABLERO
-let tablero = [];
+let board;
 const row = 6;
 const col = 7;
 // Calcular donde empieza el trablero
@@ -28,11 +28,6 @@ let game;
 let player1;
 let player2;
 //AGREGAR FIGURAS
-//Rectangulo
-function addRectangle(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
-    let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, context, row, col);
-    tablero.push(rect);//agrega recangulos al arreglo
-}
 //Circulo
 function addCircle(color, posX, posY, player) {
     //let color ='#600080';
@@ -46,8 +41,10 @@ function drawFigures() {
     for (let i = 0; i < figuras.length; i++) {
         figuras[i].draw();
     }
-    for (let i = 0; i < tablero.length; i++) {
-        tablero[i].draw();
+    let boardAux= board.getBoard();
+    console.log(boardAux);
+    for (let i = 0; i < boardAux.length; i++) {
+        boardAux[i].draw();
     }
 }
 
@@ -96,32 +93,33 @@ function onMouseMoved(event) {
 function onMouseUp(event) {
     isMouseDown = false;
     //en esa pos hay un cuadrado, ver si se puede posicionar, sino vuelvo a estado anterior
-    let locker= getLocker(event.layerX,event.layerY );
+    let locker= board.getLocker(event.layerX,event.layerY );
     //ubico la ficha al casillero
-if(locker!==null&&lastClickedFicha!==null) game.addFicha(lastClickedFicha,locker);
-// devolver un boolean, si se agrego, eliminar del arreglo de figuras
+if(locker!==null&&lastClickedFicha!==null){
+   let agregada= game.addFicha(lastClickedFicha,locker);
+   if(agregada){
+     
+// si se agrego, eliminar del arreglo de figuras
+   }
+} 
+
 }
-//obtener un el casillero
-function getLocker(posX,posY){
-for (let index = 0; index < tablero.length; index++) {
-    if(tablero[index].isPointInside(posX,posY))
-    return tablero[index];
-}
-return null;
-}
+
+
+
 
 function crearFichas() {
     let espacio = canvas.height / NUM_FICHAS;
     // Inicializar figuras de forma aleatoria
-    player1 = new Player("Jugador 1");
-    player2 = new Player("Jugador 2");
+    player1 = new Player("Jugador 1", 1);
+    player2 = new Player("Jugador 2", 2);
     for (let index = 0; index < NUM_FICHAS; index++) {
         if (index == 0) {
             addCircle('#00e6e6', canvas.width * 0.1, canvas.height / 2, player1);
             addCircle('#600080', canvas.width * 0.9, canvas.height / 2, player2);
         } else {
-            addCircle('#00e6e6', canvas.width * 0.05, espacio * index);
-            addCircle('#600080', canvas.width * 0.95, espacio * index);
+            addCircle('#00e6e6', canvas.width * 0.05, espacio * index, player1);
+            addCircle('#600080', canvas.width * 0.95, espacio * index, player2);
         }
     }
 
@@ -134,29 +132,12 @@ function crearFichas() {
   
 }
 
-function crearTablero() {
-    let color = "blue";
-    let posX = beginPosX;
-    let posY = beginPosY;
-    for (let y = 0; y < row; y++) {//filas
-      
-        for (let x = 0; x < col; x++) {
-            posX += CUADRADO_SIZE + 5;
-            addRectangle(color, posX, posY,y,x);
-        }
-        posX -= (CUADRADO_SIZE + 5) * col;
-        posY += CUADRADO_SIZE + 5;
-    }
-
-}
-
-
 
 function restartGame() {
     clearCanvas('#F8F8FF', canvas);
     // reinicializo valores
     figuras = [];
-    tablero = []; 
+    board = []; 
     startGame();
     //resetear ganador y todo
 }
@@ -166,7 +147,7 @@ document.querySelector("#restart").addEventListener('click', restartGame);
 // Crear juego
 function startGame() {
     crearFichas();
-    crearTablero();
+    board= new Board(beginPosX, beginPosY,context);
     drawFigures();
     game= new Game( row,col, player1, player2);
 }

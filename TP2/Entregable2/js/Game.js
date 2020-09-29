@@ -4,11 +4,12 @@ class Game {
         this.matrix = [];
         this.row = row;
         this.col = col;
-       // console.log(matrix);
+        // console.log(matrix);
         this.lastInsertPos = { col: 0, fil: 0 };
-        this.lastPlayer=player1;
-
-      this.createBoard();
+        this.lastPlayer = player1;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.createBoard();
     }
 
     createBoard() {
@@ -50,19 +51,23 @@ class Game {
     //Agregar ficha en las coordenadas
     addFicha(ficha, locker) {
         // si es posible ubicar en la casilla
+        let agregada=false;
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
         console.log(matrix[f][c]);
 
         if (this.isValidLocker(f, c)) {
-            matrix[f][c] = ficha;//agrego la ficha
+            matrix[f][c] = ficha;//agrego la ficha a la matriz
             this.lastInsertPos = { col: c, fil: f };// actualizar ultima insertada
-            ficha.setPosition(locker.getPosXMed(), locker.getPosYMed())
+            ficha.setPosition(locker.getPosXMed(), locker.getPosYMed());
             this.lastPlayer = ficha.getPlayer();
+            agregada=true;
         } else {
             ficha.setBeginPosition();
+
         }
         console.log("valor" + matrix[f][c].getRadius());
+        return agregada;
     }
 
     checkColum(col, fil) {
@@ -128,7 +133,9 @@ class Game {
 
         return winner;
     }
-
+    win(nombre) {
+        return "Gano el " + nombre;
+    }
 
 
 }
