@@ -1,11 +1,12 @@
 class Circle extends Figure {
-    constructor(posX, posY, radius, fill, context, player) {
+    constructor(posX, posY, radius, fill, context, player, id) {
         super(posX, posY, fill, context);
         this.radius = radius;
         this.player = player;
         this.beginPosX = posX;
         this.beginPosY = posY;
         this.clickeable = true;
+        this.id=id;
         this.turn = true;// poner en false;
     }
 
@@ -48,8 +49,11 @@ class Circle extends Figure {
             let _y = this.posY - y;
             return Math.sqrt(_x * _x + _y * _y) < this.radius;
         }
+        return false;
     }
-
+ getId(){
+     return this.id;
+ }
     getBeginPosition() {
         return {
             beginPosX: this.beginPosX,

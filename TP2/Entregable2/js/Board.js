@@ -34,8 +34,9 @@ class Board {
     //obtener un el casillero
     getLocker(posX, posY) {
         for (let index = 0; index < this.board.length; index++) {
-            if (this.board[index].isPointInside(posX, posY))
+            if (this.board[index].isPointInside(posX, posY)){
                 return this.board[index];
+            }
         }
         return null;
     }
@@ -52,7 +53,6 @@ class Board {
             posX -= (CUADRADO_SIZE + 5) * COL;
             posY += CUADRADO_SIZE + 5;
         }
-
 
     }
 

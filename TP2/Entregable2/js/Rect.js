@@ -69,6 +69,14 @@ class Rect extends Figure {
         //si no estoy afuera del rectangulo
         return !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
     }
+    circleInsideLocker(x, y, figure) {
+        // si no esta fuera de la casilla
+        let isInside = !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
+        if (isInside == true) {//esta adentro
+            figure.setPosition(this.getPosXMed, this.getPosYMed);//ubico al medio
+        }
+        return isInside;
+    }
 
    
 }

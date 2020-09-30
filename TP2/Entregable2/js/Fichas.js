@@ -14,18 +14,18 @@ class Fichas {
 
         for (let index = 0; index < this.num_fichas; index++) {
             if (index == 0) {
-                this.addCircle('#00e6e6', CANVAS_WIDTH * 0.1, CANVAS_HEIGHT / 2, player1);
-                this.addCircle('#600080', CANVAS_WIDTH * 0.9, CANVAS_HEIGHT / 2, player2);
+                this.addCircle('#00e6e6', CANVAS_WIDTH * 0.1, CANVAS_HEIGHT / 2, player1, index);
+                this.addCircle('#600080', CANVAS_WIDTH * 0.9, CANVAS_HEIGHT / 2, player2, index);
             } else {
-                this.addCircle('#00e6e6', CANVAS_WIDTH * 0.05, espacio * index, player1);
-                this.addCircle('#600080', CANVAS_WIDTH * 0.95, espacio * index, player2);
+                this.addCircle('#00e6e6', CANVAS_WIDTH * 0.05, espacio * index, player1, index);
+                this.addCircle('#600080', CANVAS_WIDTH * 0.95, espacio * index, player2, index);
             }
         }
         //eventos addEventListener
      }
 
-    addCircle(color, posX, posY, player) {
-        let circle = new Circle(posX, posY, FICHAS_SIZE, color, CONTEXT, player);
+    addCircle(color, posX, posY, player, id) {
+        let circle = new Circle(posX, posY, FICHAS_SIZE, color, CONTEXT, player,id);
         this.fichas.push(circle);
     }
 
