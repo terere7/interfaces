@@ -310,10 +310,10 @@ class Game {
     }
 
     //CAMBIAR DE JUGADOR
-    changePlayer(clickedFicha) {
+    changePlayer() {
         //falta activar y desactivar fichas
-        let player = clickedFicha.getPlayer();
-        let f= this.fichas.getBoard();
+        let player = this.clickedFicha.getPlayer();
+        let f= this.fichas.getFichas();
         for (let i = 0; i < f.length; i++) {
             if (f[i].getPlayer() == player) {
                 f[i].setTurn(false);
