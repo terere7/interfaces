@@ -51,7 +51,7 @@ class Game {
             }
         } else {
             //volver a poner la ficha en el principio
-            if (this.clickedFicha != null&& this.clickedFicha.isClickeable()) {
+            if (this.clickedFicha != null && this.clickedFicha.isClickeable()) {
                 ficha.setBeginPosition();
             }
         }
@@ -104,8 +104,8 @@ class Game {
         let validPos = false;
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
-        console.log("f"+f);
-        console.log("c"+c);
+        console.log("f" + f);
+        console.log("c" + c);
         if (f == ROW - 1) {// fila de mas abajo
             validPos = true;
             console.log("es valido");
@@ -118,7 +118,7 @@ class Game {
     }
     //Obtiene un casillero pasando su coordenadas fila y col
     getLocker(x, y) {
-        let b= this.board.getBoard();
+        let b = this.board.getBoard();
         for (let index = 0; index < b.length; index++) {
             let locker = b[index];
             if (locker.getCol() == x && locker.getRow() == y) {
@@ -168,8 +168,8 @@ class Game {
                 //si encuentra una ficha de otro jugador, no cuenta mas
                 console.log(index);
                 console.log(col);
-                let locker= this.getLocker(col, index);
-                
+                let locker = this.getLocker(col, index);
+
                 console.log(locker);
                 let playerX = this.getLocker(col, index).getFicha().getPlayer().getNum();
                 if (playerX !== this.lastPlayer.getNum()) {
@@ -189,30 +189,37 @@ class Game {
         let auxCol = col;
         //busco a la derecha
         while (auxCol < COL && !find) {
-            let playerX = this.getLocker(auxCol, fil).getFicha().getPlayer().getNum();
-            if (playerX !== this.lastPlayer.getNum()) {
+            if (this.getLocker(auxCol, fil).getFicha() == null) {
                 find = true;
             } else {
-                countRight++;
-                auxCol++;
+                let playerX = this.getLocker(auxCol, fil).getFicha().getPlayer().getNum();
+                if (playerX !== this.lastPlayer.getNum()) {
+                    find = true;
+                } else {
+                    countRight++;
+                    auxCol++;
+                }
             }
+
         }
         //Vuelvo a pos original
         auxCol = col - 1;// no cuento el casillero actual
         find = false;
         //busco a la izq
+        ///HACER LOS DEMAS COMO EESTE!!
+
         while (auxCol >= 0 && !find) {
-            if(this.getLocker(auxCol, fil).getFicha()==null){
-                find=true;
-            }else{
-                if(this.getLocker(auxCol, fil).getFicha().getPlayer().getNum()!== this.lastPlayer.getNum()) {
+            if (this.getLocker(auxCol, fil).getFicha() == null) {
+                find = true;
+            } else {
+                if (this.getLocker(auxCol, fil).getFicha().getPlayer().getNum() !== this.lastPlayer.getNum()) {
                     find = true;
                 } else {
                     countLeft++;
                     auxCol--;
                 }
             }
-             
+
         }
         count = countRight + countLeft;
         return count === WIN;
@@ -225,13 +232,17 @@ class Game {
         let countDown = 0;
         let find = false;
         while (auxCol < COL && auxFil >= 0 && !find) {
-            let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-            if (playerX !== this.lastPlayer.getNum()) {
+            if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
-                countUp++;
-                auxCol++;
-                auxFil--;
+                let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
+                if (playerX !== this.lastPlayer.getNum()) {
+                    find = true;
+                } else {
+                    countUp++;
+                    auxCol++;
+                    auxFil--;
+                }
             }
         }
         //reinicializo valores
@@ -239,13 +250,17 @@ class Game {
         auxCol = col - 1;
         auxFil = fil + 1;
         while (auxCol >= 0 && auxFil < ROW && !find) {
-            let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-            if (playerX !== this.lastPlayer.getNum()) {
+            if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
-                countDown++;
-                auxCol--;
-                auxFil++;
+                let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
+                if (playerX !== this.lastPlayer.getNum()) {
+                    find = true;
+                } else {
+                    countDown++;
+                    auxCol--;
+                    auxFil++;
+                }
             }
         }
         return (countDown + countUp) == WIN;
@@ -259,13 +274,17 @@ class Game {
         let countDown = 0;
         let find = false;
         while (auxCol >= 0 && auxFil >= 0 && !find) {
-            let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-            if (playerX !== this.lastPlayer.getNum()) {
+            if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
-                countUp++;
-                auxCol--;
-                auxFil--;
+                let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
+                if (playerX !== this.lastPlayer.getNum()) {
+                    find = true;
+                } else {
+                    countUp++;
+                    auxCol--;
+                    auxFil--;
+                }
             }
         }
         //reinicializo valores
@@ -273,13 +292,17 @@ class Game {
         auxCol = col + 1;
         auxFil = fil + 1;
         while (auxCol < COL && auxFil < ROW && !find) {
-            let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-            if (playerX !== this.lastPlayer.getNum()) {
+            if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
-                countDown++;
-                auxCol++;
-                auxFil++;
+                let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
+                if (playerX !== this.lastPlayer.getNum()) {
+                    find = true;
+                } else {
+                    countDown++;
+                    auxCol++;
+                    auxFil++;
+                }
             }
         }
         return (countDown + countUp) == WIN;
@@ -313,7 +336,7 @@ class Game {
     changePlayer() {
         //falta activar y desactivar fichas
         let player = this.clickedFicha.getPlayer();
-        let f= this.fichas.getFichas();
+        let f = this.fichas.getFichas();
         for (let i = 0; i < f.length; i++) {
             if (f[i].getPlayer() == player) {
                 f[i].setTurn(false);
@@ -327,28 +350,22 @@ class Game {
         } else {
             this.lastPlayer = this.player2;
         }
-        let mensaje = "Turno del " + this.lastPlayer.getName();
+        console.log(this.lastPlayer.getName());
+        let mensaje = "Tu turno";
         let msjEspera = "Espera un momento";
+        let span1 = document.querySelector("#player1");
+        let span2 = document.querySelector("#player2");
+        span1.innerHTML = "";
+        span2.innerHTML = "";
         if (this.lastPlayer.getNum() == 1) {
-            document.querySelector("#player1").innerHTML = mensaje;
-            document.querySelector("#player2").innerHTML = msjEspera;
+            span1.innerHTML = mensaje;
+            span2.innerHTML = msjEspera;
         } else {
-            document.querySelector("#player1").innerHTML = msjEspera;
-            document.querySelector("#player2").innerHTML = mensaje;
+            span1.innerHTML = msjEspera;
+            span2.innerHTML = mensaje;
         }
     }
 
-     switchPlayerTurns(lastDroppedFigure) {
-        let player = lastDroppedFigure.getPlayer();
-        let f= this.fichas.getBoard();
-        for (let i = 0; i < f.length; i++) {
-            if (f[i].getPlayer() == player) {
-                f[i].setTurn(false);
-            } else {
-                f[i].setTurn(true);
-            }
-        }
-    }
-
+   
 
 }
