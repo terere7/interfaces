@@ -61,7 +61,7 @@ class Rect extends Figure {
         return this.ficha;
     }
     isEmpty(){
-        return this.ficha!==null;
+        return this.ficha==null;
     }
 
     //saber si esta clickeando
@@ -73,7 +73,9 @@ class Rect extends Figure {
         // si no esta fuera de la casilla
         let isInside = !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
         if (isInside == true) {//esta adentro
-            figure.setPosition(this.getPosXMed, this.getPosYMed);//ubico al medio
+            if(figure!=null){
+                figure.setPosition(this.getPosXMed, this.getPosYMed);//ubico al medio
+            }
         }
         return isInside;
     }

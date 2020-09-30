@@ -44,16 +44,18 @@ class Game {
         //ubico la ficha al casillero
         let ficha = this.clickedFicha;
         if (locker != null && ficha != null) {
+            console.log(locker.isEmpty());
             if (locker.isEmpty() && ficha != null) {
+                console.log("fichaaa")
                 this.addFicha(ficha, locker);
             }
         } else {
             //volver a poner la ficha en el principio
-            if (this.lastClickedFicha != null) {
+            if (this.clickedFicha != null&& this.clickedFicha.isClickeable()) {
                 ficha.setBeginPosition();
             }
         }
-
+        this.drawFigures();
     }
     //DIBUJAR FIGURAS EN CANVAS
     drawFigures() {
@@ -102,6 +104,8 @@ class Game {
         let validPos = false;
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
+        console.log("f"+f);
+        console.log("c"+c);
         if (f == ROW - 1) {// fila de mas abajo
             validPos = true;
             console.log("es valido");
@@ -114,12 +118,14 @@ class Game {
     }
     //Obtiene un casillero pasando su coordenadas fila y col
     getLocker(x, y) {
-        for (let index = 0; index < this.board.length; index++) {
-            let locker = board[i];
+        let b= this.board.getBoard();
+        for (let index = 0; index < b.length; index++) {
+            let locker = b[index];
             if (locker.getCol() == x && locker.getRow() == y) {
                 return locker;
             }
         }
+        return null;
     }
     //BUG, A VECES SE VUELVE AUNQUE SEA VALIDA !!!!!!!!!!!
     //Agregar ficha al casillero
@@ -130,10 +136,9 @@ class Game {
         if (this.isValidLocker(locker)) {
             locker.setFicha(ficha);//agrego la ficha al casillero
             this.lastInsertPos = { col: c, fil: f };// actualizar ultima insertada
-            locker.circleInsideLocker();
-            this.removeClickeable(ficha);
+            ficha.setClickeable(false);
+            //this.removeClickeable(ficha);
             this.countFichasUsed++;
-            console.log(locker);
 
             if (this.isWinner()) {
                 alert("Gano el " + this.lastPlayer.getName());
@@ -144,14 +149,14 @@ class Game {
 
     }
 
-    removeClickeable(ficha) {
-        let f = fichas.getFichas();
-        for (let index = 0; index < this.fichas.getFichas().length; index++) {
-            if (f[index].getId() == ficha.getId()) {
-                f[index].setClickleable(false);
-            }
-        }
-    }
+    // removeClickeable(ficha) {
+    //     let f = fichas.getFichas();
+    //     for (let index = 0; index < this.fichas.getFichas().length; index++) {
+    //         if (f[index].getId() == ficha.getId()) {
+    //             f[index].setClickleable(false);
+    //         }
+    //     }
+    // }
 
     // FUNCIONES PARA CHECKEAR 4 EN LINEA
     checkColum(col, fil) {
@@ -161,7 +166,12 @@ class Game {
         for (let index = fil; index < ROW; index++) {
             if (!find) {
                 //si encuentra una ficha de otro jugador, no cuenta mas
-                let playerX = this.getLocker(index, col).getFicha().getPlayer().getNum();
+                console.log(index);
+                console.log(col);
+                let locker= this.getLocker(col, index);
+                
+                console.log(locker);
+                let playerX = this.getLocker(col, index).getFicha().getPlayer().getNum();
                 if (playerX !== this.lastPlayer.getNum()) {
                     find = true;
                 } else {
@@ -192,13 +202,17 @@ class Game {
         find = false;
         //busco a la izq
         while (auxCol >= 0 && !find) {
-            let playerX = this.getLocker(auxCol, fil).getFicha().getPlayer().getNum();
-            if (playerX !== this.lastPlayer.getNum()) {
-                find = true;
-            } else {
-                countLeft++;
-                auxCol--;
+            if(this.getLocker(auxCol, fil).getFicha()==null){
+                find=true;
+            }else{
+                if(this.getLocker(auxCol, fil).getFicha().getPlayer().getNum()!== this.lastPlayer.getNum()) {
+                    find = true;
+                } else {
+                    countLeft++;
+                    auxCol--;
+                }
             }
+             
         }
         count = countRight + countLeft;
         return count === WIN;
@@ -244,7 +258,7 @@ class Game {
         let countUp = 0;
         let countDown = 0;
         let find = false;
-        while (auxCol >=0 && auxFil >= 0 && !find) {
+        while (auxCol >= 0 && auxFil >= 0 && !find) {
             let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
             if (playerX !== this.lastPlayer.getNum()) {
                 find = true;
@@ -258,7 +272,7 @@ class Game {
         find = false;
         auxCol = col + 1;
         auxFil = fil + 1;
-        while (auxCol <COL && auxFil <ROW && !find) {
+        while (auxCol < COL && auxFil < ROW && !find) {
             let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
             if (playerX !== this.lastPlayer.getNum()) {
                 find = true;
@@ -274,6 +288,7 @@ class Game {
     isWinner() {
         let col = this.lastInsertPos.col;
         let fil = this.lastInsertPos.fil;
+        console.log(this.lastInsertPos.col);
         let winner = false;
         winner = this.checkColum(col, fil);
         if (!winner) {
@@ -295,7 +310,17 @@ class Game {
     }
 
     //CAMBIAR DE JUGADOR
-    changePlayer() {
+    changePlayer(clickedFicha) {
+        //falta activar y desactivar fichas
+        let player = clickedFicha.getPlayer();
+        let f= this.fichas.getBoard();
+        for (let i = 0; i < f.length; i++) {
+            if (f[i].getPlayer() == player) {
+                f[i].setTurn(false);
+            } else {
+                f[i].setTurn(true);
+            }
+        }
 
         if (this.lastPlayer.getNum() == 1) {
             this.lastPlayer = this.player2;
@@ -310,6 +335,18 @@ class Game {
         } else {
             document.querySelector("#player1").innerHTML = msjEspera;
             document.querySelector("#player2").innerHTML = mensaje;
+        }
+    }
+
+     switchPlayerTurns(lastDroppedFigure) {
+        let player = lastDroppedFigure.getPlayer();
+        let f= this.fichas.getBoard();
+        for (let i = 0; i < f.length; i++) {
+            if (f[i].getPlayer() == player) {
+                f[i].setTurn(false);
+            } else {
+                f[i].setTurn(true);
+            }
         }
     }
 
