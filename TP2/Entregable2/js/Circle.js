@@ -6,7 +6,7 @@ class Circle extends Figure {
         this.beginPosX = posX;
         this.beginPosY = posY;
         this.clickeable = true;
-        this.id=id;
+        this.id = id;
         this.turn = true;// poner en false;
     }
 
@@ -41,19 +41,9 @@ class Circle extends Figure {
     getPlayer() {
         return this.player;
     }
-
-    isPointInside(x, y) {
-        // si se puede clickea y 0
-        if ((this.clickeable) && (this.turn)) {
-            let _x = this.posX - x;
-            let _y = this.posY - y;
-            return Math.sqrt(_x * _x + _y * _y) < this.radius;
-        }
-        return false;
+    getId() {
+        return this.id;
     }
- getId(){
-     return this.id;
- }
     getBeginPosition() {
         return {
             beginPosX: this.beginPosX,
@@ -71,9 +61,17 @@ class Circle extends Figure {
     setClickeable(click) {
         this.clickeable = click;
     }
-
     setTurn(turn) {
         this.turn = turn;
     }
-
+    // COORDENADAS HAY FIGURA?
+    isPointInside(x, y) {
+        // si se puede clickea y 0
+        if ((this.clickeable) && (this.turn)) {
+            let _x = this.posX - x;
+            let _y = this.posY - y;
+            return Math.sqrt(_x * _x + _y * _y) < this.radius;
+        }
+        return false;
+    }
 }

@@ -5,9 +5,9 @@ class Fichas {
         this.player1 = player1;
         this.player2 = player2;
         this.fichas = [];
-        this.createFichas(); 
+        this.createFichas();
     }
-
+    // CREAR FICHAS
     createFichas() {
         let espacio = CANVAS_HEIGHT / this.num_fichas;
         // Inicializar figuras de forma aleatoria
@@ -22,14 +22,14 @@ class Fichas {
             }
         }
         //eventos addEventListener
-     }
-
-    addCircle(color, posX, posY, player, id) {
-        let circle = new Circle(posX, posY, FICHAS_SIZE, color, CONTEXT, player,id);
-        this.fichas.push(circle);
     }
 
-    getFichas(){
+    addCircle(color, posX, posY, player, id) {
+        let circle = new Circle(posX, posY, FICHAS_SIZE, color, CONTEXT, player, id);
+        this.fichas.push(circle);
+    }
+    //OBTENER ARREGLO DE FICHAS
+    getFichas() {
         return this.fichas;
     }
 }

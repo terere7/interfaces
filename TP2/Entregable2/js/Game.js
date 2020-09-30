@@ -44,9 +44,7 @@ class Game {
         //ubico la ficha al casillero
         let ficha = this.clickedFicha;
         if (locker != null && ficha != null) {
-            console.log(locker.isEmpty());
             if (locker.isEmpty() && ficha != null) {
-                console.log("fichaaa")
                 this.addFicha(ficha, locker);
             }
         } else {
@@ -103,11 +101,8 @@ class Game {
         let validPos = false;
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
-        console.log("f" + f);
-        console.log("c" + c);
         if (f == ROW - 1) {// fila de mas abajo
             validPos = true;
-            console.log("es valido");
         } else {
             if (!this.getLocker(c, f + 1).isEmpty()) {// el de abajo tiene una ficha
                 validPos = true;
@@ -137,9 +132,9 @@ class Game {
             locker.setFicha(ficha);//Almaceno ficha en el casillero
             this.lastInsertPos = { col: c, fil: f };//Update last position
             ficha.setClickeable(false);
-            let medX= locker.getPosXMed();
-            let medY= locker.getPosYMed();
-            ficha.setPosition(medX,medY);
+            let medX = locker.getPosXMed();
+            let medY = locker.getPosYMed();
+            ficha.setPosition(medX, medY);
             this.countFichasUsed++;
             if (this.isWinner()) {
                 alert("Gano el " + this.clickedFicha.getPlayer().getName());
@@ -158,11 +153,7 @@ class Game {
         for (let index = fil; index < ROW; index++) {
             if (!find) {
                 //si encuentra una ficha de otro jugador, no cuenta mas
-                console.log(index);
-                console.log(col);
                 let locker = this.getLocker(col, index);
-
-                console.log(locker);
                 let playerX = this.getLocker(col, index).getFicha().getPlayer().getNum();
                 if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
@@ -173,6 +164,7 @@ class Game {
         }
         return count === WIN;
     }
+
     checkRow(col, fil) {
         let count = 0;
         let countRight = 0;
@@ -216,6 +208,7 @@ class Game {
         count = countRight + countLeft;
         return count === WIN;
     }
+
     checkDiagonalAsc(col, fil) {
         let auxCol = col;
         let auxFil = fil;
@@ -303,7 +296,6 @@ class Game {
     isWinner() {
         let col = this.lastInsertPos.col;
         let fil = this.lastInsertPos.fil;
-        console.log(this.lastInsertPos.col);
         let winner = false;
         winner = this.checkColum(col, fil);
         if (!winner) {
@@ -326,14 +318,14 @@ class Game {
 
     //CAMBIAR DE JUGADOR
     changePlayer() {
-        //falta activar y desactivar fichas
+
         let player = this.clickedFicha.getPlayer();
         let f = this.fichas.getFichas();
         for (let i = 0; i < f.length; i++) {
             if (f[i].getPlayer() == player) {
-                f[i].setTurn(false);
+                f[i].setTurn(false);// Activa fichas del jugador
             } else {
-                f[i].setTurn(true);
+                f[i].setTurn(true);//Desactiva fichas del jugador
             }
         }
         if (this.clickedFicha.getPlayer().getNum() == 1) {
@@ -341,14 +333,13 @@ class Game {
         } else {
             this.lastPlayer = this.player1;
         }
-
+        //Turno 
         let mensaje = "Tu turno";
         let msjEspera = "Espera un momento";
         let span1 = document.querySelector("#player1");
         let span2 = document.querySelector("#player2");
         span1.innerHTML = "";
         span2.innerHTML = "";
-        console.log(this.lastPlayer);
         if (this.lastPlayer.getNum() == 1) {
             span1.innerHTML = mensaje;
             span2.innerHTML = msjEspera;

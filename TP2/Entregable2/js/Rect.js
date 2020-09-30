@@ -8,7 +8,7 @@ class Rect extends Figure {
         this.fill = fill;
         this.row = row;
         this.col = col;
-        this.ficha= null;
+        this.ficha = null;
     }
 
     //polimorfismo, llama al metodo de la clase mas baja
@@ -17,13 +17,14 @@ class Rect extends Figure {
         this.context.lineWidth = 3;
         this.context.strokeRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
     }
-    //Posicion media del cuadrado
+    //POSICION MEDIA DEL CUADRADO
     getPosXMed() {
         return this.posX + (this.width / 2);
     }
     getPosYMed() {
         return this.posY + (this.height / 2);
     }
+
     //GETTERS AND SETTERS
     getCoordenadas() {// fila y col que esta ubicado el casillero
         return {
@@ -53,32 +54,33 @@ class Rect extends Figure {
         this.height = height;
     }
 
-//FICHAS
-    setFicha(ficha){
-        this.ficha=ficha;
+    //FICHAS
+    setFicha(ficha) {
+        this.ficha = ficha;
     }
-    getFicha(){
+    getFicha() {
         return this.ficha;
     }
-    isEmpty(){
-        return this.ficha==null;
+    isEmpty() {
+        return this.ficha == null;
     }
 
-    //saber si esta clickeando
+    //HAY CUADRADO EN LAS POS X E Y?
     isPointInside(x, y) {
         //si no estoy afuera del rectangulo
         return !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
     }
+
     circleInsideLocker(x, y, figure) {
         // si no esta fuera de la casilla
         let isInside = !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
         if (isInside == true) {//esta adentro
-            if(figure!=null){
+            if (figure != null) {
                 figure.setPosition(this.getPosXMed, this.getPosYMed);//ubico al medio
             }
         }
         return isInside;
     }
 
-   
+
 }

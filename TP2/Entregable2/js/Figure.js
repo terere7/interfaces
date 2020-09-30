@@ -44,8 +44,6 @@ class Figure {
         this.highlightedStyle = style;
     }
 
-    
-
     //METODOS ABSTRACTOS
     draw() {
         this.context.fillStyle = this.fill;

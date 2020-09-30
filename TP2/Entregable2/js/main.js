@@ -47,7 +47,7 @@ function clearCanvas(color) {
 document.querySelector("#restart").addEventListener('click', startGame);
 
 
-// Crear juego
+//CREAR JUEGO
 function startGame() {
     clearCanvas('#F8F8FF');
     player1 = new Player("Jugador 1", 1);
@@ -56,6 +56,7 @@ function startGame() {
     board = new Board(beginPosX, beginPosY);
     game = new Game(player1, player2, board, fichas);
 }
+
 // Inicializar listeners de eventos de mouse en el canvas
 CANVAS.addEventListener('mousedown', onMouseDown, false);
 CANVAS.addEventListener('mouseup', onMouseUp, false);
