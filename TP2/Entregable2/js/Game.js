@@ -141,22 +141,13 @@ class Game {
             this.countFichasUsed++;
 
             if (this.isWinner()) {
-                alert("Gano el " + this.lastPlayer.getName());
+                alert("Gano el " + this.clickedFicha.getPlayer().getName());
             } else {
                 this.changePlayer();
             }
         }
 
     }
-
-    // removeClickeable(ficha) {
-    //     let f = fichas.getFichas();
-    //     for (let index = 0; index < this.fichas.getFichas().length; index++) {
-    //         if (f[index].getId() == ficha.getId()) {
-    //             f[index].setClickleable(false);
-    //         }
-    //     }
-    // }
 
     // FUNCIONES PARA CHECKEAR 4 EN LINEA
     checkColum(col, fil) {
@@ -172,7 +163,7 @@ class Game {
 
                 console.log(locker);
                 let playerX = this.getLocker(col, index).getFicha().getPlayer().getNum();
-                if (playerX !== this.lastPlayer.getNum()) {
+                if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
                     count++;
@@ -193,7 +184,7 @@ class Game {
                 find = true;
             } else {
                 let playerX = this.getLocker(auxCol, fil).getFicha().getPlayer().getNum();
-                if (playerX !== this.lastPlayer.getNum()) {
+                if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
                     countRight++;
@@ -212,7 +203,7 @@ class Game {
             if (this.getLocker(auxCol, fil).getFicha() == null) {
                 find = true;
             } else {
-                if (this.getLocker(auxCol, fil).getFicha().getPlayer().getNum() !== this.lastPlayer.getNum()) {
+                if (this.getLocker(auxCol, fil).getFicha().getPlayer().getNum() !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
                     countLeft++;
@@ -236,7 +227,7 @@ class Game {
                 find = true;
             } else {
                 let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-                if (playerX !== this.lastPlayer.getNum()) {
+                if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
                     countUp++;
@@ -254,7 +245,7 @@ class Game {
                 find = true;
             } else {
                 let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-                if (playerX !== this.lastPlayer.getNum()) {
+                if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
                     countDown++;
@@ -278,7 +269,7 @@ class Game {
                 find = true;
             } else {
                 let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-                if (playerX !== this.lastPlayer.getNum()) {
+                if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
                     countUp++;
@@ -296,7 +287,7 @@ class Game {
                 find = true;
             } else {
                 let playerX = this.getLocker(auxCol, auxFil).getFicha().getPlayer().getNum();
-                if (playerX !== this.lastPlayer.getNum()) {
+                if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
                     countDown++;
@@ -344,19 +335,19 @@ class Game {
                 f[i].setTurn(true);
             }
         }
-
-        if (this.lastPlayer.getNum() == 1) {
+        if (this.clickedFicha.getPlayer().getNum() == 1) {
             this.lastPlayer = this.player2;
         } else {
-            this.lastPlayer = this.player2;
+            this.lastPlayer = this.player1;
         }
-        console.log(this.lastPlayer.getName());
+        
         let mensaje = "Tu turno";
         let msjEspera = "Espera un momento";
         let span1 = document.querySelector("#player1");
         let span2 = document.querySelector("#player2");
         span1.innerHTML = "";
         span2.innerHTML = "";
+        console.log(this.lastPlayer);
         if (this.lastPlayer.getNum() == 1) {
             span1.innerHTML = mensaje;
             span2.innerHTML = msjEspera;
