@@ -7,7 +7,7 @@ class Player {
 
     //GETTER Y SETTERS
     getName() {
-        return this.nombre;
+        return this.name;
     }
     setName(name) {
         this.name = name;

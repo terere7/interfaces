@@ -78,7 +78,7 @@ class Game {
         for (let index = 0; index < fichasAux.length; index++) {
             let element = fichasAux[index];
             if (element.isPointInside(x, y)) {
-                this.clickedFicha = element;
+                this.clickedFicha = element;// seteo la ultima apretada
                 return element;
             }
         }
@@ -93,7 +93,6 @@ class Game {
 
     //FUNCION DE VERIFICACION
     isValidLocker(locker) {
-
         //busco la fila en q puede poner
         if (!this.isValidPos(locker)) return false;
         return true;
@@ -116,7 +115,8 @@ class Game {
         }
         return validPos;
     }
-    //Obtiene un casillero pasando su coordenadas fila y col
+
+    //OBTENER CASILLERO (fila y col) 
     getLocker(x, y) {
         let b = this.board.getBoard();
         for (let index = 0; index < b.length; index++) {
@@ -127,19 +127,20 @@ class Game {
         }
         return null;
     }
-    //BUG, A VECES SE VUELVE AUNQUE SEA VALIDA !!!!!!!!!!!
-    //Agregar ficha al casillero
+
+    //AGREGAR LA FICHA AL CASILLERO
     addFicha(ficha, locker) {
-        // si es posible ubicar en la casilla
+        // Fila y col ubicada (casillero)
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
         if (this.isValidLocker(locker)) {
-            locker.setFicha(ficha);//agrego la ficha al casillero
-            this.lastInsertPos = { col: c, fil: f };// actualizar ultima insertada
+            locker.setFicha(ficha);//Almaceno ficha en el casillero
+            this.lastInsertPos = { col: c, fil: f };//Update last position
             ficha.setClickeable(false);
-            //this.removeClickeable(ficha);
+            let medX= locker.getPosXMed();
+            let medY= locker.getPosYMed();
+            ficha.setPosition(medX,medY);
             this.countFichasUsed++;
-
             if (this.isWinner()) {
                 alert("Gano el " + this.clickedFicha.getPlayer().getName());
             } else {
@@ -340,7 +341,7 @@ class Game {
         } else {
             this.lastPlayer = this.player1;
         }
-        
+
         let mensaje = "Tu turno";
         let msjEspera = "Espera un momento";
         let span1 = document.querySelector("#player1");
@@ -357,6 +358,6 @@ class Game {
         }
     }
 
-   
+
 
 }
