@@ -8,6 +8,9 @@ class Circle extends Figure {
         this.clickeable = true;
         this.id = id;
         this.turn = true;// poner en false;
+        //Ficha imagen
+        this.urlimage = fill;// la imagen es el relleno
+        this.image = new Image();
     }
 
     draw() {
@@ -16,20 +19,32 @@ class Circle extends Figure {
         //x,y,radio, angulo de comienzo, angulo de finalidad (radianes) 
         // PI=180, 2PI=360
         this.context.arc(this.posX, this.posY, this.radius, 0, 2 * Math.PI);
-        this.context.fill();
+      //  this.context.fill();  color solido
+
+        if (this.image.src === "") {
+            this.image.src = this.urlimage;
+            let loadImg = function () {
+                this.context.drawImage()
+                this.context.drawImage(this.image, this.posX - this.radius, this.posY - this.radius, FICHAS_SIZE*2, FICHAS_SIZE*2);
+            }
+            this.image.onload = loadImg.bind(this);
+        } else {
+            this.context.drawImage(this.image, this.posX - this.radius, this.posY - this.radius, FICHAS_SIZE*2, FICHAS_SIZE*2);
+        }
+
         //resaltar el que este seleccionado
         if (this.highlighted === true) {// si la figura esta resaltada
             this.context.strokeStyle = this.highlightedStyle;
             this.context.lineWidth = 5;
             this.context.stroke();
         }
-
+        
         this.context.closePath();
     }
     setBeginPosition() {
         this.posX = this.beginPosX;
         this.posY = this.beginPosY;
-        //   this.draw();
+        //this.draw();
     }
     //GETTERS AND SETTERS
     setRadius(radius) {

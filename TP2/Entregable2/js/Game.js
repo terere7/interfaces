@@ -50,9 +50,14 @@ class Game {
         } else {
             //volver a poner la ficha en el principio
             if (this.clickedFicha != null && this.clickedFicha.isClickeable()) {
-                ficha.setBeginPosition();
+                this.setBeginPosition(ficha);
             }
         }
+        this.drawFigures();
+    }
+
+    setBeginPosition(ficha) {
+        ficha.setBeginPosition();
         this.drawFigures();
     }
     //DIBUJAR FIGURAS EN CANVAS
@@ -142,7 +147,7 @@ class Game {
                 this.changePlayer();
             }
         }
-
+        this.drawFigures();// para q me dibuje en el momento
     }
 
     // FUNCIONES PARA CHECKEAR 4 EN LINEA

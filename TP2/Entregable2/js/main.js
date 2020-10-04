@@ -15,8 +15,8 @@ let board;
 const ROW = 6;
 const COL = 7;
 // Calcular donde empieza el trablero
-let beginPosX = ((CANVAS_WIDTH / 2) - ((COL * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - 20;
-let beginPosY = ((CANVAS_HEIGHT / 2) - ((ROW * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + 40;
+let beginPosX = ((CANVAS_WIDTH / 2) - ((COL * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - FICHAS_SIZE;
+let beginPosY = ((CANVAS_HEIGHT / 2) - ((ROW * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + (FICHAS_SIZE*2);
 
 //JUEGO
 let game;
