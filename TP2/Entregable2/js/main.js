@@ -57,8 +57,8 @@ function startGame() {
     player2 = new Player("Jugador 2", 2);
     fichas = new Fichas(NUM_FICHAS, FICHAS_SIZE, player1, player2);
     board = new Board(beginPosX, beginPosY);
-    drop= new DropDrag(beginPosX + (CUADRADO_SIZE/2), beginPosY-FICHAS_SIZE,COL);
-    game = new Game(player1, player2, board, fichas,drop);
+    
+    game = new Game(player1, player2, board, fichas);
 }
 
 // Inicializar listeners de eventos de mouse en el canvas

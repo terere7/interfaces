@@ -1,11 +1,10 @@
 const WIN = 4;
 class Game {
-    constructor(player1, player2, board, fichas, drop) {
+    constructor(player1, player2, board, fichas) {
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
-        this.fichas = fichas;
-        this.drop=drop;
+        this.fichas = fichas;        
         this.countFichasUsed = 0;
         this.lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
         this.lastInsertPos = { col: 0, fil: 0 };
@@ -90,8 +89,8 @@ class Game {
         for (let i = 0; i < boardAux.length; i++) {
             boardAux[i].draw();
         }
-
-        let dropAux=  this.drop.getDrop();
+console.log(boardAux);
+        let dropAux=  this.board.getDrop();
         console.log(dropAux);
         for (let i = 0; i < dropAux.length; i++) {
             dropAux[i].draw();

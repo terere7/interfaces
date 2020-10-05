@@ -4,7 +4,9 @@ class Board {
         this.posX = posX;
         this.posY = posY;
         this.board = [];
+        this.dropCircles=[];
         this.createBoard();
+        this.createDrop();
     }
     
     circleInsideBoard(x, y, figure) {
@@ -15,6 +17,23 @@ class Board {
         }
         return isInside;
     }
+//DROP
+
+    createDrop(){
+        let img= "./img/FLECHA.png";
+        let posX=this.posX ;
+        let posY=this.posY-CUADRADO_SIZE;
+        for (let index = 0; index < COL; index++) {
+            posX += CUADRADO_SIZE + 5;
+                this.addRectangle(img, posX, posY, null, index);               
+        }
+        
+    }
+
+    getDrop(){
+        return this.dropCircles;
+    }
+   
 
     //Rectangulo
     addRectangle(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
