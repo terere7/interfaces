@@ -5,17 +5,31 @@ class Rect extends Figure {
         //propios atributos del rectangulo
         this.width = width;
         this.height = height;
-        this.fill = fill;
+        //     this.fill = fill;
         this.row = row;
         this.col = col;
         this.ficha = null;
+        //Casilleros con imagenes
+        this.urlimage = fill;
+        this.image = new Image();
     }
 
     //polimorfismo, llama al metodo de la clase mas baja
     draw() {
         super.draw();
-        this.context.lineWidth = 3;
-        this.context.strokeRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
+        //  this.context.lineWidth = 3;
+        // this.context.strokeRect(this.posX, this.posY, this.width, this.height);//dibuja un rectangulo
+        //Dibuja casillero con la imagen
+        if (this.image.src === "") {
+            this.image.src = this.urlimage;
+            let loadImg = function () {
+                this.context.drawImage(this.image, this.posX, this.posY, this.width, this.height);
+            }
+            this.image.onload = loadImg.bind(this);
+
+        } else {
+            this.context.drawImage(this.image, this.posX, this.posY, this.width, this.height);
+        }
     }
     //POSICION MEDIA DEL CUADRADO
     getPosXMed() {

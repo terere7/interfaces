@@ -34,7 +34,8 @@ class Board {
 
     // CREAR TABLERO (CONJUNTO DE CASILLEROS)
     createBoard() {
-        let color = "blue";
+      //  let color = "blue";
+      let color = "./img/locker1.png";
         let posX = this.posX;
         let posY = this.posY;
         for (let y = 0; y < ROW; y++) {//filas
