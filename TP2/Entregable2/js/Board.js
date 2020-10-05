@@ -6,7 +6,7 @@ class Board {
         this.board = [];
         this.createBoard();
     }
-
+    
     circleInsideBoard(x, y, figure) {
         // si no esta fuera de la casilla
         let isInside = !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);

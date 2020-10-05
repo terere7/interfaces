@@ -1,10 +1,11 @@
 const WIN = 4;
 class Game {
-    constructor(player1, player2, board, fichas) {
+    constructor(player1, player2, board, fichas, drop) {
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
         this.fichas = fichas;
+        this.drop=drop;
         this.countFichasUsed = 0;
         this.lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
         this.lastInsertPos = { col: 0, fil: 0 };
@@ -43,16 +44,32 @@ class Game {
         let locker = this.board.getLocker(event.layerX, event.layerY);
         //ubico la ficha al casillero
         let ficha = this.clickedFicha;
+        // if (locker != null && ficha != null) {
+        //     if (locker.isEmpty() && ficha != null) {
+        //         this.addFicha(ficha, locker);
+        //     }
+        // } else {
+        //     //volver a poner la ficha en el principio
+        //     if (this.clickedFicha != null && this.clickedFicha.isClickeable()) {
+        //         this.setBeginPosition(ficha);
+        //     }
+        // }
+        //dentro del tablero
         if (locker != null && ficha != null) {
-            if (locker.isEmpty() && ficha != null) {
-                this.addFicha(ficha, locker);
-            }
-        } else {
             //volver a poner la ficha en el principio
             if (this.clickedFicha != null && this.clickedFicha.isClickeable()) {
                 this.setBeginPosition(ficha);
             }
+            
+        } else {
+            //si toca algunos de los circulos
+            //controlar si no se rebalso el casillero
+            if (ficha != null) {
+                this.addFicha(ficha, locker);
+            }
+            
         }
+        
         this.drawFigures();
     }
 
@@ -72,6 +89,12 @@ class Game {
         let boardAux = this.board.getBoard();
         for (let i = 0; i < boardAux.length; i++) {
             boardAux[i].draw();
+        }
+
+        let dropAux=  this.drop.getDrop();
+        console.log(dropAux);
+        for (let i = 0; i < dropAux.length; i++) {
+            dropAux[i].draw();
         }
     }
 

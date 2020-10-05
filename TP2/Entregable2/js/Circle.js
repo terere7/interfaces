@@ -24,7 +24,7 @@ class Circle extends Figure {
         if (this.image.src === "") {
             this.image.src = this.urlimage;
             let loadImg = function () {
-                this.context.drawImage()
+               
                 this.context.drawImage(this.image, this.posX - this.radius, this.posY - this.radius, FICHAS_SIZE*2, FICHAS_SIZE*2);
             }
             this.image.onload = loadImg.bind(this);

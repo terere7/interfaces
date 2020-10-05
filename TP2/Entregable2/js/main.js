@@ -18,6 +18,9 @@ const COL = 7;
 let beginPosX = ((CANVAS_WIDTH / 2) - ((COL * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - FICHAS_SIZE;
 let beginPosY = ((CANVAS_HEIGHT / 2) - ((ROW * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) + (FICHAS_SIZE*2);
 
+//DROP Y DRAG
+let drop;
+
 //JUEGO
 let game;
 
@@ -54,7 +57,8 @@ function startGame() {
     player2 = new Player("Jugador 2", 2);
     fichas = new Fichas(NUM_FICHAS, FICHAS_SIZE, player1, player2);
     board = new Board(beginPosX, beginPosY);
-    game = new Game(player1, player2, board, fichas);
+    drop= new DropDrag(beginPosX + (CUADRADO_SIZE/2), beginPosY-FICHAS_SIZE,COL);
+    game = new Game(player1, player2, board, fichas,drop);
 }
 
 // Inicializar listeners de eventos de mouse en el canvas
