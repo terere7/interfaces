@@ -4,18 +4,26 @@ class Game {
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
-        this.fichas = fichas;        
+        this.fichas = fichas;
         this.countFichasUsed = 0;
         this.lastClickedFicha = null;// ultima figura clickeada, por defecto no tengo ninguna
         this.lastInsertPos = { col: 0, fil: 0 };
         this.clickedFicha = null;
         this.lastPlayer = player1;// por defecto comienza el
         this.isMouseDown = false;
+        this.winner = false;
+        this.listWinPieces = [];
         this.drawFigures();
+        this.firstPlayer();
+        this.interval=null;
+        this.display = null;
+        console.log(this.display)
+        
+        this.restartTimer(60);
 
     }
 
-    //EVENTOS
+    //EVENTOS MOUSE
     onMouseDown(event) {
         this.isMouseDown = true;
         if (this.lastClickedFicha != null) {
@@ -40,60 +48,49 @@ class Game {
     onMouseUp(event) {
         this.isMouseDown = false;
         //buscar casillero;
-        let locker = this.board.getLocker(event.layerX, event.layerY);
-        //ubico la ficha al casillero
+        let drop = this.board.getDropZone(event.layerX, event.layerY);
+        console.log(drop);
         let ficha = this.clickedFicha;
-        // if (locker != null && ficha != null) {
-        //     if (locker.isEmpty() && ficha != null) {
-        //         this.addFicha(ficha, locker);
-        //     }
-        // } else {
-        //     //volver a poner la ficha en el principio
-        //     if (this.clickedFicha != null && this.clickedFicha.isClickeable()) {
-        //         this.setBeginPosition(ficha);
-        //     }
-        // }
-        //dentro del tablero
-        if (locker != null && ficha != null) {
+        //La ficha esta en algun drop zone
+        if (drop != null && ficha != null) {
+            if (drop.getRow() >= 0) {
+                let locker = this.board.getLocker(drop.getCol(), drop.getRow());
+                this.winner = this.addFicha(ficha, locker);
+                this.clickedFicha = null;
+                let fila = drop.getRow();
+                drop.setRow(fila - 1);
+            } else {// no hay mas lugar
+                this.setBeginPosition(ficha);
+            }
+        } else {
             //volver a poner la ficha en el principio
             if (this.clickedFicha != null && this.clickedFicha.isClickeable()) {
                 this.setBeginPosition(ficha);
             }
-            
-        } else {
-            //si toca algunos de los circulos
-            //controlar si no se rebalso el casillero
-            if (ficha != null) {
-                this.addFicha(ficha, locker);
-            }
-            
         }
-        
         this.drawFigures();
-    }
 
-    setBeginPosition(ficha) {
-        ficha.setBeginPosition();
-        this.drawFigures();
     }
+    ///////////////////////////////////////
+
+
     //DIBUJAR FIGURAS EN CANVAS
     drawFigures() {
         this.clearCanvas('#F8F8FF');
-        //Fichas
-        let fichasAux = this.fichas.getFichas();
-        for (let i = 0; i < fichasAux.length; i++) {
-            fichasAux[i].draw();
+        //drop zone
+        let dropAux = this.board.getDrop();
+        for (let i = 0; i < dropAux.length; i++) {
+            dropAux[i].draw();
         }
         //Tablero
         let boardAux = this.board.getBoard();
         for (let i = 0; i < boardAux.length; i++) {
             boardAux[i].draw();
         }
-console.log(boardAux);
-        let dropAux=  this.board.getDrop();
-        console.log(dropAux);
-        for (let i = 0; i < dropAux.length; i++) {
-            dropAux[i].draw();
+        //Fichas
+        let fichasAux = this.fichas.getFichas();
+        for (let i = 0; i < fichasAux.length; i++) {
+            fichasAux[i].draw();
         }
     }
 
@@ -115,6 +112,38 @@ console.log(boardAux);
         CONTEXT.fillStyle = color;
         CONTEXT.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
+    ///////////////////////////////////////////
+
+    //AGREGAR LA FICHA AL CASILLERO
+    addFicha(ficha, locker) {
+        // Fila y col ubicada (casillero)
+        let f = parseInt(locker.getRow());
+        let c = parseInt(locker.getCol());
+        if (this.isValidLocker(locker)) {
+            locker.setFicha(ficha);//Almaceno ficha en el casillero
+            this.lastInsertPos = { col: c, fil: f };//Update last position
+            ficha.setClickeable(false);
+            let medX = locker.getPosXMed();
+            let medY = locker.getPosYMed();
+            ficha.setPosition(medX, medY);
+            this.countFichasUsed++;
+        }
+        this.drawFigures();// para q me dibuje en el momento
+        if (this.isWinner()) {
+            this.drawFigures();
+            alert("Gano el " + this.lastPlayer.getName());
+            //    return true;
+        } else {
+            this.changePlayer();
+            return false;
+        }
+    }
+
+    // Poner la ficha en la posicion original
+    setBeginPosition(ficha) {
+        ficha.setBeginPosition();
+        this.drawFigures();
+    }
 
     //FUNCION DE VERIFICACION
     isValidLocker(locker) {
@@ -128,7 +157,7 @@ console.log(boardAux);
         let validPos = false;
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
-        if (f == ROW - 1) {// fila de mas abajo
+        if (f == row - 1) {// fila de mas abajo
             validPos = true;
         } else {
             if (!this.getLocker(c, f + 1).isEmpty()) {// el de abajo tiene una ficha
@@ -150,34 +179,12 @@ console.log(boardAux);
         return null;
     }
 
-    //AGREGAR LA FICHA AL CASILLERO
-    addFicha(ficha, locker) {
-        // Fila y col ubicada (casillero)
-        let f = parseInt(locker.getRow());
-        let c = parseInt(locker.getCol());
-        if (this.isValidLocker(locker)) {
-            locker.setFicha(ficha);//Almaceno ficha en el casillero
-            this.lastInsertPos = { col: c, fil: f };//Update last position
-            ficha.setClickeable(false);
-            let medX = locker.getPosXMed();
-            let medY = locker.getPosYMed();
-            ficha.setPosition(medX, medY);
-            this.countFichasUsed++;
-            if (this.isWinner()) {
-                alert("Gano el " + this.clickedFicha.getPlayer().getName());
-            } else {
-                this.changePlayer();
-            }
-        }
-        this.drawFigures();// para q me dibuje en el momento
-    }
-
     // FUNCIONES PARA CHECKEAR 4 EN LINEA
     checkColum(col, fil) {
         //checkea la columna para abajo
         let find = false;
         let count = 0;
-        for (let index = fil; index < ROW; index++) {
+        for (let index = fil; index < row; index++) {
             if (!find) {
                 //si encuentra una ficha de otro jugador, no cuenta mas
                 let locker = this.getLocker(col, index);
@@ -199,7 +206,7 @@ console.log(boardAux);
         let find = false;
         let auxCol = col;
         //busco a la derecha
-        while (auxCol < COL && !find) {
+        while (auxCol < col && !find) {
             if (this.getLocker(auxCol, fil).getFicha() == null) {
                 find = true;
             } else {
@@ -243,7 +250,7 @@ console.log(boardAux);
         let countUp = 0;
         let countDown = 0;
         let find = false;
-        while (auxCol < COL && auxFil >= 0 && !find) {
+        while (auxCol < col && auxFil >= 0 && !find) {
             if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
@@ -261,7 +268,7 @@ console.log(boardAux);
         find = false;
         auxCol = col - 1;
         auxFil = fil + 1;
-        while (auxCol >= 0 && auxFil < ROW && !find) {
+        while (auxCol >= 0 && auxFil < row && !find) {
             if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
@@ -303,7 +310,7 @@ console.log(boardAux);
         find = false;
         auxCol = col + 1;
         auxFil = fil + 1;
-        while (auxCol < COL && auxFil < ROW && !find) {
+        while (auxCol < col && auxFil < row && !find) {
             if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
@@ -325,28 +332,93 @@ console.log(boardAux);
         let fil = this.lastInsertPos.fil;
         let winner = false;
         winner = this.checkColum(col, fil);
+        // if (winner) {
+        //     this.listWinPieces.push(this.getLocker(col, fil).getFicha());
+        //     this.listWinPieces.push(this.getLocker(col, fil + 1).getFicha());
+        //     this.listWinPieces.push(this.getLocker(col, fil + 2).getFicha());
+        //     this.listWinPieces.push(this.getLocker(col, fil + 3).getFicha());
+        // }
         if (!winner) {
             winner = this.checkRow(col, fil);
+            // if (winner) {
+            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
+            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
+            //         col++;
+            //     }
+            //     col = this.lastInsertPos.col - 1;
+            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
+            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
+            //         col--;
+            //     }
+            // }
         }
         if (!winner) {
             winner = this.checkDiagonalAsc(col, fil);
+            // if (winner) {
+            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
+            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
+            //         col++;
+            //         fil--;
+            //     }
+            //     col = this.lastInsertPos.col - 1;
+            //     fil = this.lastInsertPos.fil + 1;
+            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
+            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
+            //         col--;
+            //         fil++;
+            //     }
+            // }
         }
         if (!winner) {
             winner = this.checkDiagonalDesc(col, fil);
+            // if (winner) {
+            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
+            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
+            //         col--;
+            //         fil--;
+            //     }
+            //     col = this.lastInsertPos.col + 1;
+            //     fil = this.lastInsertPos.fil + 1;
+            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
+            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
+            //         col++;
+            //         fil++;
+            //     }
+            // }
         }
+        //setear las fichas 
+        this.listWinPieces.forEach(element => {
+            element.setHighlightedStyle('39FF14')
+            element.setHighlighted(true);
+        });
         return winner;
     }
 
     gameOver() {
-        if (this.countFichasUsed === NUM_FICHAS) {
+        if (this.countFichasUsed === numFichas) {
             alert("GAME OVER");
+        }
+    }
+
+
+
+
+
+
+    firstPlayer() {
+        let f = this.fichas.getFichas();
+        for (let i = 0; i < f.length; i++) {
+            if (f[i].getPlayer() != this.player1) {
+                f[i].setTurn(false);// Activa fichas del jugador
+            } else {
+                f[i].setTurn(true);//Desactiva fichas del jugador
+            }
         }
     }
 
     //CAMBIAR DE JUGADOR
     changePlayer() {
-
-        let player = this.clickedFicha.getPlayer();
+        let player = this.lastPlayer;
         let f = this.fichas.getFichas();
         for (let i = 0; i < f.length; i++) {
             if (f[i].getPlayer() == player) {
@@ -355,7 +427,7 @@ console.log(boardAux);
                 f[i].setTurn(true);//Desactiva fichas del jugador
             }
         }
-        if (this.clickedFicha.getPlayer().getNum() == 1) {
+        if (this.lastPlayer.getNum() == 1) {
             this.lastPlayer = this.player2;
         } else {
             this.lastPlayer = this.player1;
@@ -374,8 +446,35 @@ console.log(boardAux);
             span1.innerHTML = msjEspera;
             span2.innerHTML = mensaje;
         }
+        this.restartTimer();
     }
-
-
-
+    // COUNTDOWN
+    startTimer(duration) {
+        let timer = duration;
+        let minutes;
+        let seconds;
+        console.log(timer)
+        this.interval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+//console.log(seconds)
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            this.display = document.querySelector('#time');
+            this.display.innerHTML = minutes + ":" + seconds;
+if (--timer < 0) {
+                timer = duration;
+                this.changePlayer();
+            }
+        }, 1000);
+    }
+    restartTimer() {
+        clearInterval(this.interval);
+        this.startTimer(60, this.display);
+    }
+    timer() {
+        var oneMinute = 60 * 1;
+        this.display = document.querySelector('#time');
+        this.startTimer(oneMinute, this.display);
+    };
 }

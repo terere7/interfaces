@@ -33,4 +33,8 @@ class Fichas {
     getFichas() {
         return this.fichas;
     }
+
+    setNumFichas(num) {
+       this.num_fichas=num;
+    }
 }

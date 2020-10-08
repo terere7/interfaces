@@ -5,7 +5,6 @@ class Rect extends Figure {
         //propios atributos del rectangulo
         this.width = width;
         this.height = height;
-        //     this.fill = fill;
         this.row = row;
         this.col = col;
         this.ficha = null;
@@ -45,6 +44,9 @@ class Rect extends Figure {
             row: this.row,
             col: this.col
         };
+    }
+    setRow(x) {
+        this.row=x;
     }
     getRow() {
         return this.row;

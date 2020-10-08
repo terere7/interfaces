@@ -11,6 +11,7 @@ class Circle extends Figure {
         //Ficha imagen
         this.urlimage = fill;// la imagen es el relleno
         this.image = new Image();
+        this.highlightedStyle='39FF14';
     }
 
     draw() {
