@@ -17,9 +17,9 @@ class Game {
         this.firstPlayer();
         this.interval=null;
         this.display = null;
-        console.log(this.display)
-        
-        this.restartTimer(60);
+        console.log(this.display);
+        console.log(this.interval);
+     //   this.restartTimer();
 
     }
 
@@ -400,11 +400,6 @@ class Game {
         }
     }
 
-
-
-
-
-
     firstPlayer() {
         let f = this.fichas.getFichas();
         for (let i = 0; i < f.length; i++) {
@@ -446,35 +441,59 @@ class Game {
             span1.innerHTML = msjEspera;
             span2.innerHTML = mensaje;
         }
-        this.restartTimer();
+      //  this.restartTimer();
     }
     // COUNTDOWN
-    startTimer(duration) {
-        let timer = duration;
-        let minutes;
-        let seconds;
-        console.log(timer)
-        this.interval = setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-//console.log(seconds)
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            this.display = document.querySelector('#time');
-            this.display.innerHTML = minutes + ":" + seconds;
-if (--timer < 0) {
-                timer = duration;
-                this.changePlayer();
-            }
-        }, 1000);
-    }
-    restartTimer() {
-        clearInterval(this.interval);
-        this.startTimer(60, this.display);
-    }
-    timer() {
-        var oneMinute = 60 * 1;
-        this.display = document.querySelector('#time');
-        this.startTimer(oneMinute, this.display);
-    };
+//     startTimer(duration) {
+//         let timer = duration;
+//         let minutes;
+//         let seconds;
+//         console.log(timer)
+//         this.interval = setInterval(function () {
+//             minutes = parseInt(timer / 60, 10);
+//             seconds = parseInt(timer % 60, 10);
+// //console.log(seconds)
+//             minutes = minutes < 10 ? "0" + minutes : minutes;
+//             seconds = seconds < 10 ? "0" + seconds : seconds;
+//             this.display = document.querySelector('#time');
+//             this.display.innerHTML = minutes + ":" + seconds;
+// if (--timer < 0) {
+//                 timer = duration;
+//                 game.changePlayer();
+//             }
+//         }, 1000);
+//     }
+//     restartTimer() {
+//         clearInterval(this.interval);
+//         this.startTimer(10, this.display);
+//     }
+    // timer() {
+    //     var oneMinute = 60 * 1;
+    //     this.display = document.querySelector('#time');
+    //     this.startTimer(oneMinute, this.display);
+    // };
+
+    // var c = 0;
+    // var t;
+    // var timer_is_on = 0;
+    
+    // function timedCount() {
+    //   document.getElementById("txt").value = c;
+    //   c--;
+    //   t = setTimeout(timedCount, 1000);
+    // }
+    
+    // function startCount() {
+    //   if (!timer_is_on) {
+    //     timer_is_on = 1;
+    //     timedCount();
+    //   }
+    // }
+    
+    // function stopCount() {
+    //   clearTimeout(t);
+    //   timer_is_on = 0;
+    // }
+
+
 }

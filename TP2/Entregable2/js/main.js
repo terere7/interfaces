@@ -60,8 +60,8 @@ function startGame() {
     fichas = new Fichas(numFichas, FICHAS_SIZE, player1, player2);
     board = new Board(beginPosX, beginPosY, row, col);
     game = new Game(player1, player2, board, fichas);
-    // game.stopTimer();
-   // game.restartTimer();
+    //game.stopTimer();
+  // game.restartTimer();
 }
 // function startGame(row, col) {
 //     let beginPosX = ((CANVAS_WIDTH / 2) - ((col * CUADRADO_SIZE) / 2) - CUADRADO_SIZE) - FICHAS_SIZE;

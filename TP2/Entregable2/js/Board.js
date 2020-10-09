@@ -22,7 +22,7 @@ class Board {
     //DROP
 
     createDrop() {
-        let img = "./img/FLECHA.png";
+        let img = "./img/flecha.png";
         let posX = this.posX;
         let posY = this.posY - CUADRADO_SIZE;
         let fila = this.row - 1;// x defecto todos empiezan en la ultima fila
