@@ -19,8 +19,8 @@ class Board {
         }
         return isInside;
     }
-    //DROP
 
+    //DROP
     createDrop() {
         let img = "./img/flecha.png";
         let posX = this.posX;
@@ -30,21 +30,20 @@ class Board {
             posX += CUADRADO_SIZE + 5;
             this.addDrop(img, posX, posY, fila, index);
         }
-
     }
 
     getDrop() {
         return this.dropCircles;
     }
-    addDrop(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
+    addDrop(color, posX, posY, row, col) {
         let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, CONTEXT, row, col);
-        this.dropCircles.push(rect);//agrega recangulos al arreglo
+        this.dropCircles.push(rect);
     }
 
     //Rectangulo
-    addRectangle(color, posX, posY, row, col) { // Agregar rectangulos al azar dentro del canvas
+    addRectangle(color, posX, posY, row, col) {
         let rect = new Rect(posX, posY, CUADRADO_SIZE, CUADRADO_SIZE, color, CONTEXT, row, col);
-        this.board.push(rect);//agrega recangulos al arreglo
+        this.board.push(rect);
     }
 
     //OBTENER LA DROP ZONE
@@ -97,5 +96,12 @@ class Board {
     }
     setRow(row) {
         this.row = row;
+    }
+
+    getCol() {
+        return this.col;
+    }
+    getRow() {
+        return this.row;
     }
 }

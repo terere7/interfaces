@@ -15,11 +15,9 @@ class Game {
         this.listWinPieces = [];
         this.drawFigures();
         this.firstPlayer();
-        this.interval=null;
+        this.interval = null;
         this.display = null;
-        console.log(this.display);
-        console.log(this.interval);
-     //   this.restartTimer();
+        //   this.restartTimer();
 
     }
 
@@ -53,19 +51,21 @@ class Game {
         let ficha = this.clickedFicha;
         //La ficha esta en algun drop zone
         if (drop != null && ficha != null) {
-            if (drop.getRow() >= 0) {
+            if (drop.getRow() >= 0) {//me devuelve la fila disponible
                 let locker = this.board.getLocker(drop.getCol(), drop.getRow());
-                this.winner = this.addFicha(ficha, locker);
-                this.clickedFicha = null;
+                this.addFicha(ficha, locker);
+                this.clickedFicha = null;//deselecciono la ficha una vez ubicada
                 let fila = drop.getRow();
                 drop.setRow(fila - 1);
             } else {// no hay mas lugar
                 this.setBeginPosition(ficha);
+                this.clickedFicha = null;
             }
         } else {
             //volver a poner la ficha en el principio
             if (this.clickedFicha != null && this.clickedFicha.isClickeable()) {
                 this.setBeginPosition(ficha);
+                this.clickedFicha = null;
             }
         }
         this.drawFigures();
@@ -119,23 +119,21 @@ class Game {
         // Fila y col ubicada (casillero)
         let f = parseInt(locker.getRow());
         let c = parseInt(locker.getCol());
-        if (this.isValidLocker(locker)) {
-            locker.setFicha(ficha);//Almaceno ficha en el casillero
-            this.lastInsertPos = { col: c, fil: f };//Update last position
-            ficha.setClickeable(false);
-            let medX = locker.getPosXMed();
-            let medY = locker.getPosYMed();
-            ficha.setPosition(medX, medY);
-            this.countFichasUsed++;
-        }
+
+        locker.setFicha(ficha);//Almaceno ficha en el casillero
+        this.lastInsertPos = { col: c, fil: f };//Update last position
+        ficha.setClickeable(false);
+        let medX = locker.getPosXMed();
+        let medY = locker.getPosYMed();
+        ficha.setPosition(medX, medY);
+        this.countFichasUsed++;
+
         this.drawFigures();// para q me dibuje en el momento
         if (this.isWinner()) {
             this.drawFigures();
             alert("Gano el " + this.lastPlayer.getName());
-            //    return true;
         } else {
             this.changePlayer();
-            return false;
         }
     }
 
@@ -143,28 +141,6 @@ class Game {
     setBeginPosition(ficha) {
         ficha.setBeginPosition();
         this.drawFigures();
-    }
-
-    //FUNCION DE VERIFICACION
-    isValidLocker(locker) {
-        //busco la fila en q puede poner
-        if (!this.isValidPos(locker)) return false;
-        return true;
-    }
-
-    // Verificar si es una posicion valida
-    isValidPos(locker) {
-        let validPos = false;
-        let f = parseInt(locker.getRow());
-        let c = parseInt(locker.getCol());
-        if (f == row - 1) {// fila de mas abajo
-            validPos = true;
-        } else {
-            if (!this.getLocker(c, f + 1).isEmpty()) {// el de abajo tiene una ficha
-                validPos = true;
-            }
-        }
-        return validPos;
     }
 
     //OBTENER CASILLERO (fila y col) 
@@ -183,30 +159,29 @@ class Game {
     checkColum(col, fil) {
         //checkea la columna para abajo
         let find = false;
-        let count = 0;
-        for (let index = fil; index < row; index++) {
+        for (let index = fil; index < this.board.getRow(); index++) {
             if (!find) {
                 //si encuentra una ficha de otro jugador, no cuenta mas
-                let locker = this.getLocker(col, index);
                 let playerX = this.getLocker(col, index).getFicha().getPlayer().getNum();
                 if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
-                    count++;
+                    this.listWinPieces.push(this.getLocker(col, index).getFicha());
                 }
             }
         }
-        return count === WIN;
+        if(this.listWinPieces.length!==WIN){
+            this.listWinPieces=[];
+            return false;
+        }
+        return true;
     }
 
     checkRow(col, fil) {
-        let count = 0;
-        let countRight = 0;
-        let countLeft = 0;
         let find = false;
         let auxCol = col;
         //busco a la derecha
-        while (auxCol < col && !find) {
+        while (auxCol < this.board.getCol() && !find) {
             if (this.getLocker(auxCol, fil).getFicha() == null) {
                 find = true;
             } else {
@@ -214,18 +189,15 @@ class Game {
                 if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
-                    countRight++;
+                    this.listWinPieces.push(this.getLocker(auxCol, fil).getFicha());
                     auxCol++;
                 }
             }
-
         }
         //Vuelvo a pos original
         auxCol = col - 1;// no cuento el casillero actual
         find = false;
         //busco a la izq
-        ///HACER LOS DEMAS COMO EESTE!!
-
         while (auxCol >= 0 && !find) {
             if (this.getLocker(auxCol, fil).getFicha() == null) {
                 find = true;
@@ -233,24 +205,25 @@ class Game {
                 if (this.getLocker(auxCol, fil).getFicha().getPlayer().getNum() !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
-                    countLeft++;
+                    this.listWinPieces.push(this.getLocker(auxCol, fil).getFicha());
                     auxCol--;
                 }
             }
-
         }
-        count = countRight + countLeft;
-        return count === WIN;
+
+        if(this.listWinPieces.length!==WIN){
+            this.listWinPieces=[];
+            return false;
+        }
+       return true;
     }
 
     checkDiagonalAsc(col, fil) {
         let auxCol = col;
         let auxFil = fil;
         //busca para arriba
-        let countUp = 0;
-        let countDown = 0;
         let find = false;
-        while (auxCol < col && auxFil >= 0 && !find) {
+        while (auxCol < this.board.getCol() && auxFil >= 0 && !find) {
             if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
@@ -258,7 +231,7 @@ class Game {
                 if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
-                    countUp++;
+                    this.listWinPieces.push(this.getLocker(auxCol, auxFil).getFicha());
                     auxCol++;
                     auxFil--;
                 }
@@ -268,7 +241,7 @@ class Game {
         find = false;
         auxCol = col - 1;
         auxFil = fil + 1;
-        while (auxCol >= 0 && auxFil < row && !find) {
+        while (auxCol >= 0 && auxFil < this.board.getRow() && !find) {
             if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
@@ -276,21 +249,23 @@ class Game {
                 if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
-                    countDown++;
+                    this.listWinPieces.push(this.getLocker(auxCol, auxFil).getFicha());
                     auxCol--;
                     auxFil++;
                 }
             }
         }
-        return (countDown + countUp) == WIN;
+        if(this.listWinPieces.length!==WIN){
+            this.listWinPieces=[];
+            return false;
+        }
+        return true;
     }
 
     checkDiagonalDesc(col, fil) {
         let auxCol = col;
         let auxFil = fil;
         //busca para arriba
-        let countUp = 0;
-        let countDown = 0;
         let find = false;
         while (auxCol >= 0 && auxFil >= 0 && !find) {
             if (this.getLocker(auxCol, auxFil).getFicha() == null) {
@@ -300,7 +275,7 @@ class Game {
                 if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
-                    countUp++;
+                    this.listWinPieces.push(this.getLocker(auxCol, auxFil).getFicha());
                     auxCol--;
                     auxFil--;
                 }
@@ -310,7 +285,7 @@ class Game {
         find = false;
         auxCol = col + 1;
         auxFil = fil + 1;
-        while (auxCol < col && auxFil < row && !find) {
+        while (auxCol < this.board.getCol() && auxFil < this.board.getRow() && !find) {
             if (this.getLocker(auxCol, auxFil).getFicha() == null) {
                 find = true;
             } else {
@@ -318,13 +293,17 @@ class Game {
                 if (playerX !== this.clickedFicha.getPlayer().getNum()) {
                     find = true;
                 } else {
-                    countDown++;
+                    this.listWinPieces.push(this.getLocker(auxCol, auxFil).getFicha());
                     auxCol++;
                     auxFil++;
                 }
             }
         }
-        return (countDown + countUp) == WIN;
+        if(this.listWinPieces.length!==WIN){
+            this.listWinPieces=[];
+            return false;
+        }
+        return true;
     }
     // CHECKEAR SI GANO
     isWinner() {
@@ -332,65 +311,22 @@ class Game {
         let fil = this.lastInsertPos.fil;
         let winner = false;
         winner = this.checkColum(col, fil);
-        // if (winner) {
-        //     this.listWinPieces.push(this.getLocker(col, fil).getFicha());
-        //     this.listWinPieces.push(this.getLocker(col, fil + 1).getFicha());
-        //     this.listWinPieces.push(this.getLocker(col, fil + 2).getFicha());
-        //     this.listWinPieces.push(this.getLocker(col, fil + 3).getFicha());
-        // }
+    
         if (!winner) {
             winner = this.checkRow(col, fil);
-            // if (winner) {
-            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
-            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
-            //         col++;
-            //     }
-            //     col = this.lastInsertPos.col - 1;
-            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
-            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
-            //         col--;
-            //     }
-            // }
         }
         if (!winner) {
             winner = this.checkDiagonalAsc(col, fil);
-            // if (winner) {
-            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
-            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
-            //         col++;
-            //         fil--;
-            //     }
-            //     col = this.lastInsertPos.col - 1;
-            //     fil = this.lastInsertPos.fil + 1;
-            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
-            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
-            //         col--;
-            //         fil++;
-            //     }
-            // }
         }
         if (!winner) {
             winner = this.checkDiagonalDesc(col, fil);
-            // if (winner) {
-            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
-            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
-            //         col--;
-            //         fil--;
-            //     }
-            //     col = this.lastInsertPos.col + 1;
-            //     fil = this.lastInsertPos.fil + 1;
-            //     while (this.getLocker(col, fil).getFicha().getPlayer() == this.lastPlayer) {
-            //         this.listWinPieces.push(this.getLocker(col, fil).getFicha());
-            //         col++;
-            //         fil++;
-            //     }
-            // }
         }
         //setear las fichas 
         this.listWinPieces.forEach(element => {
             element.setHighlightedStyle('39FF14')
             element.setHighlighted(true);
         });
+        console.log(this.listWinPieces);
         return winner;
     }
 
@@ -441,32 +377,32 @@ class Game {
             span1.innerHTML = msjEspera;
             span2.innerHTML = mensaje;
         }
-      //  this.restartTimer();
+        //  this.restartTimer();
     }
     // COUNTDOWN
-//     startTimer(duration) {
-//         let timer = duration;
-//         let minutes;
-//         let seconds;
-//         console.log(timer)
-//         this.interval = setInterval(function () {
-//             minutes = parseInt(timer / 60, 10);
-//             seconds = parseInt(timer % 60, 10);
-// //console.log(seconds)
-//             minutes = minutes < 10 ? "0" + minutes : minutes;
-//             seconds = seconds < 10 ? "0" + seconds : seconds;
-//             this.display = document.querySelector('#time');
-//             this.display.innerHTML = minutes + ":" + seconds;
-// if (--timer < 0) {
-//                 timer = duration;
-//                 game.changePlayer();
-//             }
-//         }, 1000);
-//     }
-//     restartTimer() {
-//         clearInterval(this.interval);
-//         this.startTimer(10, this.display);
-//     }
+    //     startTimer(duration) {
+    //         let timer = duration;
+    //         let minutes;
+    //         let seconds;
+    //         console.log(timer)
+    //         this.interval = setInterval(function () {
+    //             minutes = parseInt(timer / 60, 10);
+    //             seconds = parseInt(timer % 60, 10);
+    // //console.log(seconds)
+    //             minutes = minutes < 10 ? "0" + minutes : minutes;
+    //             seconds = seconds < 10 ? "0" + seconds : seconds;
+    //             this.display = document.querySelector('#time');
+    //             this.display.innerHTML = minutes + ":" + seconds;
+    // if (--timer < 0) {
+    //                 timer = duration;
+    //                 game.changePlayer();
+    //             }
+    //         }, 1000);
+    //     }
+    //     restartTimer() {
+    //         clearInterval(this.interval);
+    //         this.startTimer(10, this.display);
+    //     }
     // timer() {
     //     var oneMinute = 60 * 1;
     //     this.display = document.querySelector('#time');
@@ -476,20 +412,20 @@ class Game {
     // var c = 0;
     // var t;
     // var timer_is_on = 0;
-    
+
     // function timedCount() {
     //   document.getElementById("txt").value = c;
     //   c--;
     //   t = setTimeout(timedCount, 1000);
     // }
-    
+
     // function startCount() {
     //   if (!timer_is_on) {
     //     timer_is_on = 1;
     //     timedCount();
     //   }
     // }
-    
+
     // function stopCount() {
     //   clearTimeout(t);
     //   timer_is_on = 0;
