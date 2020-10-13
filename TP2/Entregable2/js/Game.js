@@ -13,11 +13,11 @@ class Game {
         this.isMouseDown = false;
         this.winner = false;
         this.listWinPieces = [];
-        this.drawFigures();
-        this.firstPlayer();
         this.interval = null;
         this.display = null;
-        //   this.restartTimer();
+        this.drawFigures();
+        this.firstPlayer();
+        //   this.startTimer(10);
 
     }
 
@@ -132,6 +132,7 @@ class Game {
         if (this.isWinner()) {
             this.drawFigures();
             alert("Gano el " + this.lastPlayer.getName());
+            this.blockAll();
         } else {
             this.changePlayer();
         }
@@ -170,8 +171,8 @@ class Game {
                 }
             }
         }
-        if(this.listWinPieces.length!==WIN){
-            this.listWinPieces=[];
+        if (this.listWinPieces.length < WIN) {
+            this.listWinPieces = [];
             return false;
         }
         return true;
@@ -211,11 +212,11 @@ class Game {
             }
         }
 
-        if(this.listWinPieces.length!==WIN){
-            this.listWinPieces=[];
+        if (this.listWinPieces.length < WIN) {
+            this.listWinPieces = [];
             return false;
         }
-       return true;
+        return true;
     }
 
     checkDiagonalAsc(col, fil) {
@@ -255,8 +256,8 @@ class Game {
                 }
             }
         }
-        if(this.listWinPieces.length!==WIN){
-            this.listWinPieces=[];
+        if (this.listWinPieces.length < WIN) {
+            this.listWinPieces = [];
             return false;
         }
         return true;
@@ -299,8 +300,8 @@ class Game {
                 }
             }
         }
-        if(this.listWinPieces.length!==WIN){
-            this.listWinPieces=[];
+        if (this.listWinPieces.length < WIN) {
+            this.listWinPieces = [];
             return false;
         }
         return true;
@@ -311,7 +312,7 @@ class Game {
         let fil = this.lastInsertPos.fil;
         let winner = false;
         winner = this.checkColum(col, fil);
-    
+
         if (!winner) {
             winner = this.checkRow(col, fil);
         }
@@ -326,7 +327,6 @@ class Game {
             element.setHighlightedStyle('39FF14')
             element.setHighlighted(true);
         });
-        console.log(this.listWinPieces);
         return winner;
     }
 
@@ -345,6 +345,17 @@ class Game {
                 f[i].setTurn(true);//Desactiva fichas del jugador
             }
         }
+    }
+
+    blockAll() {
+        let f = this.fichas.getFichas();
+        for (let i = 0; i < f.length; i++) {
+            f[i].setTurn(false); //setea a tods en null 
+        }
+        let span1 = document.querySelector("#player1");
+        let span2 = document.querySelector("#player2");
+        span1.innerHTML = "";
+        span2.innerHTML = "";
     }
 
     //CAMBIAR DE JUGADOR
@@ -377,8 +388,11 @@ class Game {
             span1.innerHTML = msjEspera;
             span2.innerHTML = mensaje;
         }
-        //  this.restartTimer();
+        // this.restartTimer();
     }
+
+
+
     // COUNTDOWN
     //     startTimer(duration) {
     //         let timer = duration;

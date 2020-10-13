@@ -58,6 +58,7 @@ document.querySelector("#restart").addEventListener('click', restart);
 function restart() {
     startGame(lastRow,lastCol);
 }
+
 function startGame(row, col) {
     this.lastCol=col;
     this.lastRow=row;
