@@ -1,341 +1,204 @@
-body, html{
-    padding: 0;
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
 }
 
-body{
-    background-image: url(img/paisaje.jpg); 
-    background-attachment: fixed;
-    background-size: 100% 100%;
+li a {
     color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* nav *
-/* header, footer{
-    background-color: black;
-    text-align: center;
-} */
 
-header{
-    width: 100%;
-    height: 70px;
-    position: fixed;
-    overflow: hidden;
-    width: 100%;
-    top: 0;
+/* NAVBAR */
+
+nav {
+    background-image: linear-gradient(235deg, maroon, rgba(0, 0, 0, 0.9), black);
 }
-/* nav */
-nav{
-    background-image: linear-gradient(235deg, maroon,rgba(0,0,0,0.9),black);
-  }
 
-  .logo{
+.logo {
     height: 30px;
     width: 60px;
-  }
+}
 
-/* .navbar h1{
-    position: absolute;
-    padding: 3px;
-    float: left;
-    margin-left: 2%;
-    margin-top: 10px;
+
+/* Rating usando Font awesome*/
+
+
+/* .content{
+    display: grid;
 } */
 
-/* .navbar span{
-    color: aqua;
+.rate {
+    align-self: end;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateY(180deg);
+    /* rotate ya que viene de der a izq */
+    display: flex;
 }
 
-.navbar ul{
-    width: auto;
-    float: right;
-    margin-top: 8px;
+
+/* para que no aparezca puntitos */
+
+.rate input {
+    display: none;
 }
 
-.navbar li{
+.rate label {
+    display: block;
+    cursor: pointer;
+    width: 50px;
+    padding-left: 10px;
+}
+
+.rate label::before {
+    content: '\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: relative;
+    display: block;
+    font-size: 40px;
+    color: black
+}
+
+.rate label::after {
+    content: '\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    display: block;
+    font-size: 40px;
+    color: #1f9cff;
+    opacity: 0;
+    top: 0;
+    transition: 0.5s;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.rate label:hover::after,
+.rate label:hover~label::after,
+.rate label:checked~label::after {
+    opacity: 1;
+}
+
+
+/* Inputs */
+
+form {
+    top: 50%;
+    left: 25%;
+    width: 600px;
+    height: auto;
+    position: absolute;
+    color: black;
+}
+
+.form-group {
+    width: 300px;
+    height: auto;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: grid;
+}
+
+.form-control {
+    position: relative;
+    height: 50px;
+    font-size: 20px;
+    /* borrar el cuadrado */
+    border: none;
+    border-bottom: 1px solid #555;
+    border-radius: 0;
+    transition: .5s ease-in-out;
+}
+
+
+/* una vez clickeado el input */
+
+.form-control:focus {
+    box-shadow: none;
+    border-bottom: 4px solid rgb(42, 203, 243);
+}
+
+.form-control-textarea {
+    position: relative;
+    /* height: 50px; */
+    font-size: 20px;
+    /* borrar el cuadrado */
+    border: 1px solid #555;
+    /* border-bottom: ; */
+    border-radius: 0;
+    transition: .5s ease-in-out;
+    margin-bottom: 20px;
+}
+
+
+/* una vez clickeado el input */
+
+.form-control-textarea:focus {
+    text-decoration: none;
+    box-shadow: none;
+    box-shadow: 0 0 5px #2196f3, 0 0 100px #2196f3, 0 0 10px #2196f3;
+    border-bottom: 4px solid rgb(42, 203, 243);
+    margin-bottom: 20px;
+}
+
+
+/* label en la pos original */
+
+label {
+    position: absolute;
+    top: 0;
+    font-size: 18px;
+    padding-left: 15px;
+    line-height: 50px;
+    transition: .5s ease;
+}
+
+
+/* dsp de clickear, si tiene algo escrito  */
+
+.form-control:focus+label,
+.form-control:valid+label {
+    top: -30px;
+    padding-left: 0;
+    font-size: 14px;
+}
+
+p {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 50px;
+}
+
+
+/* BUTTON */
+
+button {
+    position: relative;
     display: inline-block;
     padding: 15px 30px;
-}
-
-.navbar a{
-    text-align: center;
     color: white;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.2vw;
-    display: block;
-    padding: 15px;
-}
-
-.navbar a:hover{
-    transition: 0.5s;
-    background-color: rgb(88, 84, 84);
-} */
-
-/* footer*/
-
-footer{
-    display: inline-block;
-    width: 100%;
-    position: static;
-}
-
-/* #logo{
-    height: 60px;
-    width: 60px;
-    text-align: center;
-    margin: 0 auto;
-} */
-
-.pie ul li img{
-    display: block;
-    width: 30px;
-    height: 30px;
-    padding: 10px;
-    margin: 0 auto;
-}
-
-.pie div,address{
-    text-decoration-style: wavy;
-    font-size: 0.5cm;
-    display: block;
-    width: 30%;
-   display: inline-block;
-}
-
-.pie ul{
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.pie ul li{
-    display:inline-block;
-    text-transform: none;
-}
-.pie ul li a{  
-    text-decoration: none;
-    text-align: center;
-    display: block;
-    padding: 5px;
-    
-}
-
-/*content*/
-.general{
-    width: 90%;
-    height: 100%;
-    margin: 0 auto;
-    display: block;
-}
-
-.general2{
-    margin-top: 10px;
-    text-align: center;
-}
-
-.content{
-	background-image: url(../fotos/dark.jpg); 
-    background-attachment: fixed;
-    background-size: 100% 100%;
-	padding: 50px; 
-	margin: 150px auto; 
-    width: 40%; 
-    display: inline-block;
-    border-radius: 25px;
-}
-
-.content img{
-    width: 400px;
-}
-
-.content2{    
-    width: 90%;  
-}
-
-div .content{
-    margin: 0 auto;
-}
-
-iframe{
-    margin: 0 auto;
-    margin-top: 20px;
-    width: 100%;
-    height: 400px;
-}
-
-table {
-    width: 100%;
-    border: solid;
-    text-align: center;
-    background-image: url(../fotos/dark.jpg); 
-    background-attachment: fixed;
-    background-size: 100% 100%;
-    border-radius: 26px;
-}
-    
-td, th{
-    border:groove;
-    border-radius: 26px;
-}
-th {
-    border-radius: 26px;
-    background-color:orangered;
-}
-
-/* form */
-.box{
-    width: 100%;
-    background-image: url(dark.jpg); 
-    background-attachment: fixed;
-    background-size: 100% 100%;
-    text-align: center;
-    border-radius: 26px;
-    padding-top: 30px;
-    padding-block-end: 30px;
-    font-size: 200;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.box h1{
     text-transform: uppercase;
-    font-size: 500;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 20px;
+    background: #2196f3;
+    border: none;
 }
 
-.box p{
-    font-size: 250;
+button {
+    overflow: hidden;
+    transition: 0.2s;
 }
 
-#tel input[type = "tel"], .box input[type = "text"], .box input[type = "email"], .box select, .box textarea, .box input [type="number"]{
-    border: 30px;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 14px 10px;
-    width: 75%;
-    outline: none;
-    color: white;
-    border-radius: 25px;
-    transition: 0.25s;
-}
-
-.box input [type="tel"]:focus, .box input [type="number"]:focus,box input[type = "text"]:focus, .box input[type = "email"]:focus, .box select:focus, .box textarea:focus{
-    width: 80%;
-    border-color: #2ecc71;
-}
-
-.box input[type = "button"], .box button{
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    width: 40%;
-    outline: none;
-    border-radius: 25px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 500;
-    color: white;
-}
-
-#verificaelcaptcha input[type="number"]{
-    border: 30px;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 14px 10px;
-    width: 75%;
-    outline: none;
-    color: white;
-    border-radius: 25px;
-    transition: 0.25s;
-}
-
-#verificaelcaptcha input[type="number"]:focus{
-    width: 80%;
-    border-color: #2ecc71;
-}
-
-#verificaelcaptcha{
-    margin: 0 auto;
-    width: 75%;
-    border: 2px;
-    border-radius: 23px;
-    border-style: solid;
-    border-color: #3498db;
-}
-
-#verificaelcaptcha img{
-    width: 40px;
-}
-
-/*index*/
-
-.noticias{
-    padding-top: 30px;
-    width: 100%;
-    text-align: center;  
-}
-
-.noticias article{
-    border-width: 3px;
-    border-style: inset;
-    border-color: white;
-    display: inline-block;
-    background-color: darkblue;
-}
-
-.articulos{
-    display: block;
-    width: 27%;
-}
-
-.articulos div{
-    text-align: center;
-    display: block;
-}
-
-.articulos img{
-    width: 100%;
-}
-
-#fotoinicio{
-    width: 100%;
-}
-
-.bienvenidos{
-    text-align: center;
-}
-
-/*informacion*/
-
-.infor{
-    text-align: center;
-    width: 100%;
-    border: 1px;
-    border-color: white;
-    border-style: double;  
-}
-
-.infor div{
-    display: inline-block;
-}
-
-.infor img{
-    width: 200px;
-}
-.inforimg{
-    width: 200px;
-}
-
-.infortext{
-    width: 80%;
+button:hover {
+    color: whitesmoke;
+    background: #2196f3;
+    box-shadow: 0 0 5px #2196f3, 0 0 100px #2196f3, 0 0 10px #2196f3;
+    transition-delay: 0.2s;
+    border: none;
 }

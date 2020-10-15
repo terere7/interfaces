@@ -7,52 +7,57 @@
     <link rel="shortcut icon" type="image/x-icon" href="img/d.jpg" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/77a4976099.js" crossorigin="anonymous"></script>
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- input -->
+    <link rel="stylesheet" href="form.css">
 </head>
 
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="index.html"><img  class="logo" src="img/Mulan_Logo_.png" alt=""></a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">HOME</a></li>
-            <li><a href="calendar.html">CALENDAR</a></li>
-            <li><a href="form.html">FORM</a></li>
-          </ul> 
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html"><img class="logo" src="img/Mulan_Logo_.png" alt=""></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">HOME</a></li>
+                <li><a href="calendar.html">CALENDAR</a></li>
+                <li><a href="form.html">FORM</a></li>
+            </ul>
         </div>
-      </nav>
+    </nav>
 
-      <form action="">
-          <h2>9. Debe agregar animaciones en los input y en los botones una vez clickeados. 
-            10. Debe animar la entrada de los componentes en la pantalla . 
-            </h2>
-      </form>
+    <div>
+        <h2>9. Debe agregar animaciones en los input y en los botones una vez clickeados. 10. Debe animar la entrada de los componentes en la pantalla .
+        </h2>
+    </div>
+    <div class="form">
+        <form action="">
+            <h2>Comments</h2>
+            <div class="form-group">
 
-      <form action="">
-        
+                <!-- Rating stars -->
 
+                <div class="rate">
+                    <input type="radio" name="" id="star1"><label for="star1"></label>
+                    <input type="radio" name="" id="star2"><label for="star2"></label>
+                    <input type="radio" name="" id="star3"><label for="star3"></label>
+                    <input type="radio" name="" id="star4"><label for="star4"></label>
+                    <input type="radio" name="" id="star5"><label for="star5"></label>
+                </div>
 
-        <input type="text" id="filtro">
-        <p>Para agregar a la tabla escribe debajo</p>
-        <p>Nombre del lugar</p>
-        <input type="text"  id="nombreLugar">
-        <p id="txtnombre">
-        </p>
-        <p>Ciudad</p>
-        <input type="text"  id="ciudad">
-        <p>Cantidad de estrellas</p>
-        <input type="number" id="nEstrella" >
-        <p id="txtestrella"></p>
+                <input type="text" id="username" class="form-control" required>
+                <label for="username">Username</label>
 
-    <button type="button" id="addTable">Agregar a la tabla</button>
-    <button type="button" id="addThree">Agrega 3 elementos</button>
-    <button type="button" id="deleteAll">Eliminar contenido</button>
-</form>
+                <p for="comment">Comment:</p>
+                <textarea id="comment" class="form-control-textarea" rows="7" cols="80" name="comment" form="usrform" placeholder="   Enter text here"></textarea>
 
-  
+                <button class="submit" type="button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script src="js/form.js"></script>
 </body>
 
 </html>
