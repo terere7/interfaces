@@ -2,7 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: black;
+    color: white;
+}
+
+body {
+    background-color: black;
 }
 
 li a {
@@ -89,10 +93,10 @@ nav {
 form {
     top: 50%;
     left: 25%;
-    width: 600px;
+    width: 1000px;
     height: auto;
     position: absolute;
-    color: black;
+    color: white;
 }
 
 .form-group {
@@ -101,17 +105,20 @@ form {
     position: absolute;
     transform: translate(-50%, -50%);
     display: grid;
+    color: white;
 }
 
 .form-control {
     position: relative;
     height: 50px;
     font-size: 20px;
+    background-color: black;
     /* borrar el cuadrado */
     border: none;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #fff;
     border-radius: 0;
     transition: .5s ease-in-out;
+    color: white;
 }
 
 
@@ -119,17 +126,20 @@ form {
 
 .form-control:focus {
     box-shadow: none;
+    background-color: black;
+    color: white;
     border-bottom: 4px solid rgb(42, 203, 243);
 }
 
 .form-control-textarea {
+    background-color: black;
     position: relative;
     /* height: 50px; */
     font-size: 20px;
     /* borrar el cuadrado */
     border: 1px solid #555;
     /* border-bottom: ; */
-    border-radius: 0;
+    border-radius: 15px;
     transition: .5s ease-in-out;
     margin-bottom: 20px;
 }
@@ -140,6 +150,7 @@ form {
 .form-control-textarea:focus {
     text-decoration: none;
     box-shadow: none;
+    border-radius: 15px;
     box-shadow: 0 0 5px #2196f3, 0 0 100px #2196f3, 0 0 10px #2196f3;
     border-bottom: 4px solid rgb(42, 203, 243);
     margin-bottom: 20px;
@@ -155,6 +166,7 @@ label {
     padding-left: 15px;
     line-height: 50px;
     transition: .5s ease;
+    color: white;
 }
 
 
@@ -188,6 +200,17 @@ button {
     border-radius: 20px;
     background: #2196f3;
     border: none;
+    margin-top: 20px;
+}
+
+button a {
+    text-decoration: none;
+    color: white;
+}
+
+button a:hover {
+    text-decoration: none;
+    color: white;
 }
 
 button {
@@ -201,4 +224,11 @@ button:hover {
     box-shadow: 0 0 5px #2196f3, 0 0 100px #2196f3, 0 0 10px #2196f3;
     transition-delay: 0.2s;
     border: none;
+}
+
+
+/* MESSAGE */
+
+.msg {
+    margin: 10%;
 }

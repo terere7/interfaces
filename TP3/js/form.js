@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
         } else {
             let form = document.querySelector(".form");
             form.innerHTML = "";
-            form.innerHTML = "<h2>Your comment was succesfully sent! </h2><h3>" + username + " Thank you for your feedback!</h3>"
+            form.innerHTML = '<div class="msg" ><h2>Your comment was succesfully sent. </h2><h3>' + username + ', thank you for your feedback!</h3><button type="submit"><a href="form.html">Back</a></button></div>';
         }
     }
 });
