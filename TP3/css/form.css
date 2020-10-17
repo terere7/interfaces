@@ -127,7 +127,9 @@ form {
     box-shadow: none;
     background-color: black;
     color: white;
-    border-bottom: 4px solid rgb(42, 203, 243);
+    /* border-bottom: 4px solid rgb(42, 203, 243); */
+    border-bottom: 4px solid red;
+    background: black;
 }
 
 .form-control-textarea {
@@ -150,8 +152,10 @@ form {
     text-decoration: none;
     box-shadow: none;
     border-radius: 15px;
-    box-shadow: 0 0 5px #2196f3, 0 0 100px #2196f3, 0 0 10px #2196f3;
-    border-bottom: 4px solid rgb(42, 203, 243);
+    /* box-shadow: 0 0 5px #2196f3, 0 0 100px #2196f3, 0 0 10px #2196f3;
+    border-bottom: 4px solid rgb(42, 203, 243); */
+    box-shadow: 0 0 5px #f32156, 0 0 100px #5a152c, 0 0 10px #ac1446;
+    border-bottom: 4px solid rgb(99, 15, 15);
     margin-bottom: 20px;
 }
 
@@ -197,7 +201,8 @@ button {
     text-decoration: none;
     font-size: 12px;
     border-radius: 20px;
-    background: #2196f3;
+    /* background: #2196f3; */
+    background: linear-gradient(90deg, rgba(80, 7, 179, 1) 0%, rgba(168, 32, 49, 1) 50%, rgba(0, 0, 0, 1) 100%);
     border: none;
     margin-top: 20px;
 }
@@ -219,8 +224,8 @@ button {
 
 button:hover {
     color: whitesmoke;
-    background: #2196f3;
-    box-shadow: 0 0 5px #2196f3, 0 0 100px #2196f3, 0 0 10px #2196f3;
+    background: linear-gradient(90deg, rgba(80, 7, 179, 1) 0%, rgba(168, 32, 49, 1) 50%, rgba(0, 0, 0, 1) 100%);
+    box-shadow: 0 0 5px #f32156, 0 0 100px #5a152c, 0 0 10px #ac1446;
     transition-delay: 0.2s;
     border: none;
 }

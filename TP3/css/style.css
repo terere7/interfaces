@@ -382,6 +382,7 @@ section .loader span::before {
 
 .events {
     margin: 0 auto;
+    padding-top: 5%;
     padding-left: 20%;
     padding-right: 20%;
     text-decoration: none;
@@ -434,8 +435,6 @@ img.image {
     width: auto;
 }
 
-table,
-th,
-td {
-    border: 1px solid black;
+.details {
+    text-align: center;
 }
