@@ -15,50 +15,66 @@
 
 
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html"><img class="logo" src="img/Mulan_Logo_.png" alt=""></a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">HOME</a></li>
-                <li><a href="calendar.html">CALENDAR</a></li>
-                <li><a href="form.html">FORM</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div>
-        <p> 10. Debe animar la entrada de los componentes en la pantalla .
-            <p>
+    <div class="spinner">
+        <div class="loader"></div>
     </div>
-    <h2 class="section">Send us your comments</h2>
-    <div class="form">
-        <form action="">
-            <h2>Comments</h2>
-            <div class="form-group">
 
-                <!-- Rating stars -->
+    <div class="page">
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html"><img class="logo" src="img/Mulan_Logo_.png" alt=""></a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">HOME</a></li>
+                    <li><a href="calendar.html">CALENDAR</a></li>
+                    <li><a href="form.html">FORM</a></li>
+                </ul>
+            </div>
+        </nav>
 
-                <div class="rate">
+
+        <h2 class="section">Send us your comments</h2>
+        <div class="form">
+            <form action="">
+                <h2>Comments</h2>
+                <div class="form-group">
+
+                    <!-- Rating stars -->
+
+                    <!-- <div class="rate">
                     <input type="radio" name="" id="star1"><label for="star1"></label>
                     <input type="radio" name="" id="star2"><label for="star2"></label>
                     <input type="radio" name="" id="star3"><label for="star3"></label>
                     <input type="radio" name="" id="star4"><label for="star4"></label>
                     <input type="radio" name="" id="star5"><label for="star5"></label>
+                </div> -->
+
+                    <input type="text" id="username" class="form-control" required>
+                    <label for="username">Username</label>
+
+                    <p for="comment">Comment:</p>
+                    <textarea id="comment" class="form-control-textarea" rows="7" cols="80" name="comment" form="usrform" placeholder="   Enter text here"></textarea>
+
+                    <button class="submit" type="button">Submit</button>
                 </div>
+            </form>
+        </div>
 
-                <input type="text" id="username" class="form-control" required>
-                <label for="username">Username</label>
+        <div>
+            <p> 10. Debe animar la entrada de los componentes en la pantalla .
+                <p>
+        </div>
+        <!-- <footer>
+            <p>Copyright © 2020, All rights reserved</p>
+        </footer> -->
 
-                <p for="comment">Comment:</p>
-                <textarea id="comment" class="form-control-textarea" rows="7" cols="80" name="comment" form="usrform" placeholder="   Enter text here"></textarea>
-
-                <button class="submit" type="button">Submit</button>
-            </div>
-        </form>
     </div>
+
+    <script src="js/script.js"></script>
     <script src="js/form.js"></script>
+
+
 </body>
 
 </html>

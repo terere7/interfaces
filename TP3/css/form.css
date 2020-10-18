@@ -33,19 +33,26 @@ nav {
     display: grid;
 } */
 
-.rate {
+
+/* .rate {
     align-self: end;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotateY(180deg);
     /* rotate ya que viene de der a izq */
-    display: flex;
-}
+
+
+/* display: flex; */
+
+
+/*} */
 
 
 /* para que no aparezca puntitos */
 
+
+/* 
 .rate input {
     display: none;
 }
@@ -84,7 +91,7 @@ nav {
 .rate label:hover~label::after,
 .rate label:checked~label::after {
     opacity: 1;
-}
+} */
 
 
 /* Inputs */
@@ -96,6 +103,7 @@ form {
     height: auto;
     position: absolute;
     color: white;
+    margin-top: 20px;
 }
 
 .form-group {
@@ -235,4 +243,9 @@ button:hover {
 
 .msg {
     margin: 10%;
+}
+
+footer p {
+    text-align: center;
+    justify-content: end;
 }
