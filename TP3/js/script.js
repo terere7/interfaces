@@ -1,5 +1,3 @@
-console.log("hola");
-
 let countDownDate = new Date("Nov 5, 2020 15:37:25").getTime();
 
 // Update the count down every 1 second
