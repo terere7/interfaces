@@ -11,6 +11,7 @@
     <!-- input -->
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 
 
@@ -52,19 +53,20 @@
 
                     <input type="text" id="username" class="form-control" required>
                     <label for="username">Username</label>
+                    <div class="alert hide">
+                        <span class="fas fa-exclamation-circle"></span> <span>You must complete your username.</span>
+                    </div>
 
                     <p for="comment">Comment:</p>
                     <textarea id="comment" class="form-control-textarea" rows="7" cols="80" name="comment" form="usrform" placeholder="   Enter text here"></textarea>
-
+                    <div class="alertC hide">
+                        <span class="fas fa-exclamation-circle"></span> <span>You must add a comment.</span>
+                    </div>
                     <button class="submit" type="button">Submit</button>
                 </div>
             </form>
         </div>
 
-        <div>
-            <p> 10. Debe animar la entrada de los componentes en la pantalla .
-                <p>
-        </div>
         <!-- <footer>
             <p>Copyright © 2020, All rights reserved</p>
         </footer> -->
