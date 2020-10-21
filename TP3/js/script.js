@@ -49,13 +49,17 @@ window.addEventListener('scroll', function() {
     bg.style.top = value * 0.5 + 'px';
     castle.style.top = value * 0.55 + 'px';
     // brillo.style.top = -value * 0.55 + 'px';
-    text.style.left = value * 1 + 'px';
-    text.style.left = value * 1 + 'px';
-    text.style.top = value * 0.65 + 'px';
+    // text.style.left = value * 1 + 'px';
+    // text.style.left = value * 1 + 'px';
+    // text.style.top = value * 0.65 + 'px';
 
-    // if (value > 600) {
-
-    // }
+    if (value > 600) {
+        document.querySelector(".cards").classList.remove('hide');
+        document.querySelector(".cards").classList.add('show');
+    } else {
+        document.querySelector(".cards").classList.remove('show');
+        document.querySelector(".cards").classList.add('hide');
+    }
 })
 
 // HEADER - MENU HUMBURGUER

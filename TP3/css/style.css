@@ -321,6 +321,32 @@ a p {
 }
 
 
+/* hacer que aparezca cuando la pantalla scrolle hasta */
+
+.cards.show {
+    animation: show_slide 5s ease forwards;
+}
+
+.cards.hide {
+    display: none;
+}
+
+@keyframes show_slide {
+    0% {
+        transform: translateX(100%);
+    }
+    40% {
+        transform: translateX(-10%);
+    }
+    80% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-10px);
+    }
+}
+
+
 /* EVENTS CARDS */
 
 
