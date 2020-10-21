@@ -1,3 +1,5 @@
+//COUNTDOWN
+
 let countDownDate = new Date("Nov 5, 2020 15:37:25").getTime();
 
 // Update the count down every 1 second
@@ -26,7 +28,7 @@ let x = setInterval(function() {
     }
 }, 1000);
 
-
+//LOADER - SPINNER
 loader();
 
 function loader() {
@@ -36,17 +38,51 @@ function loader() {
     }, 3000);
 }
 
-
+//PARALLAX
 window.addEventListener('scroll', function() {
     let bg = document.querySelector("#bg");
     let mountain = document.querySelector("#mountain");
     let text = document.querySelector("#text");
     let road = document.querySelector("#road");
     let value = window.scrollY;
+    // console.log(value);
     bg.style.top = value * 0.5 + 'px';
     mountain.style.top = value * 0.55 + 'px';
     road.style.top = -value * 0.55 + 'px';
     text.style.left = value * 1 + 'px';
     text.style.left = value * 1 + 'px';
     text.style.top = value * 0.65 + 'px';
+
+    // if (value > 600) {
+
+    // }
 })
+
+// HEADER - MENU HUMBURGUER
+function toggleMenu(event) {
+    this.classList.toggle('is-active');
+    document.querySelector(".mainMenu").classList.toggle("is_active");
+    event.preventDefault();
+}
+
+let menu = document.querySelector('.hamburger');
+menu.addEventListener('click', toggleMenu, false);
+
+// document.querySelector(".menuHome").addEventListener("click", function() {
+//     loading();
+//     document.querySelector(".mainMenu").classList.toggle("is_active");
+//     document.querySelector(".hamburger").classList.toggle("is-active");
+//     window.scroll(0, 660);
+// });
+// document.querySelector(".menuCalendario").addEventListener("click", function() {
+//     loading();
+//     document.querySelector(".mainMenu").classList.toggle("is_active");
+//     document.querySelector(".hamburger").classList.toggle("is-active");
+//     window.scroll(0, 1600);
+// });
+// document.querySelector(".menuFormulario").addEventListener("click", function() {
+//     loading();
+//     document.querySelector(".mainMenu").classList.toggle("is_active");
+//     document.querySelector(".hamburger").classList.toggle("is-active");
+//     window.scroll(0, 2060);
+// });

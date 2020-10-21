@@ -16,13 +16,17 @@ body {
 
 /* NAVBAR */
 
-nav {
+
+/* nav {
     background-image: linear-gradient(235deg, maroon, rgba(0, 0, 0, 0.9), black);
 }
 
+*/
+
 .logo {
-    height: 30px;
+    height: 35px;
     width: 60px;
+    margin-left: 600px;
 }
 
 h2.section {
@@ -30,6 +34,125 @@ h2.section {
     padding-left: 40px;
     padding-bottom: 20px;
 }
+
+
+/* HEADER - HAMBURGUER */
+
+.hamburger {
+    position: fixed;
+    background-color: transparent;
+    left: 0;
+    top: 0;
+    height: 30px;
+    width: 30px;
+    padding: 10px 10px;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transition: -webkit-transform 0.25s cubic-bezier(0.05, 1.04, 0.72, 0.98);
+    transition: transform 0.25s cubic-bezier(0.05, 1.04, 0.72, 0.98);
+    z-index: 1002;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.hamburger.is-active {
+    background-color: none;
+}
+
+._layer {
+    background: white;
+    margin-bottom: 4px;
+    border-radius: 2px;
+    width: 28px;
+    height: 4px;
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transition: all 0.25s cubic-bezier(0.05, 1.04, 0.72, 0.98);
+    transition: all 0.25s cubic-bezier(0.05, 1.04, 0.72, 0.98);
+}
+
+.hamburger:hover .-top {
+    -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    transform: translateY(-100%);
+}
+
+.hamburger:hover .-bottom {
+    -webkit-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    transform: translateY(100%);
+}
+
+.hamburger.is-active .-top {
+    -webkit-transform: translateY(200%) rotate(45deg) !important;
+    -ms-transform: translateY(200%) rotate(45deg) !important;
+    transform: translateY(200%) rotate(45deg) !important;
+}
+
+.hamburger.is-active .-mid {
+    opacity: 0;
+}
+
+.hamburger.is-active .-bottom {
+    -webkit-transform: translateY(-200%) rotate(135deg) !important;
+    -ms-transform: translateY(-200%) rotate(135deg) !important;
+    transform: translateY(-200%) rotate(135deg) !important;
+}
+
+.mainMenu.is_active {
+    transform: translate3d(0px, 0px, 0px);
+}
+
+.mainMenu {
+    background-color: rgb(255, 0, 0, 0.7);
+    bottom: 0;
+    height: fit-content;
+    left: 0;
+    overflow-y: scroll;
+    position: fixed;
+    top: 0;
+    transform: translate3d(0px, -100%, 0px);
+    transition: transform 0.35s cubic-bezier(0.05, 1.04, 0.72, 0.98) 0s;
+    width: 100%;
+    z-index: 1001;
+}
+
+.mainMenu ul {
+    margin: 0;
+    padding: 0;
+}
+
+.mainMenu ul li {
+    list-style: none;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    line-height: 2em;
+    height: 2em;
+    color: #369;
+    text-transform: none;
+    font-weight: bold;
+}
+
+.mainMenu ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.mainMenu ul li:hover {
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    font-size: 1.2rem;
+    background: rgb(2, 41, 19);
+    background: linear-gradient(90deg, rgba(2, 41, 19, 1) 7%, rgba(8, 85, 99, 1) 29%, rgba(9, 97, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+}
+
+
+/* STATIC PHOTO */
 
 .bloque {
     background-image: url("../img/mulan2.png");
@@ -135,7 +258,7 @@ a p {
 
 /* CARDS  */
 
-.card {
+.card1 {
     position: relative;
     top: 50%;
     left: 50%;
@@ -147,7 +270,7 @@ a p {
     transition: 0.5s;
 }
 
-.card .front {
+.card1 .front {
     position: absolute;
     top: 0;
     left: 0;
@@ -159,11 +282,11 @@ a p {
     transition: 0.5s;
 }
 
-.card:hover .front {
+.card1:hover .front {
     transform: rotateX(-180deg);
 }
 
-.card .back {
+.card1 .back {
     position: absolute;
     top: 0;
     left: 0;
@@ -175,11 +298,11 @@ a p {
     transition: 0.5s;
 }
 
-.card:hover .back {
+.card1:hover .back {
     transform: rotateX(0deg);
 }
 
-.card .back .details {
+.card1 .back .details {
     position: absolute;
     left: 0;
     width: 100%;
