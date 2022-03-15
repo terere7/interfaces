@@ -9,5 +9,5 @@ Entregable 2: 4 en linea.
 https://terehsieh.github.io/interfaces/TP2/Entregable2/
 
 Entregable 3: Sitio WEB - Mulan.  
-https://terehsieh.github.io/interfaces/TP3/
+https://terere7.github.io/interfaces/TP3/
 
